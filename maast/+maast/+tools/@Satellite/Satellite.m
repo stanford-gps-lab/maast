@@ -1,13 +1,4 @@
 classdef Satellite < matlab.mixin.Copyable
-%*************************************************************************
-%*     Copyright c 2019 The board of trustees of the Leland Stanford     *
-%*                      Junior University. All rights reserved.          *
-%*     This file is part of MAAST which is releaded under the MIT        *
-%*      License.  See `LICENSE.TXT` for full license details.            *
-%*                                                                       *
-%*     Questions and comments should be directed to:                     *
-%*     https://github.com/stanford-gps-lab/maast                         *
-%*************************************************************************
 % Satellite     an almanac based representation of a satellite in orbit.
 %   TODO: more detailed description as needed
 %
@@ -24,6 +15,12 @@ classdef Satellite < matlab.mixin.Copyable
 %
 %   See Also: maast.tools.Satellite.fromAlmMatrix,
 %   maast.tools.Satellite.fromYuma
+
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details.
+%   Questions and comments should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast
 
     % the almanac properties -> can only be set in the constructor
     % TODO: decide if want these to actually be immutable or just

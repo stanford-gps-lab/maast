@@ -1,17 +1,14 @@
 classdef SignalConstants
-%*************************************************************************
-%*     Copyright c 2019 The board of trustees of the Leland Stanford     *
-%*                      Junior University. All rights reserved.          *
-%*     This file is part of MAAST which is releaded under the MIT        *
-%*      License.  See `LICENSE.TXT` for full license details.            *
-%*                                                                       *
-%*     Questions and comments should be directed to:                     *
-%*     https://github.com/stanford-gps-lab/maast                         *
-%*************************************************************************
 % SignalConstants   a set of constant values related to GNSS signals.
 %
 %   References: 	Parkinson, et. al., GPS Theory and Applications, V. 1,
 %		AIAA, 1996.
+
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details.
+%   Questions and comments should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast     
     
     properties (Constant)
         % C - speed of line ([m/s])

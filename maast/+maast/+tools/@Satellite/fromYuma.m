@@ -1,13 +1,4 @@
 function sats = fromYuma(filename)
-%*************************************************************************
-%*     Copyright c 2019 The board of trustees of the Leland Stanford     *
-%*                      Junior University. All rights reserved.          *
-%*     This file is part of MAAST which is releaded under the MIT        *
-%*      License.  See `LICENSE.TXT` for full license details.            *
-%*                                                                       *
-%*     Questions and comments should be directed to:                     *
-%*     https://github.com/stanford-gps-lab/maast                         *
-%*************************************************************************
 % fromYuma  reads in a yuma almanac file and creates a list of Satellites
 % based on the almanac parameters.
 %   sats = maast.tools.Satellite.fromYuma(filename) creates the satellite
@@ -17,6 +8,12 @@ function sats = fromYuma(filename)
 %   length N of satellite lists.
 %
 % See Also: maast.tools.Satellite.fromAlmMatrix, maast.tools.Satellite
+
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details.
+%   Questions and comments should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast
 
 % error checking on inputs
 if nargin < 1

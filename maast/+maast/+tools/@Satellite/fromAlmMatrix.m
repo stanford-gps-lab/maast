@@ -1,13 +1,4 @@
 function sats = fromAlmMatrix(alm)
-%*************************************************************************
-%*     Copyright c 2019 The board of trustees of the Leland Stanford     *
-%*                      Junior University. All rights reserved.          *
-%*     This file is part of MAAST which is releaded under the MIT        *
-%*      License.  See `LICENSE.TXT` for full license details.            *
-%*                                                                       *
-%*     Questions and comments should be directed to:                     *
-%*     https://github.com/stanford-gps-lab/maast                         *
-%*************************************************************************
 % fromAlmMatrix     compatibility function to create a satellite list from
 % the `alm_param` matrix.
 %   sats = maast.tools.Satellite.fromAlmMatrix(alm) creates a list of
@@ -20,6 +11,12 @@ function sats = fromAlmMatrix(alm)
 %   provides compatibility with almanac handling for MAAST before v2
 %
 %   See Also: maast.tools.Satellite.fromYuma, maast.tools.Satellite
+
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details.
+%   Questions and comments should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast
 
 % call the satellite constructor with each of the columns separated out
 sats = maast.tools.Satellite(alm(:,1), alm(:,2), alm(:,3), alm(:,4), ...
