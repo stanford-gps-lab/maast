@@ -103,7 +103,7 @@ classdef SatellitePosition < handle
             end
             
             % create the output as an SxT matrix
-            obj(S,T) = pppanal.SatellitePosition();
+            obj(S,T) = maast.tools.SatellitePosition();
             for s = 1:S
                 for t = 1:T
                     obj(s,t).Satellite = satellite(s);

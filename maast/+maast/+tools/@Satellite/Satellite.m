@@ -95,8 +95,7 @@ classdef Satellite < matlab.mixin.Copyable
             Nsats = length(prn);
 
             % create a list of satellites given the number of satellites
-            obj(Nsats) = obj;
-            obj(1) = copy(obj(end));  % hack around MATLAB handle array bug
+            obj(Nsats) = maast.tools.Satellite();
 
             % convert each row of information to satellite data
             for i = 1:Nsats
