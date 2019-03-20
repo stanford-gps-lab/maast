@@ -130,7 +130,9 @@ classdef Satellite < matlab.mixin.Copyable
 
     % non-static method signatures
     methods
-        posecef = getPositionECEF(obj, t)
+        % NOTE: this only computes the position, not the velocity which is
+        % also needed
+        pos = getPosition(obj, t)
         % TODO: add a plotting function
         % TODO: add a function to get position in different frames (e.g.
         % LLA or ECI)
