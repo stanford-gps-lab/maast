@@ -20,6 +20,8 @@ classdef User < handle
 %   https://github.com/stanford-gps-lab/maast
 
 	properties
+        % ID - the ID of the user
+        ID
 
         % PositionLLH - LLH position of the user on the world
         %   latitude and longitude are defined in degrees
@@ -34,6 +36,13 @@ classdef User < handle
         % ElevationMask - elevation mask for which to consider satellites
         % in view in [rad]
         ElevationMask = 5 * pi/180
+        
+        % InBound - true if the user is within a specified polygon
+        %   if the user was created with a polygon bound, this will be
+        %   flagged true if the user is within the bound and false
+        %   otherwise.  If no polygon bound was provided InBound will
+        %   default to false
+        InBound = false
 	end
 
 	methods
@@ -49,6 +58,8 @@ classdef User < handle
             end
 
             parser = inputParser;
+            parser.addParameter('ID', []);
+            parser.addParameter('Polygon', []);
             parser.addParameter('ElevationMask', 5*pi/180);
             parser.parse(varargin{:});
             res = parser.Results;
@@ -70,12 +81,35 @@ classdef User < handle
 			    cos(latRad).*sin(lonRad), ...
 			    sin(latRad)];
 
+            % default to a sequential id set if no ID information passed
+            ids = res.ID;
+            if isempty(ids)
+                ids = 1:Nsites;
+            end
+            
+            % check which points are within the polygon
+            inBnds = false(Nsites,1);
+            if ~isempty(res.Polygon)
+                poly = res.Polygon;
+                polycheck = inpolygon(posllh(:,2), posllh(:,1), poly(:,2), poly(:,1));
+                inBnds = (polycheck > 0);  % inpolygon returns 0.5 in some versions of MATLAB
+            end
+            
+            % expand the elevation mask if only a single value
+            elMask = res.ElevationMask;
+            if length(elMask) == 1
+                elMask = elMask * ones(Nsites, 1);
+            end
+            
             % create the user object for each site
             for i = 1:Nsites
                 % directly just save the LLH and the ECEF positions to the
                 % user object
+                obj(i).ID = ids(i);
                 obj(i).PositionLLH = posllh(i,:)';
                 obj(i).Position = posECEF(i,:)';
+                obj(i).InBound = inBnds(i);
+                obj(i).ElevationMask = elMask(i);
 
                 % precompute the matrix for the rotation from ECEF to ENU
                 lat = latRad(i);
@@ -84,10 +118,6 @@ classdef User < handle
                     -sin(lon)         ,  cos(lon)         , 0;
                     -sin(lat)*cos(lon), -sin(lat)*sin(lon), cos(lat);
                      cos(lat)*cos(lon),  cos(lat)*sin(lon), sin(lat)];
-                 
-                 % set the elevation mask from the additional parameter
-                 % TODO: right now this sets the same mask for all users
-                 obj(i).ElevationMask = res.ElevationMask;
             end
            
         end
@@ -103,6 +133,8 @@ classdef User < handle
 	methods (Static)
         % TODO: want constructors to make different grid types
 %         objs = createUserGrid(numSites)
+        usrs = createFromLLHFile(llhfile, polyfile)
+        usrs = createUserGrid(polyfile, latstep, lonstep)
 	end
 
 

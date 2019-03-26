@@ -31,6 +31,13 @@ coastData = load('coast');
 hold all;
 plot(coastData.long, coastData.lat, 'k');
 plot(lonDeg, latDeg, 'o');
+
+% if we have some that are in bound, want to highlight those
+inBnd = [obj(:).InBound];
+if sum(inBnd) > 0
+    plot(lonDeg(inBnd), latDeg(inBnd), 'r*');
+end
+
 hold off;
 grid on; axis equal;
 xlim([-180, 180]); ylim([-90, 90]);
