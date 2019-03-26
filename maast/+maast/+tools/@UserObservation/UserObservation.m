@@ -93,6 +93,7 @@ classdef UserObservation < handle
     methods
         % TODO: any methods go here
         [varargout] = getDOPS(obj)
+        ipp = getIPP(obj)
     end
     
     methods (Access = protected)
