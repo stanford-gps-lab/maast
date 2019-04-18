@@ -76,10 +76,11 @@ classdef User < handle
             lonRad = posllh(:,2)*pi/180;
 
             % bulk convert the LLH positions to ECEF positions
-            posECEF = maast.constants.EarthConstants.R*[
-			    cos(latRad).*cos(lonRad), ...
-			    cos(latRad).*sin(lonRad), ...
-			    sin(latRad)];
+%             posECEF = maast.constants.EarthConstants.R*[
+% 			    cos(latRad).*cos(lonRad), ...
+% 			    cos(latRad).*sin(lonRad), ...
+% 			    sin(latRad)];
+            posECEF = maast.tools.llh2ecef(posllh);
 
             % default to a sequential id set if no ID information passed
             ids = res.ID;

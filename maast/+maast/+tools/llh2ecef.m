@@ -57,8 +57,8 @@ e2 = (2 - f) * f;
 r_N  = maast.constants.EarthConstants.R ./ sqrt(1 - e2*slat.*slat);
 
 % do the conversion
-x = (r_N + h).*clat.*cos(lon);
-y = (r_N + h).*clat.*sin(lon);
+x = (r_N + h).*clat.*cos(lonr);
+y = (r_N + h).*clat.*sin(lonr);
 z = (r_N*(1 - e2) + h).*slat;
 
 % if the input was a matrix, return a matrix output, if the input was 3 

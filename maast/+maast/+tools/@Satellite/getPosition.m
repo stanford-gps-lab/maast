@@ -21,8 +21,8 @@ function satPos = getPosition(obj, time)
 
 
 % get constants needed
-CONST_MU_E = pppanal.constants.EarthConstants.mu;
-CONST_OMEGA_E = pppanal.constants.EarthConstants.omega;
+CONST_MU_E = maast.constants.EarthConstants.mu;
+CONST_OMEGA_E = maast.constants.EarthConstants.omega;
 
 
 %
