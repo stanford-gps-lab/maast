@@ -52,9 +52,9 @@ GUI_OUT_COVAVAIL = 7;
 %    gpsudrefun = 'af_udreadd';
 %    init_udre_osp;
     
-    %choose Release 8/9 ADD version
-    gpsudrefun = 'af_udreadd2';
-    init_udre2_osp;    
+%     %choose Release 8/9 ADD version %%%%% Not Public
+%     gpsudrefun = 'af_udreadd2';
+%     init_udre2_osp;    
     
     %choose constant version
     % UDREI values to choose are from the MOPS
@@ -63,8 +63,8 @@ GUI_OUT_COVAVAIL = 7;
     %0.75 1.00 1.25 1.75 2.25 3.0 3.75 4.5 5.25 6.0 7.5 15.0 50.0 150.0 NM DNU
     % Note MOPS is 0 to N-1, but matlab is 1 to N
   
-%    gpsudrefun = 'af_udreconst';
-%    UDREI_CONST = 11; 
+   gpsudrefun = 'af_udreconst';
+   UDREI_CONST = 11; 
 
 
 
@@ -74,17 +74,17 @@ GUI_OUT_COVAVAIL = 7;
 %    geoudrefun = 'af_geoadd';
 %    init_geo_osp;
 
-    %choose Release 8/9 ADD version
-    geoudrefun = 'af_geoadd2';
-    init_geo2_osp;
+%     %choose Release 8/9 ADD version %%%%% Not Public
+%     geoudrefun = 'af_geoadd2';
+%     init_geo2_osp;
     
     %choose constant version
     % UDREI values to choose are from the MOPS
     %  0    1    2    3    4   5   6    7   8    9   10  11   12   13   14  15
     %  1    2    3    4    5   6   7    8   9    10  11  12   13   14   15  16 
     %0.75 1.00 1.25 1.75 2.25 3.0 3.75 4.5 5.25 6.0 7.5 15.0 50.0 150.0 NM DNU
-    %geoudrefun = 'af_geoconst';
-    %GEOUDREI_CONST = 13;
+    geoudrefun = 'af_geoconst';
+    GEOUDREI_CONST = 13;
 
 
 % GIVE Menu
@@ -97,17 +97,17 @@ GUI_OUT_COVAVAIL = 7;
 %    givefun = 'af_giveadd1';
 %    init_giveadd1_osp;    
     
-    %choose Release 8/9 version
-    givefun = 'af_giveadd2';
-    init_giveadd2_osp;      
+%     %choose Release 8/9 version %%%%% Not Public
+%     givefun = 'af_giveadd2';
+%     init_giveadd2_osp;      
     
     %choose constant version
     % GIVEI values to choose are from the MOPS
     % 0   1   2   3   4   5   6   7   8   9   10  11  12  13   14  15
     % 1   2   3   4   5   6   7   8   9  10   11  12  13  14   15  16 
     %0.3 0.6 0.9 1.2 1.5 1.8 2.1 2.4 2.7 3.0 3.6 4.5 6.0 15.0 45.0 NM
-    %givefun = 'af_giveconst';
-    %GIVEI_CONST = 13;
+    givefun = 'af_giveconst';
+    GIVEI_CONST = 13;
 
     %dual frequency flag should be set to zero if one of the above GIVE
     %functions are selected.  If it is set to 1 the above should all be
@@ -139,12 +139,12 @@ GUI_OUT_COVAVAIL = 7;
  
 % WRS GPS CNMP Menu
 
-     %select ADD   
-      wrsgpscnmpfun = 'af_cnmpadd';
-      init_cnmp;
+%      %select ADD    %%%%% Not Public
+%       wrsgpscnmpfun = 'af_cnmpadd';
+%       init_cnmp;
       
       %select aggressive model
-%      wrsgpscnmpfun = 'af_cnmpagg';
+     wrsgpscnmpfun = 'af_cnmpagg';
  
 % WRS GEO CNMP Menu
 
