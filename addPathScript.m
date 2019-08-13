@@ -10,4 +10,3 @@
 % the path as well.
 
 addpath('maast')
-addpath('stanfordgnsstools\PolygonFiles')
