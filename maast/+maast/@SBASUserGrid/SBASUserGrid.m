@@ -20,6 +20,36 @@ classdef SBASUserGrid < sgt.UserGrid
     %
     %   See Also: sgt.UserGrid, sgt.UserGrid.createUserGrid, maast.SBASUser
     
+    methods
+        function obj = SBASUserGrid(posLLH, varargin)
+            
+            % Handle different number of arguments
+            args = {};
+            if (nargin == 1)
+                args = {posLLH};
+            elseif (nargin > 1)
+                args = [{posLLH}, varargin(:)'];
+            end
+            
+            % Use superclass constructor
+            obj = obj@sgt.UserGrid(args{:});
+            
+            % Make Users SBAS Users
+            obj.Users = maast.SBASUser.fromsgtUser(obj.Users);
+                        
+        end
+    end
+    
+    % Static Methods
+    methods (Static)
+       sbasUserGrid = fromsgtUserGrid(sgtUserGrid); 
+    end
+    
+    % Public Methods
+    methods
+        
+    end
+    
     
     
     
