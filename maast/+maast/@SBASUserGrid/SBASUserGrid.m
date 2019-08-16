@@ -34,15 +34,17 @@ classdef SBASUserGrid < sgt.UserGrid
             % Use superclass constructor
             obj = obj@sgt.UserGrid(args{:});
             
-            % Make Users SBAS Users
-            obj.Users = maast.SBASUser.fromsgtUser(obj.Users);
-                        
+            if (~isempty(obj.Users))
+                % Make Users SBAS Users
+                obj.Users = maast.SBASUser.fromsgtUser(obj.Users);
+            end
+            
         end
     end
     
     % Static Methods
     methods (Static)
-       sbasUserGrid = fromsgtUserGrid(sgtUserGrid); 
+        obj = fromsgtUserGrid(sgtUserGrid);
     end
     
     % Public Methods
