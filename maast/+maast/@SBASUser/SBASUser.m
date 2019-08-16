@@ -10,38 +10,24 @@ classdef SBASUser < sgt.User
     
     % Constructor
     methods
-        function obj = SBASUser(user)
+        function obj = SBASUser(posLLH, varargin)
             
-            % Handle the empty constructor
-            if nargin < 1
-                obj.PositionLLH = zeros(3,1);
-                obj.PositionECEF = zeros(3,1);
-                obj.ECEF2ENU = zeros(3,3);
-                return;
+            % Handle different number of arguments
+            args = {};
+            if (nargin == 1)
+                args = {posLLH};
+            elseif (nargin > 1)
+                args = [{posLLH}, varargin(:)'];
             end
             
-            % Count number of input users
-            numUsers = length(user);
-            
-            % Assign properties from user
-            for i = 1:numUsers
-                obj(i).ID = user(i).ID;
-                obj(i).PositionLLH = user(i).PositionLLH;
-                obj(i).PositionECEF = user(i).PositionECEF;
-                obj(i).InBound = user(i).InBound;
-                obj(i).ElevationMask = user(i).ElevationMask;
-            end
-            
+            % Use superclass constructor
+            obj = obj@sgt.User(args{:});
             
         end
     end
     
-    
-    
-    
-    
-    
-    
-    
-    
+    % Static methods here
+    methods (Static)
+        obj = fromsgtUser(sgtUser);
+    end
 end
