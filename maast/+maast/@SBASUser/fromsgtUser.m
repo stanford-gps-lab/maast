@@ -4,6 +4,9 @@ function obj = fromsgtUser(sgtUser)
 % Number of user objects
 numUser = length(sgtUser);
 
+% Initialize User object
+obj(numUser) = maast.SBASUser();
+
 for i = 1:numUser
     obj(i).ID = sgtUser(i).ID;
     obj(i).PositionLLH = sgtUser(i).PositionLLH;
