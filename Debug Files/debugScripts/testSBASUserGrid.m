@@ -1,6 +1,12 @@
 function testSBASUserGrid()
 fprintf('Testing maast.SBASUserGrid: ')
 
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details. Questions and comments
+%   should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast
+
 testResults = [];
 %% Define Test Parameters
 posLLH = [1 2 3; 4 5 6];
