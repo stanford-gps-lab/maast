@@ -1,10 +1,11 @@
 classdef SBASUser < sgt.User
     % SBASUser  a container for SBAS users, a subclass of sgt.User.
     %
-    %   maast.SBASUser(user) creates an SBAS user by adopting the
-    %   properties from an already created user (sgt.User). The SBAS user
-    %   has methods associated with it required for use in SBAS
-    %   calculations.
+    %   maast.SBASUser(posLLH, varargin) creates an SBAS user at position
+    %   posLLH. If posLLH is an Nx3 matrix, then N SBASUser objects will be
+    %   created where each column in posLLH represents [lat lon alt] in
+    %   [deg deg m]. maast.SBASUser is a subclass of sgt.User and so has 
+    %   access to all public and protected methods defined for sgt.User.
     %
     %   See Also: sgt.User, sgt.UserGrid, maast.SBASUserGrid
     
