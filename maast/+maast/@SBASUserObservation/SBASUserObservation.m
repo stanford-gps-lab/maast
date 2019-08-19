@@ -34,10 +34,9 @@ classdef SBASUserObservation < sgt.UserObservation
         end
     end
     
-    
-    
-    
-    
-    
+    % Static Methods
+    methods
+        obj = fromUserObservation(userObservation);
+    end
     
 end
