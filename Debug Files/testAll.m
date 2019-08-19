@@ -25,12 +25,10 @@ for i = 1:length(testList)
 end
 
 fprintf('\nLicenses in Use:\n')
-license('inuse') %  This helps in development to ensure that on MATLAB is being used.
+license('inuse') %  This helps in development to ensure that only MATLAB is being used.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% Check to see that only the 'matlab' license is used %%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 diary off
-
-
