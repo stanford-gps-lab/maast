@@ -10,7 +10,7 @@ fprintf('Testing maast.SBASUserObservation: ')
 testResults = [];
 %% Define Test Parameters
 numUsers = 100;
-sbasUserGrid = maast.SBASUserGrid.createSBASUserGrid('NumUsers', numUsers);
+sbasUserGrid = maast.SBASUserGrid.createUserGrid('NumUsers', numUsers);
 sbasUser = sbasUserGrid.Users(1);
 satellite = sgt.Satellite.fromYuma('current.alm');
 time = 0;

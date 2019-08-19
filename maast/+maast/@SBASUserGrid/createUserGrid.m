@@ -1,7 +1,7 @@
-function obj = createSBASUserGrid(varargin)
-% createSBASUserGrid    create a grid of SBAS users.
+function obj = createUserGrid(varargin)
+% createUserGrid    create a grid of SBAS users.
 %
-%   maast.SBASUserGrid.createSBASUserGrid(varargin) creates a grid of SBAS
+%   maast.SBASUserGrid.createUserGrid(varargin) creates a grid of SBAS
 %   users with parameters given in varargin.
 %
 %   varargin:
@@ -35,37 +35,37 @@ function obj = createSBASUserGrid(varargin)
 %
 %   Examples: The following are a number of common use cases for this
 %   method.
-%   ----- maast.SBASUserGrid.createSBASUserGrid('NumUsers', numUsers)
+%   ----- maast.SBASUserGrid.createUserGrid('NumUsers', numUsers)
 %   This implementation creates a grid of users over the entire surface of
 %   the globe and evenly distributes them.
-%   ----- maast.SBASUserGrid.createSBASUserGrid('NumUsers', numUsers,
+%   ----- maast.SBASUserGrid.createUserGrid('NumUsers', numUsers,
 %   'GridBoundary', [latMin, latMax, lonMin, lonMax])
 %   This implementation creates a grid of users over the surface of the
 %   globe specified by the 'GridBoundary'.
-%   ----- maast.SBASUserGrid.createSBASUserGrid('NumUsers', numUsers,
+%   ----- maast.SBASUserGrid.createUserGrid('NumUsers', numUsers,
 %   'PolygonFile', polyfile)
 %   This implementation creates a 'GridBoundary' from the input
 %   'PolygonFile' file and evenly distributes the number of specified users
 %   throughout the geographic boundary. The users created in this scenario
 %   will also have the property 'InBound' determined from the same
 %   polyfile.
-%   ----- maast.SBASUserGrid.createSBASUserGrid('PolygonFile', polyfile,
+%   ----- maast.SBASUserGrid.createUserGrid('PolygonFile', polyfile,
 %   'GridStep', [latStep, lonStep])
 %   This implementation creates a 'GridBoundary' using the specified
 %   polyfile and distributes the users throughout the geographic region
 %   using the specified 'GridStep'.
-%   ----- maast.SBASUserGrid.createSBASUserGrid('GridStep',
+%   ----- maast.SBASUserGrid.createUserGrid('GridStep',
 %   [latStep, lonStep])
 %   This implementation distributes users throughout the globe with spacing
 %   specified by [latStep, lonStep].
-%   ----- maast.SBASUserGrid.createSBASUserGrid('GridStep',
+%   ----- maast.SBASUserGrid.createUserGrid('GridStep',
 %   [latStep, lonStep], 'GridBoundary', [latMin, latMax, lonMin, lonMax])
 %   This implementation distributes throughout the geographic region
 %   specified by 'GridBoundary' using the specified 'GridStep'.
-%   ----- maast.SBASUserGrid.createSBASUserGrid('LLHFile', LLHFilename)
+%   ----- maast.SBASUserGrid.createUserGrid('LLHFile', LLHFilename)
 %   This implementation generates a user grid based on the LLH provided in
 %   LLHFilename.
-%   ----- maast.SBASUserGrid.createSBASUserGrid('LLHFile', LLHFilename,
+%   ----- maast.SBASUserGrid.createUserGrid('LLHFile', LLHFilename,
 %   'PolygonFile', polyfile)
 %   This implementation generates a user grid based on the LLH provided in
 %   LLHFilename. It also incorporates the polygon saved in polyfile.

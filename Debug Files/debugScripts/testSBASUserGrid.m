@@ -59,7 +59,7 @@ end
 
 %% Test 5 - obj.createSBASUserGrid - create grid of SBAS users
 try
-    test5 = maast.SBASUserGrid.createSBASUserGrid('NumUsers', numUsers);
+    test5 = maast.SBASUserGrid.createUserGrid('NumUsers', numUsers);
     
     if (~isa(test5, 'maast.SBASUserGrid')) && (~isa(test5.Users, 'maast.SBASUser'))
         testResults(5) = 1;
