@@ -80,9 +80,9 @@ function obj = createUserGrid(varargin)
 %   https://github.com/stanford-gps-lab/maast
 
 % Create a user grid
-userGrid = sgt.UserGrid.createUserGrid(varargin{:});
+sgtUserGrid = sgt.UserGrid.createUserGrid(varargin{:});
 
 % Create an SBAS user grid
-obj = maast.SBASUserGrid.fromsgtUserGrid(userGrid);
+obj = maast.SBASUserGrid.fromsgtUserGrid(sgtUserGrid);
 
 end
