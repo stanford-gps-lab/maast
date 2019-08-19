@@ -9,5 +9,5 @@ function vpl = getSBASVPL(obj)
 %   https://github.com/stanford-gps-lab/maast
 
 % TODO:
-vpl = 0;
+vpl = [];
 end

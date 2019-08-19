@@ -9,5 +9,5 @@ function hpl = getSBASHPL(obj)
 %   https://github.com/stanford-gps-lab/maast
 
 % TODO:
-hpl = 0;
+hpl = [];
 end
