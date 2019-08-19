@@ -44,9 +44,14 @@ classdef SBASUserObservation < sgt.UserObservation
                 obj.User = maast.SBASUser.fromsgtUser(obj.User);
             end
             
-            % Calculate SBAS V/HPL
-            obj.VPL = obj.getSBASVPL;
-            obj.HPL = obj.getSBASHPL;            
+            % Number of obj
+            numObj = length(obj);
+            
+            for i = 1:numObj
+                % Calculate SBAS V/HPL
+                obj(i).VPL = obj(i).getSBASVPL;
+                obj(i).HPL = obj(i).getSBASHPL;
+            end
         end
     end
     
