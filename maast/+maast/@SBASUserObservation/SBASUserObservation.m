@@ -18,6 +18,15 @@ classdef SBASUserObservation < sgt.UserObservation
     %   should be directed to the project at:
     %   https://github.com/stanford-gps-lab/maast
     
+    % Public Properties
+    properties (SetAccess = public)
+        % VPL - Vertical Protection Level
+        VPL
+        
+        % HPL - Horizontal Protection Level
+        HPL
+    end
+    
     methods
         function obj = SBASUserObservation(sbasUser, satellitePosition)
             % Handle different number of arguments
@@ -27,9 +36,9 @@ classdef SBASUserObservation < sgt.UserObservation
             elseif (nargin == 2)
                 args = {sbasUser, satellitePosition};
             end
-
+            
             % Use superclass constructor
-            obj = obj@sgt.UserObservation(args{:});           
+            obj = obj@sgt.UserObservation(args{:});
             
         end
     end
