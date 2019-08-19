@@ -57,7 +57,7 @@ catch
     testResults(4) = 1;
 end
 
-%% Test 5 - SBASUserGrid.createSBASUserGrid - create grid of SBAS users
+%% Test 5 - obj.createSBASUserGrid - create grid of SBAS users
 try
     test5 = maast.SBASUserGrid.createSBASUserGrid('NumUsers', numUsers);
     
