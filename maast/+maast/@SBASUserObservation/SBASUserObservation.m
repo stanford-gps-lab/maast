@@ -27,6 +27,10 @@ classdef SBASUserObservation < sgt.UserObservation
             
             % Use superclass constructor
             obj = obj@sgt.UserObservation(args{:});
+            
+            if (~isa(sbasUser, 'maast.SBASUser'))
+               error('Input user must be of type maast.SBASUser')
+            end
         end
     end
     

@@ -9,8 +9,11 @@ fprintf('Testing maast.SBASUserObservation: ')
 
 testResults = [];
 %% Define Test Parameters
-sbasUserGrid = maast.SBASUserGrid.createSBASUserGrid('NumUsers', 100);
+numUsers = 100;
+sbasUserGrid = maast.SBASUserGrid.createSBASUserGrid('NumUsers', numUsers);
 sbasUser = sbasUserGrid.Users(1);
+userGrid = sgt.UserGrid.createUserGrid('NumUsers', numUsers);
+user = userGrid.Users(1);
 satellite = sgt.Satellite.fromYuma('current.alm');
 time = 0;
 satellitePosition = satellite.getPosition(time);
