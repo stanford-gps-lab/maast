@@ -12,23 +12,59 @@ testResults = [];
 numUsers = 100;
 sbasUserGrid = maast.SBASUserGrid.createSBASUserGrid('NumUsers', numUsers);
 sbasUser = sbasUserGrid.Users(1);
-userGrid = sgt.UserGrid.createUserGrid('NumUsers', numUsers);
-user = userGrid.Users(1);
 satellite = sgt.Satellite.fromYuma('current.alm');
 time = 0;
+time2 = 0:100:1000;
 satellitePosition = satellite.getPosition(time);
+satellitePosition2 = satellite.getPosition(time2);
 
-%% Test 1 - Constructor - Basic
+userGrid = sgt.UserGrid.createUserGrid('NumUsers', numUsers);
+user = userGrid.Users(1);
+userObservation = sgt.UserObservation(user, satellitePosition);
+userObservation2 = sgt.UserObservation(user, satellitePosition2);
+
+%% Test 1 - Constructor - Single user
 try
     test1 = maast.SBASUserObservation(sbasUser, satellitePosition);
     if (~isa(test1.User, 'maast.SBASUser'))
-       testResults(1) = 1; 
+        testResults(1) = 1;
     end
 catch
     testResults(1) = 1;
 end
 
-%% Test 2 - Constructor - 
+%% Test 2 - Constructor - Single user at multiple times
+try
+    test2 = maast.SBASUserObservation(sbasUser, satellitePosition2);
+    
+    if (~isa([test2.User], 'maast.SBASUser')) && (length(test2) ~= length(time2))
+        testResults(2) = 1;
+    end
+catch
+    testResults(2) = 1;
+end
+
+%% Test 3 - obj.fromsgtUserObservation - Single user
+try
+    test3 = maast.SBASUserObservation.fromsgtUserObservation(userObservation);
+    
+    if (~isa(test3, 'maast.SBASUserObservation'))
+        testResults(3) = 1;
+    end
+catch
+    testResults(3) = 1;
+end
+
+%% Test 4 - obj.fromsgtUserObservation - Single user at multiple times
+try
+    test4 = maast.SBASUserObservation.fromsgtUserObservation(userObservation2);
+    
+    if (~isa(test4, 'maast.SBASUserObservation')) && (length(test4) ~= length(time2))
+        testResults(4) = 1;
+    end
+catch
+    testResults(4) = 1;
+end
 
 %% Display test results
 if any(testResults)
