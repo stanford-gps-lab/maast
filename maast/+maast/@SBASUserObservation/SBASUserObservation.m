@@ -17,8 +17,16 @@ classdef SBASUserObservation < sgt.UserObservation
     %   https://github.com/stanford-gps-lab/maast
     
     methods
-        function obj = SBASUserObservation()
+        function obj = SBASUserObservation(sbasUser, satellitePosition)
             
+            % Handle different number of arguments
+            args = {};
+            if (nargin == 2)
+                args = {sbasUser, satellitePosition}; 
+            end
+            
+            % Use superclass constructor
+            obj = obj@sgt.UserObservation(args{:});
         end
     end
     
