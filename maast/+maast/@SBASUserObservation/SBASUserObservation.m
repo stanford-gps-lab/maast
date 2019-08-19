@@ -19,7 +19,7 @@ classdef SBASUserObservation < sgt.UserObservation
     %   https://github.com/stanford-gps-lab/maast
     
     % Public Properties
-    properties (SetAccess = public)
+    properties (Access = public)
         % VPL - Vertical Protection Level
         VPL
         
@@ -44,6 +44,9 @@ classdef SBASUserObservation < sgt.UserObservation
                 obj.User = maast.SBASUser.fromsgtUser(obj.User);
             end
             
+            % Calculate SBAS V/HPL
+            obj.VPL = obj.getSBASVPL;
+            obj.HPL = obj.getSBASHPL;            
         end
     end
     
@@ -51,5 +54,12 @@ classdef SBASUserObservation < sgt.UserObservation
     methods (Static)
         obj = fromsgtUserObservation(userObservation);
     end
+    
+    % Protected Methods
+    methods (Access = protected)
+        vpl = getSBASVPL(obj);
+        hpl = getSBASHPL(obj);
+    end
+    
     
 end
