@@ -51,6 +51,7 @@ classdef SBASUserGrid < sgt.UserGrid
     % Static Methods
     methods (Static)
         obj = fromsgtUserGrid(sgtUserGrid);
+        obj = createSBASUserGrid(varargin);
     end
     
     % Public Methods
