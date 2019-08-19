@@ -28,6 +28,8 @@ catch
     testResults(1) = 1;
 end
 
+%% Test 2 - Constructor - 
+
 %% Display test results
 if any(testResults)
     fprintf('---Failed---\n')
