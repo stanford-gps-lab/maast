@@ -15,6 +15,8 @@ gridName = 'MyGrid';
 
 sgtUserGrid = sgt.UserGrid.createUserGrid('NumUsers', 100);
 
+numUsers = 100;
+
 %% Test 1 - Constructor - single SBASUserGrid
 try
     test1 = maast.SBASUserGrid(posLLH);
@@ -53,6 +55,17 @@ try
     end
 catch
     testResults(4) = 1;
+end
+
+%% Test 5 - SBASUserGrid.createSBASUserGrid - create grid of SBAS users
+try
+    test5 = maast.SBASUserGrid.createSBASUserGrid('NumUsers', numUsers);
+    
+    if (~isa(test5, 'maast.SBASUserGrid')) && (~isa(test5.Users, 'maast.SBASUser'))
+        testResults(5) = 1;
+    end
+catch
+    testResults(5) = 1;
 end
 
 %% Display test results
