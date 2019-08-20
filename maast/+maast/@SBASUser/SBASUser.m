@@ -27,7 +27,6 @@ classdef SBASUser < sgt.User
     % Constructor
     methods
         function obj = SBASUser(posLLH, varargin)
-            
             % Handle different number of arguments
             args = {};
             if (nargin == 1)
