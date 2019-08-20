@@ -27,8 +27,9 @@ classdef SBASReferenceObservation < maast.SBASUserObservation
     end
     
     % Public Methods
-    methods
-        sig2Tropo = tropoVariance(satellitePosition);
+    methods (Access = protected)
+        sig2Tropo = tropoVariance(obj);
+        sig2CNMP = cnmpVariance(obj);
     end
     
     % Static Methods
