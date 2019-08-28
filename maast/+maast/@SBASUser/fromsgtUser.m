@@ -21,5 +21,4 @@ for i = 1:numUser
     obj(i).ElevationMask = sgtUser(i).ElevationMask;
     obj(i).InBound = sgtUser(i).InBound;
 end
-
 end
