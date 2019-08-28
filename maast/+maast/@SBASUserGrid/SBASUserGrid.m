@@ -53,15 +53,4 @@ classdef SBASUserGrid < sgt.UserGrid
         obj = fromsgtUserGrid(sgtUserGrid);
         obj = createUserGrid(varargin);
     end
-    
-    % Public Methods
-    methods
-        
-    end
-    
-    
-    
-    
-    
-    
 end

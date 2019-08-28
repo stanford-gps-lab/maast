@@ -23,7 +23,4 @@ for i = 1:numUser
     obj(i).Polygon = sgtUserGrid(i).Polygon;
     obj(i).Users = maast.SBASUser.fromsgtUser(sgtUserGrid(i).Users);
 end
-
-
-
 end
