@@ -11,6 +11,12 @@ classdef SBASReferenceStation < sgt.User
     %   See Also: sgt.User, sgt.UserGrid.createUserGrid,
     %   maast.SBASUserGrid.createUserGrid
     
+    % Copyright 2019 Stanford University GPS Laboratory
+    %   This file is part of MAAST which is released under the MIT License.
+    %   See `LICENSE.txt` for full license details. Questions and comments
+    %   should be directed to the project at:
+    %   https://github.com/stanford-gps-lab/maast
+    
     % Constructor
     methods
         function obj = SBASReferenceStation(posLLH, varargin)
@@ -26,7 +32,7 @@ classdef SBASReferenceStation < sgt.User
             obj = obj@sgt.User(args{:});
             
         end
-    end   
+    end
     
     % Static Methods
     methods (Static)
