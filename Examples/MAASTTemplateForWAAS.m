@@ -10,22 +10,43 @@ clear; close all; clc;
 
 %% Set Parameters
 posLLH = [37.427127, -122.173243, 17];  % [deg deg m] Stanford GPS Lab location
-% polyFile = 'usrconus.dat';
-% gridStep = 10;
+waasReferenceStationPos = 'wrs_foc.dat';
+polyFile = 'usrconus.dat';
+gridStep = 2;
 almanac = 'current.alm';    % Yuma File
 time = 0:300:86400;     % [s]
 
+% Dependent parameters
+timeLength = length(time);
+
+%% Build WAAS reference station Grid
+wrs = maast.SBASReferenceStationGrid.createReferenceStationGrid('LLHFile', waasReferenceStationPos);
+
 %% Build SBAS User Grid
-user = maast.SBASUser(posLLH);
+sbasUserGrid = maast.SBASUserGrid.createUserGrid('PolygonFile', polyFile, 'GridStep', gridStep);
 
 %% Build Satellite Constellation
 satellite = sgt.Satellite.fromYuma(almanac);
 
-%% Calculate Satellite Positions
+%% Calculate Satellite Positions over time
 satellitePosition = satellite.getPosition(time);
 
-%% Calculate User Observations
-userObservation = maast.SBASUserObservation(user, satellitePosition);
+%% Calculate WAAS reference station observations
+numReferenceStations = length(wrs.Users);
+wrsObservation(numReferenceStations, timeLength) = maast.SBASReferenceObservation;
+for i = 1:numReferenceStations
+    i
+    wrsObservation(i,:) = maast.SBASReferenceObservation(wrs.Users(i), satellitePosition);
+end
+
+%% Calculate SBAS User Observations
+numSBASUsers = length(sbasUserGrid.Users);
+sbasUserObservation(numSBASUsers, timeLength) = maast.SBASUserObservation;
+for i = 1:numSBASUsers
+    i
+    sbasUserObservation(i,:) = maast.SBASUserObservation(sbasUserGrid.Users(i), satellitePosition);
+end
+
 
 
 
