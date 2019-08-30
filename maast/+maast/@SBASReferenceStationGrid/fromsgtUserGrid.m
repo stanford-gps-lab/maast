@@ -14,7 +14,7 @@ function obj = fromsgtUserGrid(sgtUserGrid)
 numUser = length(sgtUserGrid);
 
 % Initialize User object
-obj(numUser) = maast.SBASUserGrid();
+obj(numUser) = maast.SBASReferenceStationGrid();
 
 for i = 1:numUser
     obj(i).GridName = sgtUserGrid(i).GridName;

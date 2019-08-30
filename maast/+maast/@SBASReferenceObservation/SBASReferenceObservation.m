@@ -22,17 +22,24 @@ classdef SBASReferenceObservation < maast.SBASUserObservation
             args = {};
             if (nargin == 1)
                 args = {sbasReferenceStation};
-            elseif (nargin > 1)
-                args = [{sbasReferenceStation, satellitePosition}, varargin{:}'];
+            elseif (nargin == 2)
+                args = {sbasReferenceStation, satellitePosition};
+            elseif (nargin > 2)
+                args = [{sbasReferenceStation, satellitePosition}, varargin(:)'];
             end
             
             % Use superclass constructor
             obj = obj@maast.SBASUserObservation(args{:});
+            
+            % Perform calculations specific to SBASReferenceObservation
+            if (~any(strcmp(varargin, 'CustomCNMPVariance')))
+               obj.cnmpVariance; 
+            end
         end
     end
     
     % Static Methods
-    methods
+    methods (Static)
         obj = fromSBASUserObservation(sbasUserObservation);
     end
     
