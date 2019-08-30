@@ -14,6 +14,12 @@ classdef SBASMasterStation < matlab.mixin.Copyable
     
     % Public properties
     properties
+        % NumRefObs - number of reference observations input.
+        NumRefObs
+        
+        % NumSats - number of satellites observed.
+        NumSats
+        
         %UDRE - User Differential Range Error for each satellite at each
         %time. Is an SxT matrix for S satellites and T times.
         UDREI
@@ -32,6 +38,10 @@ classdef SBASMasterStation < matlab.mixin.Copyable
                 return;
             end
             
+            % Number of sbasReferenceObservations
+            numRefObs = length(sbasReferenceObservation); obj.NumRefObs = numRefObs;
+            numSats = length(sbasReferenceObservation(1).SatellitePRN); obj.NumSats = numSats;
+            
             % Get varargin inputs
             if (nargin > 1)
                 res = parsemaastSBASMasterStationInput(varargin{:});
@@ -43,12 +53,14 @@ classdef SBASMasterStation < matlab.mixin.Copyable
                     customUDREI = res.CustomUDREI(indDir+1:end-2);
                     addpath(res.CustomUDREI(1:indDir))
                 end
+                if (isfield(res, 'CustomMT28') == 1) && (~isempty(res.CustomMT28))
+                    % Add function to path and trim name
+                    indDir = find(res.CustomMT28 == '\', 1, 'last');
+                    customMT28 = res.CustomMT28(indDir+1:end-2);
+                    addpath(res.CustomMT28(1:indDir))
+                end
             end
-            
-            % Number of sbasReferenceObservations
-            numRefObs = length(sbasReferenceObservation);
-            numSats = length(sbasReferenceObservation.SatellitePRN);
-            
+
             % Calculate UDRE
             if (exist('res', 'var') == 1) && (isfield(res, 'CustomUDREI') == 1) && (~isempty(res.CustomUDREI))
                 feval(customUDREI, obj);
