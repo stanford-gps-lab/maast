@@ -23,6 +23,10 @@ user = userGrid.Users(1);
 userObservation = sgt.UserObservation(user, satellitePosition);
 userObservation2 = sgt.UserObservation(user, satellitePosition2);
 
+homedir = pwd;
+customTropoVariance = [homedir, '\CustomFunctions\customTropoVariance.m'];
+customCNMPVariance = [homedir, '\CustomFunctions\customCNMPVariance.m'];
+
 %% Test 1 - Constructor - Single user
 try
     test1 = maast.SBASUserObservation(sbasUser, satellitePosition);
@@ -57,6 +61,28 @@ try
     end
 catch
     testResults(4) = 1;
+end
+
+%% Test 5 - Constructor - use varargin to test custom tropo variance
+try
+   test5 = maast.SBASUserObservation(sbasUser, satellitePosition, 'CustomTropoVariance', customTropoVariance);
+   
+   if (isempty(test5.Sig2Tropo)) || (test5.Sig2Tropo ~= -1)
+      testResults(5) = 1; 
+   end
+catch
+    testResults(5) = 1;
+end
+
+%% Test 6 - Constructor - use varargin to test custom cnmp variance
+try
+   test6 = maast.SBASUserObservation(sbasUser, satellitePosition, 'CustomCNMPVariance', customCNMPVariance);
+   
+   if (isempty(test6.Sig2CNMP)) || (test6.Sig2CNMP ~= -1)
+      testResults(6) = 1; 
+   end
+catch
+    testResults(6) = 1;
 end
 
 %% Display test results
