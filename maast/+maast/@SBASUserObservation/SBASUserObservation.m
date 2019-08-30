@@ -20,6 +20,14 @@ classdef SBASUserObservation < sgt.UserObservation
     
     % Public Properties
     properties (Access = public)
+        % Sig2Tropo - [m^2] Variance of the line of sight range due to
+        % troposphere
+        Sig2Tropo
+        
+        % Sig2CNMP - [m^2] Variance of the line of sight range due to code
+        % noise and multipath
+        Sig2CNMP
+        
         % VPL - Vertical Protection Level
         VPL
         
@@ -28,25 +36,58 @@ classdef SBASUserObservation < sgt.UserObservation
     end
     
     methods
-        function obj = SBASUserObservation(sbasUser, satellitePosition)
+        function obj = SBASUserObservation(sbasUser, satellitePosition, varargin)
             % Handle different number of arguments
             args = {};
             if (nargin == 1)
                 args = {sbasUser};
-            elseif (nargin == 2)
+            elseif (nargin >= 2)
                 args = {sbasUser, satellitePosition};
             end
             
             % Use superclass constructor
             obj = obj@sgt.UserObservation(args{:});
             
+            % Get varargin inputs
+            if nargin > 2
+                res = parsemaastSBASUserObservationInput(varargin{:});
+                
+                % Add custom functions to path
+                if (isfield(res, 'CustomTropoVariance') == 1) && (~isempty(res.CustomTropoVariance))
+                   % Add function to path and trim name
+                   indDir = find(res.CustomTropoVariance == '\', 1, 'last');
+                   customTropoVariance = res.CustomTropoVariance(indDir+1:end-2);
+                   addpath(res.CustomTropoVariance(1:indDir))     
+                end
+                if (isfield(res, 'CustomCNMPVariance') == 1) && (~isempty(res.CustomCNMPVariance))
+                   % Add function to path and trim name
+                   indDir = find(res.CustomCNMPVariance == '\', 1, 'last');
+                   customCNMPVariance = res.CustomCNMPVariance(indDir+1:end-2);
+                   addpath(res.CustomCNMPVariance(1:indDir))     
+                end
+            end
+            
             % Number of obj
             numObj = length(obj);
             
             for i = 1:numObj
+                % Calculate tropo variance
+                if (exist('res', 'var') == 1) && (isfield(res, 'CustomTropoVariance') == 1) && (~isempty(res.CustomTropoVariance))
+                    feval(customTropoVariance, obj);
+                else
+                    obj(i).tropoVariance;   % Use built in tropo variance
+                end
+                
+                % Calculate CNMP variance
+                if (exist('res', 'var') == 1) && (isfield(res, 'CustomCNMPVariance') == 1) && (~isempty(res.CustomCNMPVariance))
+                    feval(customCNMPVariance, obj);
+                else
+                    obj(i).cnmpVariance;    % Use built in cnmp variance
+                end
+                
                 % Calculate SBAS V/HPL
-                obj(i).VPL = obj(i).getSBASVPL;
-                obj(i).HPL = obj(i).getSBASHPL;
+                obj(i).getSBASVPL;
+                obj(i).getSBASHPL;
             end
         end
     end
@@ -58,9 +99,30 @@ classdef SBASUserObservation < sgt.UserObservation
     
     % Protected Methods
     methods (Access = protected)
-        vpl = getSBASVPL(obj);
-        hpl = getSBASHPL(obj);
+        tropoVariance(obj);
+        cnmpVariance(obj);
+        getSBASVPL(obj);
+        getSBASHPL(obj);
     end
-    
-    
 end
+
+function res = parsemaastSBASUserObservationInput(varargin)
+% Initialize parser
+parser = inputParser;
+
+% CustomTropoVariance Function
+validCustomTropoVarianceFn = @(x) (exist(x, 'file')==2);
+parser.addParameter('CustomTropoVariance', [], validCustomTropoVarianceFn)
+
+% CustomCNMPVariance Function
+validCustomCNMPVarianceFn = @(x) (exist(x, 'file')==2);
+parser.addParameter('CustomCNMPVariance', [], validCustomCNMPVarianceFn)
+
+% Run parser and set results
+parser.parse(varargin{:})
+res = parser.Results;
+end
+
+
+
+
