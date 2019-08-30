@@ -9,6 +9,9 @@ classdef MAASTConstants < matlab.mixin.Copyable
         
         % L2Frequency - [Hz] L2 center frequency
         L2Frequency = 1227.60e6;
+        
+        % IonoAlt - [m] Altitude of the ionospheric grid points
+        IonoHeight = 350000;
     end
     
         

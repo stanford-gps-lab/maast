@@ -30,7 +30,7 @@ classdef SBASMasterStation < matlab.mixin.Copyable
         MT28
         
         % IGP - Ionospheric Grid Points object. See maast.IGPData.
-        IGP
+        IGPData
         
         % GIVEI - Grid ionospheric vertical error Indicator for each
         % ionospheric grid point
