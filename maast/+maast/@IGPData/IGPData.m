@@ -18,8 +18,8 @@ classdef IGPData < matlab.mixin.Copyable
         % ID - ID of the ionospheric grid points.
         ID
         
-        % LL - Latitude and Longitude of the IGP.
-        LL
+        % IGPMask - Latitude and Longitude of the IGP.
+        IGPMask
         
         % Workset
         Workset
@@ -46,7 +46,7 @@ classdef IGPData < matlab.mixin.Copyable
             end
             
             % Use old maast function for now. Will update in the future.
-            obj.init_igpdata(igpFile)            
+            obj.initIGPData(igpFile)            
         end
     end
     

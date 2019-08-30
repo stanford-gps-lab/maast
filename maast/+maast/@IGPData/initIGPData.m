@@ -1,11 +1,9 @@
-function [] = init_igpdata(obj,igpfile)
+function [] = initIGPData(obj,igpfile)
 % Function created mostly from original code that was used to create
 % IGPData. To be replaced at a later date.
-
-global CONST_H_IONO;
-global COL_IGP_BAND COL_IGP_ID COL_IGP_LL COL_IGP_XYZ COL_IGP_WORKSET ...
-        COL_IGP_EHAT COL_IGP_NHAT COL_IGP_MAGLAT COL_IGP_CORNERDEN ...
-        COL_IGP_GIVEI COL_IGP_FLOORI COL_IGP_MAX
+    
+maastConstants = maast.constants.MAASTConstants;
+ionoAlt = maastConstants.IonoAlt;
     
 igpraw = sortrows(load(igpfile),[3,4]);
 igp_mask = igpraw(:,3:4);
@@ -14,10 +12,10 @@ igp_mask = igpraw(:,3:4);
 %convert to radians
 igp_mask_rad=igp_mask*pi/180;
 n_igp = size(igp_mask,1);
-iono_h = repmat(CONST_H_IONO,n_igp,1);
+iono_h = repmat(ionoAlt,n_igp,1);
 
 %compute the ECEF XYZ positions of the IGPs
-xyz_igp=llh2xyz([igp_mask(:,1),igp_mask(:,2),iono_h]);
+xyz_igp=sgt.tools.llh2ecef([igp_mask(:,1),igp_mask(:,2),iono_h]);
 
 %calculate east and north unit vectors for each IGP
 cos_lat=cos(igp_mask_rad(:,1));
@@ -101,10 +99,10 @@ else
                          igp_mask(idx,1)-5.0 igp_mask(idx,2)-15.0]);
     end    
 end
-xyz_give=[llh2xyz([ll_give(:,1),ll_give(:,2),iono_h]) ...
-              llh2xyz([ll_give(:,3),ll_give(:,4),iono_h]) ...
-              llh2xyz([ll_give(:,5),ll_give(:,6),iono_h]) ...
-              llh2xyz([ll_give(:,7),ll_give(:,8),iono_h])];
+xyz_give=[sgt.tools.llh2ecef([ll_give(:,1),ll_give(:,2),iono_h]) ...
+              sgt.tools.llh2ecef([ll_give(:,3),ll_give(:,4),iono_h]) ...
+              sgt.tools.llh2ecef([ll_give(:,5),ll_give(:,6),iono_h]) ...
+              sgt.tools.llh2ecef([ll_give(:,7),ll_give(:,8),iono_h])];
 del_xyz=xyz_give-[xyz_igp xyz_igp xyz_igp xyz_igp];
 
 igp_corner_den=ones(4,3,n_igp);
@@ -120,21 +118,21 @@ igp_corner_den(4,3,:)=sum((del_xyz(:,10:12).*igp_en_hat(:,4:6))')'*1e-6;
 %find the magnetic latitude (see ICD-200)
 igp_mag_lat=igp_mask(:,1) + 0.064*180*cos(igp_mask_rad(:,2)-1.617*pi);
 
-%find the inverse IGP mask
-inv_igp_mask=find_inv_IGPmask(igp_mask);
+% Set properties
+obj.Band = igpraw(:,1);
+obj.ID = igpraw(:,2);
+obj.IGPMask = igp_mask;
+obj.Workset = igpraw(:,5);
+obj.Ehat = igp_en_hat(:,1:3);
+obj.Nhat = igp_en_hat(:,4:6);
+obj.MagLat = igp_mag_lat;
+obj.CornerDen = reshape(igp_corner_den,12,n_igp)';
 
-igpdata = repmat(NaN,n_igp,COL_IGP_MAX);
-igpdata(:,COL_IGP_BAND) = igpraw(:,1);
-igpdata(:,COL_IGP_ID) = igpraw(:,2);
-igpdata(:,COL_IGP_LL) = igp_mask;
-igpdata(:,COL_IGP_XYZ) = xyz_igp;
-igpdata(:,COL_IGP_WORKSET) = igpraw(:,5);
-igpdata(:,COL_IGP_EHAT) = igp_en_hat(:,1:3);
-igpdata(:,COL_IGP_NHAT) = igp_en_hat(:,4:6);
-igpdata(:,COL_IGP_MAGLAT) = igp_mag_lat;
-igpdata(:,COL_IGP_CORNERDEN) = reshape(igp_corner_den,12,n_igp)';
-if size(igpraw,2) > 5
-    igpdata(:,COL_IGP_FLOORI) = igpraw(:,6)+1;
-else
-    igpdata(:,COL_IGP_FLOORI) = 1;
-end
+% igpdata(:,COL_IGP_XYZ) = xyz_igp;
+% igpdata(:,COL_IGP_WORKSET) = igpraw(:,5);
+% igpdata(:,COL_IGP_CORNERDEN) = reshape(igp_corner_den,12,n_igp)';
+% if size(igpraw,2) > 5
+%     igpdata(:,COL_IGP_FLOORI) = igpraw(:,6)+1;
+% else
+%     igpdata(:,COL_IGP_FLOORI) = 1;
+% end
