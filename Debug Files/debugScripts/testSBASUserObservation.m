@@ -26,9 +26,6 @@ userObservation2 = sgt.UserObservation(user, satellitePosition2);
 %% Test 1 - Constructor - Single user
 try
     test1 = maast.SBASUserObservation(sbasUser, satellitePosition);
-    if (~isa(test1.User, 'maast.SBASUser'))
-        testResults(1) = 1;
-    end
 catch
     testResults(1) = 1;
 end
@@ -36,10 +33,6 @@ end
 %% Test 2 - Constructor - Single user at multiple times
 try
     test2 = maast.SBASUserObservation(sbasUser, satellitePosition2);
-    
-    if (~isa([test2.User], 'maast.SBASUser')) && (length(test2) ~= length(time2))
-        testResults(2) = 1;
-    end
 catch
     testResults(2) = 1;
 end

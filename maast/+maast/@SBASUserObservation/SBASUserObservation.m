@@ -40,10 +40,6 @@ classdef SBASUserObservation < sgt.UserObservation
             % Use superclass constructor
             obj = obj@sgt.UserObservation(args{:});
             
-            if (nargin < 2)
-                obj.User = maast.SBASUser.fromsgtUser(obj.User);
-            end
-            
             % Number of obj
             numObj = length(obj);
             
