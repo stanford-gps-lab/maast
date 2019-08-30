@@ -21,7 +21,7 @@ numUsers = 100;
 try
     test1 = maast.SBASUserGrid(posLLH);
     
-    if (~isa(test1, 'maast.SBASUserGrid')) && (~isa(test1.Users, 'maast.SBASUser'))
+    if (~isa(test1, 'maast.SBASUserGrid')) || (~isa(test1.Users, 'maast.SBASUser'))
         testResults(1) = 1;
     end
 catch
@@ -78,5 +78,4 @@ if any(testResults)
 else
     fprintf('Passed\n')
 end
-
 end
