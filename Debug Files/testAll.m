@@ -19,7 +19,7 @@ end
 
 diary testResults.test
 
-%% Test sgt
+%% Test maast
 for i = 1:length(testList)
     run(fullfile(testDir, testList(i).name));
 end
