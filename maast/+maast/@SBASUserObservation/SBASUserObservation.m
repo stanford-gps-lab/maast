@@ -41,7 +41,7 @@ classdef SBASUserObservation < sgt.UserObservation
             args = {};
             if (nargin == 1)
                 args = {sbasUser};
-            elseif (nargin >= 2)
+            elseif (nargin > 1)
                 args = {sbasUser, satellitePosition};
             end
             
