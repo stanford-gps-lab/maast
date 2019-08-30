@@ -17,13 +17,13 @@ classdef SBASReferenceObservation < maast.SBASUserObservation
     
     % Constructor
     methods
-        function obj = SBASReferenceObservation(sbasReferenceStation, satellitePosition)
+        function obj = SBASReferenceObservation(sbasReferenceStation, satellitePosition, varargin)
             % Handle different number of arguments
             args = {};
             if (nargin == 1)
                 args = {sbasReferenceStation};
             elseif (nargin > 1)
-                args = {sbasReferenceStation, satellitePosition};
+                args = [{sbasReferenceStation, satellitePosition}, varargin{:}'];
             end
             
             % Use superclass constructor
@@ -36,4 +36,8 @@ classdef SBASReferenceObservation < maast.SBASUserObservation
         obj = fromSBASUserObservation(sbasUserObservation);
     end
     
+    % Protected Methods
+    methods (Access = protected)
+       cnmpVariance(obj); 
+    end
 end
