@@ -15,7 +15,7 @@ waasReferenceStationPos = 'wrs_foc.dat';
 polyFile = 'usrconus.dat';
 gridStep = 2;
 almanac = 'current.alm';    % Yuma File
-time = 0:300:86400;     % [s]
+time = 0:300:600;     % [s]
 
 % Dependent parameters
 timeLength = length(time);

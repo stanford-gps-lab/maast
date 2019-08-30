@@ -54,6 +54,6 @@ classdef SBASReferenceStationGrid < sgt.UserGrid
     % Static Methods
     methods (Static)
         obj = fromsgtUserGrid(sgtUserGrid);
-        obj = createUserGrid(varargin);
+        obj = createReferenceStationGrid(varargin);
     end    
 end

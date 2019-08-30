@@ -59,7 +59,7 @@ end
 
 %% Test 5 - obj.createSBASUserGrid - create grid of Reference Stations
 try
-    test5 = maast.SBASReferenceStationGrid.createUserGrid('NumUsers', numUsers);
+    test5 = maast.SBASReferenceStationGrid.createReferenceStationGrid('NumUsers', numUsers);
     
     if (~isa(test5, 'maast.SBASReferenceStationGrid')) && (~isa(test5.Users, 'maast.SBASReferenceStation'))
         testResults(5) = 1;
