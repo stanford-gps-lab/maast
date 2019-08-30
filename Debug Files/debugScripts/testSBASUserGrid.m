@@ -50,7 +50,7 @@ end
 try
     test4 = maast.SBASUserGrid.fromsgtUserGrid(sgtUserGrid);
     
-    if (~isa(test4, 'maast.SBASUserGrid')) && (~isa(test4.Users, 'maast.SBASUser'))
+    if (~isa(test4, 'maast.SBASUserGrid')) || (~isa(test4.Users, 'maast.SBASUser'))
         testResults(4) = 1;
     end
 catch
@@ -61,7 +61,7 @@ end
 try
     test5 = maast.SBASUserGrid.createUserGrid('NumUsers', numUsers);
     
-    if (~isa(test5, 'maast.SBASUserGrid')) && (~isa(test5.Users, 'maast.SBASUser'))
+    if (~isa(test5, 'maast.SBASUserGrid')) || (~isa(test5.Users, 'maast.SBASUser'))
         testResults(5) = 1;
     end
 catch
