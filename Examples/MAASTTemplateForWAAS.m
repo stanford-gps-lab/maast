@@ -10,7 +10,7 @@ clear; close all; clc;
 
 %% Set Parameters
 fprintf('Setting up run...\n')
-posLLH = [37.427127, -122.173243, 17];  % [deg deg m] Stanford GPS Lab location
+% posLLH = [37.427127, -122.173243, 17];  % [deg deg m] Stanford GPS Lab location
 waasReferenceStationPos = 'wrs_foc.dat';
 polyFile = 'usrconus.dat';
 gridStep = 2;
@@ -23,12 +23,14 @@ timeLength = length(time);
 %% Build WAAS reference station Grid
 fprintf('Building WAAS reference station grid: ')
 wrsGrid = maast.SBASReferenceStationGrid.createReferenceStationGrid('LLHFile', waasReferenceStationPos);
-fprintf([num2str(length(wrsGrid.Users)), ' WAAS reference stations\n'])
+numReferenceStations = length(wrsGrid.Users);
+fprintf([num2str(numReferenceStations), ' WAAS reference stations\n'])
 
 %% Build SBAS User Grid
 fprintf('Building WAAS user grid: ')
 sbasUserGrid = maast.SBASUserGrid.createUserGrid('PolygonFile', polyFile, 'GridStep', gridStep);
-fprintf([num2str(length(sbasUserGrid.Users)), ' WAAS users\n'])
+numSBASUsers = length(sbasUserGrid.Users);
+fprintf([num2str(numSBASUsers), ' WAAS users\n'])
 
 %% Build Satellite Constellation
 fprintf('Building satellite constellation: ')
@@ -41,15 +43,13 @@ satellitePosition = satellite.getPosition(time);
 
 %% Calculate WAAS reference station observations
 fprintf('Calculating WAAS reference station observations...\n')
-numReferenceStations = length(wrsGrid.Users);
-wrsObservation(numReferenceStations, timeLength) = maast.SBASReferenceObservation;
+wrsObservation(numReferenceStations, timeLength) = maast.SBASReferenceObservation;  % Preallocate
 for i = 1:numReferenceStations
     wrsObservation(i,:) = maast.SBASReferenceObservation(wrsGrid.Users(i), satellitePosition);
 end
 %% Calculate SBAS User Observations
 fprintf('Calculating WAAS user observations...\n')
-numSBASUsers = length(sbasUserGrid.Users);
-sbasUserObservation(numSBASUsers, timeLength) = maast.SBASUserObservation;
+sbasUserObservation(numSBASUsers, timeLength) = maast.SBASUserObservation;  % Preallocate
 for i = 1:numSBASUsers
     sbasUserObservation(i,:) = maast.SBASUserObservation(sbasUserGrid.Users(i), satellitePosition);
 end
