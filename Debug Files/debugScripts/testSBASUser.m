@@ -33,7 +33,7 @@ end
 try
     test2 = maast.SBASUser(posLLH2);
     
-    if (~isa(test2, 'maast.SBASUser')) && (length(test2) ~= numUsers2)
+    if (~isa(test2, 'maast.SBASUser')) || (length(test2) ~= numUsers2)
         testResults(2) = 1;
     end
 catch
@@ -101,5 +101,4 @@ if any(testResults)
 else
     fprintf('Passed\n')
 end
-
 end
