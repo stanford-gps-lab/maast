@@ -9,6 +9,12 @@ classdef SBASReferenceObservation < maast.SBASUserObservation
     %
     %   See Also: sgt.UserObservation, maast.SBASUserObservation
     
+    % Copyright 2019 Stanford University GPS Laboratory
+    %   This file is part of MAAST which is released under the MIT License.
+    %   See `LICENSE.txt` for full license details. Questions and comments
+    %   should be directed to the project at:
+    %   https://github.com/stanford-gps-lab/maast
+    
     % Constructor
     methods
         function obj = SBASReferenceObservation(sbasReferenceStation, satellitePosition)
@@ -22,19 +28,12 @@ classdef SBASReferenceObservation < maast.SBASUserObservation
             
             % Use superclass constructor
             obj = obj@maast.SBASUserObservation(args{:});
-            
         end
-    end
-    
-    % Public Methods
-    methods (Access = protected)
-        sig2Tropo = tropoVariance(obj);
-        sig2CNMP = cnmpVariance(obj);
     end
     
     % Static Methods
     methods
-       obj = fromSBASUserObservation(sbasUserObservation); 
+        obj = fromSBASUserObservation(sbasUserObservation);
     end
     
 end
