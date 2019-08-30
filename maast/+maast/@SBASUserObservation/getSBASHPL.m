@@ -1,4 +1,4 @@
-function hpl = getSBASHPL(obj)
+function [] = getSBASHPL(obj)
 % getSBASHPL calculates the HPL for a given SBASUserObservation using the
 % methods outlined in Appendix J of the WAAS MOPS
 
@@ -9,5 +9,5 @@ function hpl = getSBASHPL(obj)
 %   https://github.com/stanford-gps-lab/maast
 
 % TODO:
-hpl = [];
+obj.HPL = [];
 end

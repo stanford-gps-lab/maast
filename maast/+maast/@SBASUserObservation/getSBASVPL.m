@@ -1,4 +1,4 @@
-function vpl = getSBASVPL(obj)
+function [] = getSBASVPL(obj)
 % getSBASVPL calculates the VPL for a given SBASUserObservation using the
 % methods outlined in Appendix J of the WAAS MOPS
 
@@ -9,5 +9,5 @@ function vpl = getSBASVPL(obj)
 %   https://github.com/stanford-gps-lab/maast
 
 % TODO:
-vpl = [];
+obj.VPL = [];
 end
