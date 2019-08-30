@@ -3,8 +3,8 @@ classdef SBASMasterStation < matlab.mixin.Copyable
     %
     %   maast.SBASMasterStation(sbasReferenceObservation) creates an
     %   SBASMasterStation object which digests the information coming in
-    %   from the SBAS Reference Stations and outputs information required
-    %   by SBAS Users.
+    %   from the SBAS Reference Stations and outputs information to be sent
+    %   to SBAS Users.
     
     % Copyright 2019 Stanford University GPS Laboratory
     %   This file is part of MAAST which is released under the MIT License.
@@ -20,14 +20,21 @@ classdef SBASMasterStation < matlab.mixin.Copyable
         % NumSats - number of satellites observed.
         NumSats
         
-        %UDRE - User Differential Range Error for each satellite at each
+        % UDRE - User Differential Range Error Indicator for each satellite at each
         %time. Is an SxT matrix for S satellites and T times.
         UDREI
         
-        %MT28 - Covariance matrix created for MT28 message. Is a cell
+        % MT28 - Covariance matrix created for MT28 message. Is a cell
         %matrix of size SxT for S satellites and T times where each cell is
         %a 4x4 covariance matrix.
         MT28
+        
+        % IGP - Ionospheric Grid Points object. See maast.IGPData.
+        IGP
+        
+        % GIVEI - Grid ionospheric vertical error Indicator for each
+        % ionospheric grid point
+        GIVEI
     end
     
     % Constructor
