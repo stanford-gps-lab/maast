@@ -39,7 +39,7 @@ classdef SBASMasterStation < matlab.mixin.Copyable
     
     % Constructor
     methods
-        function obj = SBASMasterStation(sbasReferenceObservation, varargin)
+        function obj = SBASMasterStation(sbasReferenceObservation, igpFile, varargin)
             % Handle empty constructor
             if (nargin < 1)
                 return;
@@ -81,6 +81,9 @@ classdef SBASMasterStation < matlab.mixin.Copyable
                 mt28 = eye(4); mt28(4,4) = 0; mt28 = {mt28};
                 obj.MT28 = repmat(mt28, [numSats, numRefObs]);
             end
+            
+            % Create IGP Data
+            obj.IGPData = maast.IGPData(igpFile);
         end
     end
 end

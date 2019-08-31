@@ -2,11 +2,11 @@ classdef SBASUserObservation < sgt.UserObservation
     % SBASUserObservation   a container for an observation from an SBAS
     % user.
     %
-    %   maast.SBASUserObservation(sbasUser, satellitePosition) creates an
-    %   SBAS User Observation. maast.SBASUserObservation is a subclass of
-    %   sgt.UserObservation and contains additional properties and methods
-    %   needed for maast calculations. sbasUser must be of type
-    %   maast.SBASUser.
+    %   maast.SBASUserObservation(sbasUser, satellitePosition, igpData,
+    %   varargin) creates an SBAS User Observation.
+    %   maast.SBASUserObservation is a subclass of sgt.UserObservation and 
+    %   contains additional properties and methods needed for maast 
+    %   calculations. sbasUser must be of type maast.SBASUser.
     %
     %   See Also: sgt.UserObservation,
     %   maast.SBASUserObservation.createSBASUserObservation,
@@ -20,6 +20,9 @@ classdef SBASUserObservation < sgt.UserObservation
     
     % Public Properties
     properties (Access = public)
+        % IPP - Ionospheric Pierce Points in [lat lon alt] [deg deg m]
+        IPP
+        
         % Sig2Tropo - [m^2] Variance of the line of sight range due to
         % troposphere
         Sig2Tropo
@@ -49,7 +52,7 @@ classdef SBASUserObservation < sgt.UserObservation
             obj = obj@sgt.UserObservation(args{:});
             
             % Get varargin inputs
-            if nargin > 2
+            if nargin > 3
                 res = parsemaastSBASUserObservationInput(varargin{:});
                 
                 % Add custom functions to path
@@ -85,11 +88,19 @@ classdef SBASUserObservation < sgt.UserObservation
                     obj(i).cnmpVariance;    % Use built in cnmp variance
                 end
                 
+                % Calculate Ionospheric pierce points
+                obj(i).getIPP;
+                
                 % Calculate SBAS V/HPL
                 obj(i).getSBASVPL;
                 obj(i).getSBASHPL;
             end
         end
+    end
+    
+    % Public Methods
+    methods
+       getIPP(obj) 
     end
     
     % Static Methods

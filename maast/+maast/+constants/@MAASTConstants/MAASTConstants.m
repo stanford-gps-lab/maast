@@ -12,8 +12,19 @@ classdef MAASTConstants < matlab.mixin.Copyable
         
         % IonoAlt - [m] Altitude of the ionospheric grid points
         IonoAlt = 350000;
+        
+        % IonoRadius - [m] Radius of the Ionosphere
+        IonoRadius
     end
     
-        
-    
+    % Constructor
+    methods
+        function obj = MAASTConstants()
+            % Import earth constants
+            earthConstants = sgt.constants.EarthConstants;
+            
+            % Calculate Ionoradius
+            obj.IonoRadius = obj.IonoAlt + earthConstants.R;
+        end
+    end
 end

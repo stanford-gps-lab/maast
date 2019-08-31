@@ -24,23 +24,25 @@ homedir = pwd;
 customUDREI = [homedir, '\CustomFunctions\customUDREI.m'];
 customMT28 = [homedir, '\CustomFunctions\customMT28.m'];
 
+igpFile = 'igpjoint_R8_9.dat'; 
+
 %% Test 1 - Constructor - Single reference station observation
 try
-    test1 = maast.SBASMasterStation(sbasReferenceObservation);
+    test1 = maast.SBASMasterStation(sbasReferenceObservation, igpFile);
 catch
     testResults(1) = 1;
 end
 
 %% Test 2 - Constructor - Multiple reference station observations
 try
-    test2 = maast.SBASMasterStation(sbasReferenceObservation2);
+    test2 = maast.SBASMasterStation(sbasReferenceObservation2, igpFile);
 catch
     testResults(2) = 1;
 end
 
 %% Test 3 - Constructor - varargin: CustomUDREI
 try
-    test3 = maast.SBASMasterStation(sbasReferenceObservation, 'CustomUDREI', customUDREI);
+    test3 = maast.SBASMasterStation(sbasReferenceObservation, igpFile, 'CustomUDREI', customUDREI);
     
     if (test3.UDREI ~= -1*ones(test3.NumSats, test3.NumRefObs))
         testResults(3) = 1;
@@ -51,7 +53,7 @@ end
 
 %% Test 4 - Constructor - varargin: CustomMT28
 try
-    test4 = maast.SBASMasterStation(sbasReferenceObservation, 'CustomMT28', customMT28);
+    test4 = maast.SBASMasterStation(sbasReferenceObservation, igpFile, 'CustomMT28', customMT28);
     
     if (test4.MT28{1} ~= -1*ones(4))
         testResults(4) = 1;
