@@ -17,6 +17,13 @@ almanac = 'current.alm';    % Yuma File
 time = 0:300:600;     % [s]
 igpFile = 'igpjoint_R8_9.dat';
 
+% Geostationary satellite parameters
+geoPRN = [137; 138];
+geoLongitude = [-107.0; -133.0];
+geoAF0 = zeros(2,1);
+geoAF1 = zeros(2,1);
+geoConstellation = 'WAAS';
+
 % Dependent parameters
 timeLength = length(time);
 
@@ -38,11 +45,13 @@ satellite = sgt.Satellite.fromYuma(almanac);
 fprintf([num2str(length(satellite)), ' satellites\n'])
 
 %% Specify GEO Satellite Orbits
-% TODO
+waasSatellite = sgt.Satellite.fromGEO(geoPRN, geoLongitude, geoAF0, geoAF1, geoConstellation);
 
 %% Calculate Satellite Positions over time
 fprintf('Calculating satellite positions over time...\n')
-satellitePosition = satellite.getPosition(time);
+gpsSatellitePosition = satellite.getPosition(time);
+waasSatellitePosition = waasSatellite.getPosition(time, 'ecef', true);
+satellitePosition = [gpsSatellitePosition; waasSatellitePosition];
 
 %% Calculate WAAS Reference Station Observations
 fprintf('Calculating WAAS reference station observations...\n')

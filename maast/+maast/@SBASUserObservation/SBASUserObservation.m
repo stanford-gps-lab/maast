@@ -176,11 +176,13 @@ classdef SBASUserObservation < sgt.UserObservation
                     else
                         obj(i).calculateSig2;   % Use built in Sig2 method
                     end
+                    
+                    % Calculate SBAS VPL
+                    obj(i).getSBASVPL;
+                    
+                    % Calculate SBAS HPL
+                    obj(i).getSBASHPL;
                 end
-                
-                % Calculate SBAS V/HPL
-                obj(i).getSBASVPL;
-                obj(i).getSBASHPL;
             end
         end
     end
