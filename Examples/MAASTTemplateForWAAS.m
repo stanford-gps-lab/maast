@@ -28,8 +28,8 @@ fprintf([num2str(numReferenceStations), ' WAAS reference stations\n'])
 
 %% Build SBAS User Grid
 fprintf('Building WAAS user grid: ')
-sbasUserGrid = maast.SBASUserGrid.createUserGrid('PolygonFile', polyFile, 'GridStep', gridStep);
-numSBASUsers = length(sbasUserGrid.Users);
+waasUserGrid = maast.SBASUserGrid.createUserGrid('PolygonFile', polyFile, 'GridStep', gridStep);
+numSBASUsers = length(waasUserGrid.Users);
 fprintf([num2str(numSBASUsers), ' WAAS users\n'])
 
 %% Build Satellite Constellation
@@ -59,7 +59,7 @@ waasMasterStation = maast.SBASMasterStation(wrsObservation, igpFile);
 fprintf('Calculating WAAS user observations...\n')
 waasUserObservation(numSBASUsers, timeLength) = maast.SBASUserObservation;  % Preallocate
 for i = 1:numSBASUsers
-    waasUserObservation(i,:) = maast.SBASUserObservation(sbasUserGrid.Users(i), satellitePosition, waasMasterStation);
+    waasUserObservation(i,:) = maast.SBASUserObservation(waasUserGrid.Users(i), satellitePosition, waasMasterStation);
 end
 
 

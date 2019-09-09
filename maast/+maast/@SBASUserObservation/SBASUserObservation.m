@@ -4,8 +4,8 @@ classdef SBASUserObservation < sgt.UserObservation
     %
     %   maast.SBASUserObservation(sbasUser, satellitePosition, igpData,
     %   varargin) creates an SBAS User Observation.
-    %   maast.SBASUserObservation is a subclass of sgt.UserObservation and 
-    %   contains additional properties and methods needed for maast 
+    %   maast.SBASUserObservation is a subclass of sgt.UserObservation and
+    %   contains additional properties and methods needed for maast
     %   calculations. sbasUser must be of type maast.SBASUser.
     %
     %   See Also: sgt.UserObservation,
@@ -23,13 +23,17 @@ classdef SBASUserObservation < sgt.UserObservation
         % IPP - Ionospheric Pierce Points in [lat lon alt] [deg deg m]
         IPP
         
-        % Sig2Tropo - [m^2] Variance of the line of sight range due to
+        % Sig2Tropo - [m^2] Variance of the line of sight range error due to
         % troposphere
         Sig2Tropo
         
-        % Sig2CNMP - [m^2] Variance of the line of sight range due to code
+        % Sig2CNMP - [m^2] Variance of the line of sight range error due to code
         % noise and multipath
         Sig2CNMP
+        
+        % Sig2UDRE - [m^2] Variance of the light of sight range error due
+        % to differential range error
+        Sig2UDRE
         
         % VPL - Vertical Protection Level
         VPL
@@ -38,6 +42,7 @@ classdef SBASUserObservation < sgt.UserObservation
         HPL
     end
     
+    % Constructor
     methods
         function obj = SBASUserObservation(sbasUser, satellitePosition, sbasMasterStation, varargin)
             % Handle different number of arguments
@@ -51,22 +56,33 @@ classdef SBASUserObservation < sgt.UserObservation
             % Use superclass constructor
             obj = obj@sgt.UserObservation(args{:});
             
+            % Handle empty constructor
+            if (isempty(obj(1).UserLL))
+                return;
+            end
+            
             % Get varargin inputs
             if nargin > 3
                 res = parsemaastSBASUserObservationInput(varargin{:});
                 
                 % Add custom functions to path
                 if (isfield(res, 'CustomTropoVariance') == 1) && (~isempty(res.CustomTropoVariance))
-                   % Add function to path and trim name
-                   indDir = find(res.CustomTropoVariance == '\', 1, 'last');
-                   customTropoVariance = res.CustomTropoVariance(indDir+1:end-2);
-                   addpath(res.CustomTropoVariance(1:indDir))     
+                    % Add function to path and trim name
+                    indDir = find(res.CustomTropoVariance == '\', 1, 'last');
+                    customTropoVariance = res.CustomTropoVariance(indDir+1:end-2);
+                    addpath(res.CustomTropoVariance(1:indDir))
                 end
                 if (isfield(res, 'CustomCNMPVariance') == 1) && (~isempty(res.CustomCNMPVariance))
-                   % Add function to path and trim name
-                   indDir = find(res.CustomCNMPVariance == '\', 1, 'last');
-                   customCNMPVariance = res.CustomCNMPVariance(indDir+1:end-2);
-                   addpath(res.CustomCNMPVariance(1:indDir))     
+                    % Add function to path and trim name
+                    indDir = find(res.CustomCNMPVariance == '\', 1, 'last');
+                    customCNMPVariance = res.CustomCNMPVariance(indDir+1:end-2);
+                    addpath(res.CustomCNMPVariance(1:indDir))
+                end
+                if (isfield(res, 'CustomUDREVariance') == 1) && (~isempty(res.CustomUDREVariance))
+                    % Add function to path and trim name
+                    indDir = find(res.CustomUDREVariance == '\', 1, 'last');
+                    customUDREVariance = res.CustomUDREVariance(indDir+1:end-2);
+                    addpath(res.CustomUDREVariance(1:indDir))
                 end
             end
             
@@ -88,11 +104,13 @@ classdef SBASUserObservation < sgt.UserObservation
                     obj(i).cnmpVariance;    % Use built in cnmp variance
                 end
                 
-                % Calculate UDRE variance
-                if (exist('res', 'var') == 1) && (isfield(res, 'CustomCNMPVariance') == 1) && (~isempty(res.CustomCNMPVariance))
-                    feval(customCNMPVariance, obj);
-                else
-                    obj(i).cnmpVariance;    % Use built in cnmp variance
+                if (~isa(obj, 'maast.SBASReferenceObservation'))  % Only compute UDRE variance for sbas users
+                    % Calculate UDRE variance
+                    if (exist('res', 'var') == 1) && (isfield(res, 'CustomUDREVariance') == 1) && (~isempty(res.CustomUDREVariance))
+                        feval(customUDREVariance, obj, sbasMasterStation.UDREI(:,i));
+                    else
+                        obj(i).udreVariance(sbasMasterStation.UDREI(:,i));    % Use built in udre variance
+                    end
                 end
                 
                 % Calculate Ionospheric pierce points
@@ -107,7 +125,7 @@ classdef SBASUserObservation < sgt.UserObservation
     
     % Public Methods
     methods
-       getIPP(obj) 
+        getIPP(obj)
     end
     
     % Static Methods
@@ -119,6 +137,7 @@ classdef SBASUserObservation < sgt.UserObservation
     methods (Access = protected)
         tropoVariance(obj);
         cnmpVariance(obj);
+        udreVariance(obj, udrei);
         getSBASVPL(obj);
         getSBASHPL(obj);
     end
@@ -135,6 +154,10 @@ parser.addParameter('CustomTropoVariance', [], validCustomTropoVarianceFn)
 % CustomCNMPVariance Function
 validCustomCNMPVarianceFn = @(x) (exist(x, 'file')==2);
 parser.addParameter('CustomCNMPVariance', [], validCustomCNMPVarianceFn)
+
+% CustomUDREVariance Function
+validCustomUDREVarianceFn = @(x) (exist(x, 'file')==2);
+parser.addParameter('CustomUDREVariance', [], validCustomUDREVarianceFn)
 
 % Run parser and set results
 parser.parse(varargin{:})
