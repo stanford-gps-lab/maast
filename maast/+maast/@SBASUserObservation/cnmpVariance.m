@@ -9,9 +9,18 @@ function [] = cnmpVariance(obj)
 %   should be directed to the project at:
 %   https://github.com/stanford-gps-lab/maast
 
+% Handle empty input
+if (isempty(obj.UserLL))
+    return;
+end
 
+% Grab WAASMOPSConstants
+waasMOPSConstants = maast.constants.WAASMOPSConstants;
 
+% Get elevation angles
+el = NaN(length(obj.SatellitePRN), 1);
+el(obj.SatellitesInViewMask) = obj.ElevationAngles(obj.SatellitesInViewMask);
 
-
-
+obj.Sig2CNMP =(waasMOPSConstants.CNMPA0 + waasMOPSConstants.CNMPA1*exp(-el/waasMOPSConstants.CNMPTheta0)).^2 +...
+    (waasMOPSConstants.CNMPB0 - waasMOPSConstants.CNMPB1*(el - waasMOPSConstants.CNMPPhi0)/waasMOPSConstants.CNMPPhi1).^2;
 end
