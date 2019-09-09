@@ -42,6 +42,9 @@ classdef WAASMOPSConstants < matlab.mixin.Copyable
         
         % Sig2UDRE - Variance values for UDRE given in WAAS MOPS
         Sig2UDRE
+        
+        % CCovariance - MT10 parameter for MT28
+        CCovariance = 0;
     end
     
     % Constructor

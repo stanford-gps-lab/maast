@@ -35,6 +35,9 @@ classdef SBASUserObservation < sgt.UserObservation
         % to differential range error
         Sig2UDRE
         
+        % Sig2FLT - [m^2] Fast/Long-term variance given UDREs and MT28 info
+        Sig2FLT
+        
         % VPL - Vertical Protection Level
         VPL
         
@@ -84,6 +87,12 @@ classdef SBASUserObservation < sgt.UserObservation
                     customUDREVariance = res.CustomUDREVariance(indDir+1:end-2);
                     addpath(res.CustomUDREVariance(1:indDir))
                 end
+                if (isfield(res, 'CustomFLTVariance') == 1) && (~isempty(res.CustomFLTVariance))
+                    % Add function to path and trim name
+                    indDir = find(res.CustomFLTVariance == '\', 1, 'last');
+                    customFLTVariance = res.CustomFLTVariance(indDir+1:end-2);
+                    addpath(res.CustomFLTVariance(1:indDir))
+                end
             end
             
             % Number of obj
@@ -110,6 +119,13 @@ classdef SBASUserObservation < sgt.UserObservation
                         feval(customUDREVariance, obj, sbasMasterStation.UDREI(:,i));
                     else
                         obj(i).udreVariance(sbasMasterStation.UDREI(:,i));    % Use built in udre variance
+                    end
+                    
+                    % Calculate FLT variance
+                    if (exist('res', 'var') == 1) && (isfield(res, 'CustomFLTVariance') == 1) && (~isempty(res.CustomFLTVariance))
+                        feval(customFLTVariance, obj, sbasMasterStation.MT28{:,i});
+                    else
+                        obj(i).fltVariance(sbasMasterStation.MT28(:,i));    % Use built in udre variance
                     end
                 end
                 
@@ -138,6 +154,7 @@ classdef SBASUserObservation < sgt.UserObservation
         tropoVariance(obj);
         cnmpVariance(obj);
         udreVariance(obj, udrei);
+        fltVariance(obj, mt28);
         getSBASVPL(obj);
         getSBASHPL(obj);
     end
