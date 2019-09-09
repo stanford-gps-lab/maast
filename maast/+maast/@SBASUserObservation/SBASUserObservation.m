@@ -20,6 +20,10 @@ classdef SBASUserObservation < sgt.UserObservation
     
     % Public Properties
     properties (Access = public)
+        % SatellitesMonitoredMask - Mask of the satellites that are
+        % monitored for use in availability calculations
+        SatellitesMonitoredMask
+        
         % IPP - Ionospheric Pierce Points in [lat lon alt] [deg deg m]
         IPP
         
@@ -41,6 +45,10 @@ classdef SBASUserObservation < sgt.UserObservation
         % Sig2UIVE - [m^2] User Ionosphere Vertical Error given IPP and
         % GIVEs
         Sig2UIVE
+        
+        % Sig2 - [m^2] Combined variance to be used by the users in
+        % calculating V/HPL
+        Sig2
         
         % VPL - Vertical Protection Level
         VPL
@@ -103,6 +111,12 @@ classdef SBASUserObservation < sgt.UserObservation
                     customUIVEVariance = res.CustomUIVEVariance(indDir+1:end-2);
                     addpath(res.CustomUIVEVariance(1:indDir))
                 end
+                if (isfield(res, 'CustomSig2') == 1) && (~isempty(res.CustomSig2))
+                    % Add function to path and trim name
+                    indDir = find(res.CustomSig2 == '\', 1, 'last');
+                    customSig2 = res.CustomSig2(indDir+1:end-2);
+                    addpath(res.CustomSig2(1:indDir))
+                end
             end
             
             if (~isa(obj, 'maast.SBASReferenceObservation'))    % Only grab igpFile data for SBAS Users
@@ -152,6 +166,16 @@ classdef SBASUserObservation < sgt.UserObservation
                     else
                         obj(i).uiveVariance(sbasMasterStation.GIVEI(:,i), igpData);    % Use built in givei variance
                     end
+                    
+                    % SatellitesMonitoredMask
+                    obj(i).SatellitesMonitoredMask = (obj(i).SatellitesInViewMask & (obj(i).Sig2UIVE > 0));
+                    
+                    % Calculate Sig2
+                    if (exist('res', 'var') == 1) && (isfield(res, 'CustomSig2') == 1) && (~isempty(res.CustomSig2))
+                        feval(customSig2, obj);
+                    else
+                        obj(i).calculateSig2;   % Use built in Sig2 method
+                    end
                 end
                 
                 % Calculate SBAS V/HPL
@@ -178,6 +202,7 @@ classdef SBASUserObservation < sgt.UserObservation
         udreVariance(obj, udrei);
         fltVariance(obj, mt28);
         uiveVariance(obj, givei, igpData);
+        calculateSig2(obj);
         getSBASVPL(obj);
         getSBASHPL(obj);
     end
@@ -198,6 +223,18 @@ parser.addParameter('CustomCNMPVariance', [], validCustomCNMPVarianceFn)
 % CustomUDREVariance Function
 validCustomUDREVarianceFn = @(x) (exist(x, 'file')==2);
 parser.addParameter('CustomUDREVariance', [], validCustomUDREVarianceFn)
+
+% CustomFLTVariance Function
+validCustomFLTVarianceFn = @(x) (exist(x, 'file')==2);
+parser.addParameter('CustomFLTVariance', [], validCustomFLTVarianceFn)
+
+% CustomUIVEVariance Function
+validCustomUIVEVarianceFn = @(x) (exist(x, 'file')==2);
+parser.addParameter('CustomUIVEVariance', [], validCustomUIVEVarianceFn)
+
+% CustomSig2 Function
+validCustomSig2Fn = @(x) (exist(x, 'file')==2);
+parser.addParameter('CustomSig2', [], validCustomSig2Fn)
 
 % Run parser and set results
 parser.parse(varargin{:})
