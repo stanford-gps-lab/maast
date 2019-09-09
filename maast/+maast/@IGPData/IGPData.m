@@ -21,6 +21,9 @@ classdef IGPData < matlab.mixin.Copyable
         % IGPMask - Latitude and Longitude of the IGP.
         IGPMask
         
+        % InvIGPMask - Inverse IGP Mask
+        InvIGPMask
+        
         % Workset
         Workset
         

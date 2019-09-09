@@ -81,6 +81,13 @@ classdef SBASMasterStation < matlab.mixin.Copyable
             
             % Create IGP Data
             obj.IGPData = maast.IGPData(igpFile);
+            
+            % Calculate GIVEI
+            if (exist('res', 'var') == 1) && (isfield(res, 'CustomGIVEI') == 1) && (~isempty(res.CustomGIVEI))
+                feval(customGIVEI, obj);
+            else
+                obj.GIVEI = 13*ones(length(obj.IGPData.ID), timeLength);  % Assume constant GIVEI of 13 for all grid points
+            end
         end
     end
 end

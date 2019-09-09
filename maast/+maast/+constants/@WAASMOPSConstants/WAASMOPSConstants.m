@@ -43,6 +43,9 @@ classdef WAASMOPSConstants < matlab.mixin.Copyable
         % Sig2UDRE - Variance values for UDRE given in WAAS MOPS
         Sig2UDRE
         
+        % Sig2GIVE - Variance values for GIVE given in WAAS MOPS
+        Sig2GIVE
+        
         % CCovariance - MT10 parameter for MT28
         CCovariance = 0;
     end
@@ -56,8 +59,13 @@ classdef WAASMOPSConstants < matlab.mixin.Copyable
             
             % Sig2UDRE
             obj.Sig2UDRE = [0.0520 0.0924 0.1444 0.2830 0.4678 0.8315 1.2992 ...
-                      1.8709 2.5465 3.3260 5.1968 20.787 230.9661 ...
-                      2078.695 obj.NotMonitored obj.DoNotUse];
+                1.8709 2.5465 3.3260 5.1968 20.787 230.9661 ...
+                2078.695 obj.NotMonitored obj.DoNotUse];
+            
+            % Sig2GIVE
+            obj.Sig2GIVE = [0.0084 0.0333 0.0749 0.1331 0.2079 0.2994 0.4075 ...
+                0.5322 0.6735 0.8315 1.1974 1.8709 3.3260 20.787 ...
+                187.0826 obj.NotMonitored];   %GIVE variance values
         end
     end
     

@@ -38,6 +38,10 @@ classdef SBASUserObservation < sgt.UserObservation
         % Sig2FLT - [m^2] Fast/Long-term variance given UDREs and MT28 info
         Sig2FLT
         
+        % Sig2UIVE - [m^2] User Ionosphere Vertical Error given IPP and
+        % GIVEs
+        Sig2UIVE
+        
         % VPL - Vertical Protection Level
         VPL
         
@@ -47,7 +51,7 @@ classdef SBASUserObservation < sgt.UserObservation
     
     % Constructor
     methods
-        function obj = SBASUserObservation(sbasUser, satellitePosition, sbasMasterStation, varargin)
+        function obj = SBASUserObservation(sbasUser, satellitePosition, sbasMasterStation, igpFile, varargin)
             % Handle different number of arguments
             args = {};
             if (nargin == 1)
@@ -93,12 +97,26 @@ classdef SBASUserObservation < sgt.UserObservation
                     customFLTVariance = res.CustomFLTVariance(indDir+1:end-2);
                     addpath(res.CustomFLTVariance(1:indDir))
                 end
+                if (isfield(res, 'CustomUIVEVariance') == 1) && (~isempty(res.CustomUIVEVariance))
+                    % Add function to path and trim name
+                    indDir = find(res.CustomUIVEVariance == '\', 1, 'last');
+                    customUIVEVariance = res.CustomUIVEVariance(indDir+1:end-2);
+                    addpath(res.CustomUIVEVariance(1:indDir))
+                end
+            end
+            
+            if (~isa(obj, 'maast.SBASReferenceObservation'))    % Only grab igpFile data for SBAS Users
+                % Get IGP Data
+                igpData = maast.IGPData(igpFile);
             end
             
             % Number of obj
             numObj = length(obj);
             
             for i = 1:numObj
+                % Calculate Ionospheric pierce points
+                obj(i).getIPP;
+                
                 % Calculate tropo variance
                 if (exist('res', 'var') == 1) && (isfield(res, 'CustomTropoVariance') == 1) && (~isempty(res.CustomTropoVariance))
                     feval(customTropoVariance, obj);
@@ -113,7 +131,7 @@ classdef SBASUserObservation < sgt.UserObservation
                     obj(i).cnmpVariance;    % Use built in cnmp variance
                 end
                 
-                if (~isa(obj, 'maast.SBASReferenceObservation'))  % Only compute UDRE variance for sbas users
+                if (~isa(obj, 'maast.SBASReferenceObservation'))  % Only compute these variances for sbas users
                     % Calculate UDRE variance
                     if (exist('res', 'var') == 1) && (isfield(res, 'CustomUDREVariance') == 1) && (~isempty(res.CustomUDREVariance))
                         feval(customUDREVariance, obj, sbasMasterStation.UDREI(:,i));
@@ -125,12 +143,16 @@ classdef SBASUserObservation < sgt.UserObservation
                     if (exist('res', 'var') == 1) && (isfield(res, 'CustomFLTVariance') == 1) && (~isempty(res.CustomFLTVariance))
                         feval(customFLTVariance, obj, sbasMasterStation.MT28{:,i});
                     else
-                        obj(i).fltVariance(sbasMasterStation.MT28(:,i));    % Use built in udre variance
+                        obj(i).fltVariance(sbasMasterStation.MT28(:,i));    % Use built in flt variance
+                    end
+                    
+                    % Calculate UIVE variance
+                    if (exist('res', 'var') == 1) && (isfield(res, 'CustomUIVEVariance') == 1) && (~isempty(res.CustomUIVEVariance))
+                        feval(customUIVEVariance, obj, sbasMasterStation.MT28{:,i});
+                    else
+                        obj(i).uiveVariance(sbasMasterStation.GIVEI(:,i), igpData);    % Use built in givei variance
                     end
                 end
-                
-                % Calculate Ionospheric pierce points
-                obj(i).getIPP;
                 
                 % Calculate SBAS V/HPL
                 obj(i).getSBASVPL;
@@ -155,6 +177,7 @@ classdef SBASUserObservation < sgt.UserObservation
         cnmpVariance(obj);
         udreVariance(obj, udrei);
         fltVariance(obj, mt28);
+        uiveVariance(obj, givei, igpData);
         getSBASVPL(obj);
         getSBASHPL(obj);
     end

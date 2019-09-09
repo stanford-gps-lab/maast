@@ -118,10 +118,14 @@ igp_corner_den(4,3,:)=sum((del_xyz(:,10:12).*igp_en_hat(:,4:6))')'*1e-6;
 %find the magnetic latitude (see ICD-200)
 igp_mag_lat=igp_mask(:,1) + 0.064*180*cos(igp_mask_rad(:,2)-1.617*pi);
 
+%find the inverse IGP mask
+inv_igp_mask=find_inv_IGPmask(igp_mask);
+
 % Set properties
 obj.Band = igpraw(:,1);
 obj.ID = igpraw(:,2);
 obj.IGPMask = igp_mask;
+obj.InvIGPMask = inv_igp_mask;
 obj.Workset = igpraw(:,5);
 obj.Ehat = igp_en_hat(:,1:3);
 obj.Nhat = igp_en_hat(:,4:6);
@@ -136,3 +140,40 @@ obj.CornerDen = reshape(igp_corner_den,12,n_igp)';
 % else
 %     igpdata(:,COL_IGP_FLOORI) = 1;
 % end
+end
+
+function inv_IGPmask=find_inv_IGPmask(IGPmask)
+
+NOT_IN_MASK=-12;
+IGPmask_min_lat=-85;
+IGPmask_max_lat=85;
+
+IGPmask_min_lon=0;
+IGPmask_max_lon=355;
+
+IGPmask_increment=5;
+
+%set all values as not being in the mask
+inv_IGPmask=ones(length(IGPmask_min_lat:IGPmask_increment:...
+                    IGPmask_max_lat), length(IGPmask_min_lon:...
+                    IGPmask_increment:IGPmask_max_lon))*NOT_IN_MASK;
+
+%convert the latitudes and longitues to 5 degree integer values
+mask_idx=round(IGPmask(:,1:2)/IGPmask_increment);
+
+%make sure the longitudes run 0 to 360 degrees
+mask_idx(:,2)=mod(mask_idx(:,2),360/IGPmask_increment)+1;
+
+% adjust the latitude indicies to run from 1 to N
+mask_idx(:,1)=mask_idx(:,1)-IGPmask_min_lat/IGPmask_increment + 1;
+
+%set the IGP numbers
+num_IGP=length(IGPmask);
+%create the inverse mask
+inv_IGPmask(sub2ind(size(inv_IGPmask),mask_idx(:,1),mask_idx(:,2)))=...
+           (1:num_IGP)';
+
+%Repeat matrix to handle wrap around at 360
+inv_IGPmask = [inv_IGPmask inv_IGPmask(:,1:18)];
+
+end
