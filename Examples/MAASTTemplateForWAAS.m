@@ -10,12 +10,12 @@ clear; close all; clc;
 
 %% Set Parameters
 fprintf('Setting up run...\n')
-% posLLH = [37.427127, -122.173243, 17];  % [deg deg m] Stanford GPS Lab location
 waasReferenceStationPos = 'wrs_foc.dat';
 polyFile = 'usrconus.dat';
 gridStep = 20;
 almanac = 'current.alm';    % Yuma File
 time = 0:300:600;     % [s]
+igpFile = 'igpjoint_R8_9.dat';
 
 % Dependent parameters
 timeLength = length(time);
@@ -44,17 +44,22 @@ fprintf([num2str(length(satellite)), ' satellites\n'])
 fprintf('Calculating satellite positions over time...\n')
 satellitePosition = satellite.getPosition(time);
 
-%% Calculate WAAS reference station observations
+%% Calculate WAAS Reference Station Observations
 fprintf('Calculating WAAS reference station observations...\n')
 wrsObservation(numReferenceStations, timeLength) = maast.SBASReferenceObservation;  % Preallocate
 for i = 1:numReferenceStations
     wrsObservation(i,:) = maast.SBASReferenceObservation(wrsGrid.Users(i), satellitePosition);
 end
-%% Calculate SBAS User Observations
+
+%% Collect WAAS Observations at Master Station
+fprintf('Combining reference station observations...\n')
+waasMasterStation = maast.SBASMasterStation(wrsObservation, igpFile);
+
+%% Calculate WAAS User Observations
 fprintf('Calculating WAAS user observations...\n')
-sbasUserObservation(numSBASUsers, timeLength) = maast.SBASUserObservation;  % Preallocate
+waasUserObservation(numSBASUsers, timeLength) = maast.SBASUserObservation;  % Preallocate
 for i = 1:numSBASUsers
-    sbasUserObservation(i,:) = maast.SBASUserObservation(sbasUserGrid.Users(i), satellitePosition);
+    waasUserObservation(i,:) = maast.SBASUserObservation(sbasUserGrid.Users(i), satellitePosition, waasMasterStation);
 end
 
 

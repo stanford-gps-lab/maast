@@ -14,9 +14,6 @@ classdef SBASMasterStation < matlab.mixin.Copyable
     
     % Public properties
     properties
-        % NumRefObs - number of reference observations input.
-        NumRefObs
-        
         % NumSats - number of satellites observed.
         NumSats
         
@@ -46,7 +43,7 @@ classdef SBASMasterStation < matlab.mixin.Copyable
             end
             
             % Number of sbasReferenceObservations
-            numRefObs = length(sbasReferenceObservation); obj.NumRefObs = numRefObs;
+            [~, timeLength] = size(sbasReferenceObservation);
             numSats = length(sbasReferenceObservation(1).SatellitePRN); obj.NumSats = numSats;
             
             % Get varargin inputs
@@ -72,14 +69,14 @@ classdef SBASMasterStation < matlab.mixin.Copyable
             if (exist('res', 'var') == 1) && (isfield(res, 'CustomUDREI') == 1) && (~isempty(res.CustomUDREI))
                 feval(customUDREI, obj);
             else
-                obj.UDREI = 11*ones(numSats, numRefObs);  % Assume constant UDREI of 11 for GPS Satellites
+                obj.UDREI = 11*ones(numSats, timeLength);  % Assume constant UDREI of 11 for GPS Satellites
             end
             % Calculate MT28
             if (exist('res', 'var') == 1) && (isfield(res, 'CustomMT28') == 1) && (~isempty(res.CustomMT28))
                 feval(customMT28, obj);
             else
                 mt28 = eye(4); mt28(4,4) = 0; mt28 = {mt28};
-                obj.MT28 = repmat(mt28, [numSats, numRefObs]);
+                obj.MT28 = repmat(mt28, [numSats, timeLength]);
             end
             
             % Create IGP Data

@@ -39,7 +39,7 @@ classdef SBASUserObservation < sgt.UserObservation
     end
     
     methods
-        function obj = SBASUserObservation(sbasUser, satellitePosition, varargin)
+        function obj = SBASUserObservation(sbasUser, satellitePosition, sbasMasterStation, varargin)
             % Handle different number of arguments
             args = {};
             if (nargin == 1)
@@ -82,6 +82,13 @@ classdef SBASUserObservation < sgt.UserObservation
                 end
                 
                 % Calculate CNMP variance
+                if (exist('res', 'var') == 1) && (isfield(res, 'CustomCNMPVariance') == 1) && (~isempty(res.CustomCNMPVariance))
+                    feval(customCNMPVariance, obj);
+                else
+                    obj(i).cnmpVariance;    % Use built in cnmp variance
+                end
+                
+                % Calculate UDRE variance
                 if (exist('res', 'var') == 1) && (isfield(res, 'CustomCNMPVariance') == 1) && (~isempty(res.CustomCNMPVariance))
                     feval(customCNMPVariance, obj);
                 else
