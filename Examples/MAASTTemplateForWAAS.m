@@ -13,7 +13,7 @@ fprintf('Setting up run...\n')
 % posLLH = [37.427127, -122.173243, 17];  % [deg deg m] Stanford GPS Lab location
 waasReferenceStationPos = 'wrs_foc.dat';
 polyFile = 'usrconus.dat';
-gridStep = 2;
+gridStep = 20;
 almanac = 'current.alm';    % Yuma File
 time = 0:300:600;     % [s]
 
@@ -36,6 +36,9 @@ fprintf([num2str(numSBASUsers), ' WAAS users\n'])
 fprintf('Building satellite constellation: ')
 satellite = sgt.Satellite.fromYuma(almanac);
 fprintf([num2str(length(satellite)), ' satellites\n'])
+
+%% Specify GEO Satellite Orbits
+% TODO
 
 %% Calculate Satellite Positions over time
 fprintf('Calculating satellite positions over time...\n')
