@@ -44,7 +44,10 @@ classdef SBASMasterStation < matlab.mixin.Copyable
             
             % Number of sbasReferenceObservations
             [~, timeLength] = size(sbasReferenceObservation);
+            
+            satellitePRN = sbasReferenceObservation(1).SatellitePRN;
             numSats = length(sbasReferenceObservation(1).SatellitePRN); obj.NumSats = numSats;
+            geoSatellites = satellitePRN >= 120;   % Used to see if there are geo satellites present. 120 is minimum GEO PRN
             
             % Get varargin inputs
             if (nargin > 1)
@@ -70,6 +73,17 @@ classdef SBASMasterStation < matlab.mixin.Copyable
                 feval(customUDREI, obj);
             else
                 obj.UDREI = 11*ones(numSats, timeLength);  % Assume constant UDREI of 11 for GPS Satellites
+                % Allocate WAAS UDREI
+                if any(geoSatellites)
+                    if any(satellitePRN == 137)
+                        idx = satellitePRN == 137;
+                        obj.UDREI(idx,:) = 13*ones(1, timeLength);
+                    end
+                    if any(satellitePRN == 138)
+                        idx = satellitePRN == 138;
+                        obj.UDREI(idx,:) = 13*ones(1, timeLength);
+                    end
+                end
             end
             % Calculate MT28
             if (exist('res', 'var') == 1) && (isfield(res, 'CustomMT28') == 1) && (~isempty(res.CustomMT28))
@@ -77,6 +91,21 @@ classdef SBASMasterStation < matlab.mixin.Copyable
             else
                 mt28 = eye(4); mt28(4,4) = 0; mt28 = {mt28};
                 obj.MT28 = repmat(mt28, [numSats, timeLength]);
+                % Allocate MT28 for WAAS PRNs
+                if any(geoSatellites)     % Minimum GEO PRN
+                    if any(satellitePRN == 137)
+                        idx = satellitePRN == 137;
+                        tempR = [157, 484, 48, 510; 0, 63, -11, 58; 0, 0, 38, 4; 0, 0, 0, 1];
+                        tempCov = {tempR'*tempR};
+                        obj.MT28(idx,:) = repmat(tempCov, [1, timeLength]);
+                    end
+                    if any(satellitePRN == 138)
+                        idx = satellitePRN == 138;
+                        tempR = [317, 312, 41, 446; 0, 41, -59, 22; 0, 0, 28, 3; 0, 0, 0, 1];
+                        tempCov = {tempR'*tempR};
+                        obj.MT28(idx,:) = repmat(tempCov, [1, timeLength]);
+                    end
+                end
             end
             
             % Create IGP Data

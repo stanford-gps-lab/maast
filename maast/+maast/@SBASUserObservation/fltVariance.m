@@ -22,7 +22,7 @@ for i = 1:numSats
         dUDRE = sqrt([obj.LOSecef(i,:), 1]*mt28{i}*[obj.LOSecef(i,:)'; 1])...
             + waasMOPSConstants.CCovariance;    %TODO: Add scale factor for GEOs
         
-        obj.Sig2FLT(i) = obj.Sig2UDRE(i)*dUDRE.^2;
+        obj.Sig2FLT(i) = obj.Sig2UDRE(i)*dUDRE^2;
     end
 end
 end
