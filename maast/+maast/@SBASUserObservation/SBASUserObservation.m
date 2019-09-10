@@ -77,7 +77,7 @@ classdef SBASUserObservation < sgt.UserObservation
             end
             
             % Get varargin inputs
-            if nargin > 3
+            if (nargin > 4)
                 res = parsemaastSBASUserObservationInput(varargin{:});
                 
                 % Add custom functions to path
