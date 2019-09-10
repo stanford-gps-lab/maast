@@ -28,7 +28,7 @@ fprintf('\nLicenses in Use:\n')
 license('inuse') %  This helps in development to ensure that only MATLAB is being used.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%% Check to see that only the 'matlab' license is used %%%%%%%%%%%
+%%% Check to see that only the 'matlab' and 'statistics' license is used %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 diary off
