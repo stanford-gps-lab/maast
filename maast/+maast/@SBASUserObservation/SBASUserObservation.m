@@ -187,6 +187,7 @@ classdef SBASUserObservation < sgt.UserObservation
     % Public Methods
     methods
         getIPP(obj)
+        [vir, hir] = getSBASVHIR(obj)
     end
     
     % Static Methods

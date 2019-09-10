@@ -70,12 +70,3 @@ waasUserObservation(numSBASUsers, timeLength) = maast.SBASUserObservation;  % Pr
 for i = 1:numSBASUsers
     waasUserObservation(i,:) = maast.SBASUserObservation(waasUserGrid.Users(i), satellitePosition, waasMasterStation, igpFile);
 end
-
-
-
-
-
-
-
-
-

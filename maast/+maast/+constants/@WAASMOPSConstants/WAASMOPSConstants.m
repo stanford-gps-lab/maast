@@ -52,6 +52,12 @@ classdef WAASMOPSConstants < matlab.mixin.Copyable
         
         % KHNPA - K value for non-precision approach HPL calculations
         KHNPA = 6.18;
+        
+        % VALLPV200 - Vertical Alert Limit for LPV200 approaches
+        VALLPV200 = 35;
+        
+        % HALLPV200 - Horizontal Alert Limit fo LPV200 approaches
+        HALLPV200 = 40;
     end
     
     % Properties set in constructor
