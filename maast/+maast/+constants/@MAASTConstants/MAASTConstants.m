@@ -3,7 +3,8 @@ classdef MAASTConstants < matlab.mixin.Copyable
     %    Grab a MAASTConstants object by using var =
     %    maast.constants.MAASTConstants.
     
-    properties
+    % Constant Properties
+    properties (Constant)
         % L1Frequency - [Hz] L1 center frequency
         L1Frequency = 1575.42e6;
         
@@ -12,7 +13,10 @@ classdef MAASTConstants < matlab.mixin.Copyable
         
         % IonoAlt - [m] Altitude of the ionospheric grid points
         IonoAlt = 350000;
-        
+    end
+    
+    % Properties set in constructor
+    properties
         % IonoRadius - [m] Radius of the Ionosphere
         IonoRadius
     end
@@ -20,11 +24,8 @@ classdef MAASTConstants < matlab.mixin.Copyable
     % Constructor
     methods
         function obj = MAASTConstants()
-            % Import earth constants
-            earthConstants = sgt.constants.EarthConstants;
-            
             % Calculate Ionoradius
-            obj.IonoRadius = obj.IonoAlt + earthConstants.R;
+            obj.IonoRadius = obj.IonoAlt + sgt.constants.EarthConstants.R;
         end
     end
 end

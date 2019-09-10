@@ -35,11 +35,11 @@ catch
 end
 
 %% Test 2 - Constructor - Single user at multiple times
-% try
+try
     test2 = maast.SBASReferenceObservation(referenceStation, satellitePosition2);
-% catch
-%     testResults(2) = 1;
-% end
+catch
+    testResults(2) = 1;
+end
 
 %% Test 3 - obj.fromsgtUserObservation - Single user
 try
@@ -67,7 +67,7 @@ end
 try
    test5 = maast.SBASReferenceObservation(referenceStation, satellitePosition, 'CustomTropoVariance', customTropoVariance);
    
-   if (isempty(test5.Sig2Tropo)) || (test5.Sig2Tropo ~= -1)
+   if (isempty(test5.Sig2Tropo)) || (any(test5.Sig2Tropo ~= -1))
       testResults(5) = 1; 
    end
 catch
