@@ -17,6 +17,9 @@ classdef SBASMasterStation < matlab.mixin.Copyable
         % NumSats - number of satellites observed.
         NumSats
         
+        % t - time vector
+        t
+        
         % UDRE - User Differential Range Error Indicator for each satellite at each
         %time. Is an SxT matrix for S satellites and T times.
         UDREI
@@ -42,8 +45,9 @@ classdef SBASMasterStation < matlab.mixin.Copyable
                 return;
             end
             
-            % Number of sbasReferenceObservations
-            [~, timeLength] = size(sbasReferenceObservation);
+            % Length of time
+            obj.t = sbasReferenceObservation(1).t;
+            timeLength = length(obj.t);
             
             satellitePRN = sbasReferenceObservation(1).SatellitePRN;
             numSats = length(sbasReferenceObservation(1).SatellitePRN); obj.NumSats = numSats;

@@ -44,7 +44,7 @@ end
 try
     test3 = maast.SBASMasterStation(sbasReferenceObservation, igpFile, 'CustomUDREI', customUDREI);
     
-    if (test3.UDREI ~= -1*ones(test3.NumSats, test3.NumRefObs))
+    if (mean(test3.UDREI, 'all') ~= -1)
         testResults(3) = 1;
     end
 catch
