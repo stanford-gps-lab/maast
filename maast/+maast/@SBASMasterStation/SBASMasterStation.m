@@ -46,7 +46,7 @@ classdef SBASMasterStation < matlab.mixin.Copyable
             end
             
             % Length of time
-            obj.t = sbasReferenceObservation(1).t;
+            obj.t = [sbasReferenceObservation.t]';
             timeLength = length(obj.t);
             
             satellitePRN = sbasReferenceObservation(1).SatellitePRN;

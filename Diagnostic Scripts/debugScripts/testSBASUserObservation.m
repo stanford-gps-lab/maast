@@ -23,20 +23,28 @@ user = userGrid.Users(1);
 userObservation = sgt.UserObservation(user, satellitePosition);
 userObservation2 = sgt.UserObservation(user, satellitePosition2);
 
+referenceGrid = maast.SBASReferenceStationGrid.createReferenceStationGrid('LLHFile', 'wrs_foc.dat');
+referenceObservation = maast.SBASReferenceObservation(referenceGrid.Users(1), satellitePosition);
+referenceObservation2 = maast.SBASReferenceObservation(referenceGrid.Users(1), satellitePosition2);
+
+igpFile = 'igpjoint_R8_9.dat';
+sbasMasterStation = maast.SBASMasterStation(referenceObservation, igpFile);
+sbasMasterStation2 = maast.SBASMasterStation(referenceObservation2, igpFile);
+
 homedir = pwd;
 customTropoVariance = [homedir, '\CustomFunctions\customTropoVariance.m'];
 customCNMPVariance = [homedir, '\CustomFunctions\customCNMPVariance.m'];
 
 %% Test 1 - Constructor - Single user
 try
-    test1 = maast.SBASUserObservation(sbasUser, satellitePosition);
+    test1 = maast.SBASUserObservation(sbasUser, satellitePosition, sbasMasterStation, igpFile);
 catch
     testResults(1) = 1;
 end
 
 %% Test 2 - Constructor - Single user at multiple times
 try
-    test2 = maast.SBASUserObservation(sbasUser, satellitePosition2);
+    test2 = maast.SBASUserObservation(sbasUser, satellitePosition2, sbasMasterStation2, igpFile);
 catch
     testResults(2) = 1;
 end
@@ -65,7 +73,7 @@ end
 
 %% Test 5 - Constructor - use varargin to test custom tropo variance
 try
-   test5 = maast.SBASUserObservation(sbasUser, satellitePosition, 'CustomTropoVariance', customTropoVariance);
+   test5 = maast.SBASUserObservation(sbasUser, satellitePosition, sbasMasterStation, igpFile, 'CustomTropoVariance', customTropoVariance);
    
    if (isempty(test5.Sig2Tropo)) || (test5.Sig2Tropo ~= -1)
       testResults(5) = 1; 
@@ -76,7 +84,7 @@ end
 
 %% Test 6 - Constructor - use varargin to test custom cnmp variance
 try
-   test6 = maast.SBASUserObservation(sbasUser, satellitePosition, 'CustomCNMPVariance', customCNMPVariance);
+   test6 = maast.SBASUserObservation(sbasUser, satellitePosition, sbasMasterStation, igpFile, 'CustomCNMPVariance', customCNMPVariance);
    
    if (isempty(test6.Sig2CNMP)) || (test6.Sig2CNMP ~= -1)
       testResults(6) = 1; 
