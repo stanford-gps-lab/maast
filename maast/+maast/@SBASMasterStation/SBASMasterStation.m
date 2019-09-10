@@ -47,7 +47,7 @@ classdef SBASMasterStation < matlab.mixin.Copyable
             
             satellitePRN = sbasReferenceObservation(1).SatellitePRN;
             numSats = length(sbasReferenceObservation(1).SatellitePRN); obj.NumSats = numSats;
-            geoSatellites = satellitePRN >= 120;   % Used to see if there are geo satellites present. 120 is minimum GEO PRN
+            geoSatellites = satellitePRN >= maast.constants.WAASMOPSConstants.MinGEOPRN;   % Used to see if there are geo satellites present. 120 is minimum GEO PRN
             
             % Get varargin inputs
             if (nargin > 1)

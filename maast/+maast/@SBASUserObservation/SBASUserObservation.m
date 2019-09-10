@@ -177,11 +177,8 @@ classdef SBASUserObservation < sgt.UserObservation
                         obj(i).calculateSig2;   % Use built in Sig2 method
                     end
                     
-                    % Calculate SBAS VPL
-                    obj(i).getSBASVPL;
-                    
-                    % Calculate SBAS HPL
-                    obj(i).getSBASHPL;
+                    % Calculate SBAS VPL and HPL
+                    obj(i).getSBASVHPL;
                 end
             end
         end
@@ -205,8 +202,7 @@ classdef SBASUserObservation < sgt.UserObservation
         fltVariance(obj, mt28);
         uiveVariance(obj, givei, igpData);
         calculateSig2(obj);
-        getSBASVPL(obj);
-        getSBASHPL(obj);
+        getSBASVHPL(obj);
     end
 end
 

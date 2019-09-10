@@ -6,7 +6,8 @@ classdef WAASMOPSConstants < matlab.mixin.Copyable
     % 'init_cnmp_mops.m'. Context for these values will be added in the
     % future.
     
-    properties
+    % Constant properties
+    properties (Constant)
         %CNMPA0 - [m]
         CNMPA0 = 0.13;
         
@@ -37,6 +38,24 @@ classdef WAASMOPSConstants < matlab.mixin.Copyable
         % DoNotUse - flag to indicate sat or igp is not safe
         DoNotUse = -18;
         
+        % CCovariance - MT10 parameter for MT28
+        CCovariance = 0;
+        
+        % MinGEOPRN - Minimum GEO PRN
+        MinGEOPRN = 120;
+        
+        % KVPA - K value for VPL calculations
+        KVPA = 5.33;
+        
+        % KHPA - K value for precision approach HPL calculations
+        KHPA = 6.0;
+        
+        % KHNPA - K value for non-precision approach HPL calculations
+        KHNPA = 6.18;
+    end
+    
+    % Properties set in constructor
+    properties
         % UDRE - UDRE values given in WAAS MOPS
         UDRE
         
@@ -45,9 +64,6 @@ classdef WAASMOPSConstants < matlab.mixin.Copyable
         
         % Sig2GIVE - Variance values for GIVE given in WAAS MOPS
         Sig2GIVE
-        
-        % CCovariance - MT10 parameter for MT28
-        CCovariance = 0;
     end
     
     % Constructor
