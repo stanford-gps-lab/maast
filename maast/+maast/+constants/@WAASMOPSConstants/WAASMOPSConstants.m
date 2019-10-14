@@ -52,12 +52,15 @@ classdef WAASMOPSConstants < matlab.mixin.Copyable
         
         % KVPA - K value for VPL calculations
         KVPA = 5.33;
+%         KVPA = 6.33;
         
         % KHPA - K value for precision approach HPL calculations
         KHPA = 6.0;
+%         KHPA = 6.907;
         
         % KHNPA - K value for non-precision approach HPL calculations
         KHNPA = 6.18;
+%         KHNPA = 7.065;
         
         % VALLPV200 - Vertical Alert Limit for LPV200 approaches
         VALLPV200 = 35;
