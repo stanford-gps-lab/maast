@@ -1,6 +1,12 @@
 function [] = initIGPData(obj,igpfile)
 % Function created mostly from original code that was used to create
 % IGPData. To be replaced at a later date.
+
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details. Questions and comments
+%   should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast
     
 maastConstants = maast.constants.MAASTConstants;
 ionoAlt = maastConstants.IonoAlt;

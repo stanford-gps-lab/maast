@@ -2,6 +2,12 @@ function [] = fltVariance(obj, mt28)
 % This function calculates the fast/long-term variance for sbas user
 % observations given udre and mt28 information.
 
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details. Questions and comments
+%   should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast
+
 % Handle empty objects
 if (isempty(obj.UserLL))
     return;

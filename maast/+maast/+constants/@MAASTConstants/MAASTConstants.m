@@ -3,6 +3,12 @@ classdef MAASTConstants < matlab.mixin.Copyable
     %    Grab a MAASTConstants object by using var =
     %    maast.constants.MAASTConstants.
     
+    % Copyright 2019 Stanford University GPS Laboratory
+    %   This file is part of MAAST which is released under the MIT License.
+    %   See `LICENSE.txt` for full license details. Questions and comments
+    %   should be directed to the project at:
+    %   https://github.com/stanford-gps-lab/maast
+    
     % Constant Properties
     properties (Constant)
         % L1Frequency - [Hz] L1 center frequency

@@ -2,6 +2,12 @@ function [] = calculateSig2(obj)
 % This function calculates the line of sight variance to all satellites
 % that are monitored according to the WAAS MOPS.
 
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details. Questions and comments
+%   should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast
+
 % Preallocate
 obj.Sig2 = NaN(length(obj.SatellitePRN),1);
 

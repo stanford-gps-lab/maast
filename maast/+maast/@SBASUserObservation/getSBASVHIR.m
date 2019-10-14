@@ -2,6 +2,12 @@ function [vir, hir] = getSBASVHIR(obj)
 % obj.getVHIR calculates the Vertical and Horizontal Integrity Risk for
 % specified alert levels
 
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details. Questions and comments
+%   should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast
+
 % Preallocate
 [numUsers, timeLength] = size(obj);
 vir = NaN(numUsers, timeLength);

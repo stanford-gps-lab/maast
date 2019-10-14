@@ -3,6 +3,12 @@ function getIPP(obj)
 % points. This code is from the original maast and will likely be changed
 % or replaced in the future.
 
+% Copyright 2019 Stanford University GPS Laboratory
+%   This file is part of MAAST which is released under the MIT License.
+%   See `LICENSE.txt` for full license details. Questions and comments
+%   should be directed to the project at:
+%   https://github.com/stanford-gps-lab/maast
+
 % Handle empty input
 if (isempty(obj.UserLL))
     return;
