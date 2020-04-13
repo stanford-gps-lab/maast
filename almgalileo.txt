@@ -1,0 +1,450 @@
+******** Week   703 almanac for GAL-01 ********
+ID:                         75
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.0
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-02 ********
+ID:                         76
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.6981317008E+000
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-03 ********
+ID:                         77
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.1396263402E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-04 ********
+ID:                         78
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.2094395402E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-05 ********
+ID:                         79
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.2792526803E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-06 ********
+ID:                         80
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.3490658504E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-07 ********
+ID:                         81
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.4188790205E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-08 ********
+ID:                         82
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.4886921906E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-09 ********
+ID:                         83
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.5585053606E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-10 ********
+ID:                         84
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.2326523893E+000
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-11 ********
+ID:                         85
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.9307840901E+000
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-12 ********
+ID:                         86
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.1628915791E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-13 ********
+ID:                         87
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.2327047492E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-14 ********
+ID:                         88
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.3025179192E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-15 ********
+ID:                         89
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.3723310893E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-16 ********
+ID:                         90
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.4421442594E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-17 ********
+ID:                         91
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.5119574295E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-18 ********
+ID:                         92
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.5817705996E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-19 ********
+ID:                         93
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.4653047786E+000
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-20 ********
+ID:                         94
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.1163436479E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-21 ********
+ID:                         95
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.1861568180E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-22 ********
+ID:                         96
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.2559699881E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-23 ********
+ID:                         97
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.3257831582E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-24 ********
+ID:                         98
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.3955963283E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-25 ********
+ID:                         99
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.4654094983E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-26 ********
+ID:                         100
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.5352226684E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-27 ********
+ID:                         101
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.6050358385E+001
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-28 ********
+ID:                         102
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.0
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.3490658504E+000
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-29 ********
+ID:                         103
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.2094395102E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.3490658504E+000
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+
+******** Week   703 almanac for GAL-30 ********
+ID:                         104
+Health:                     000
+Eccentricity:               0.0
+Time of Applicability(s):   344063.0000
+Orbital Inclination(rad):   0.9773843811
+Rate of Right Ascen(r/s):   0.0
+SQRT(A)  (m 1/2):           5476.510752
+Right Ascen at TOA(rad):    0.4188790205E+01
+Argument of Perigee(rad):   0.0
+Mean Anom(rad):             0.3490658504E+000
+Af0(s):                     0.0000000000E+000
+Af1(s/s):                   0.0000000000E+000
+week:                        703
+

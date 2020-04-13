@@ -35,7 +35,7 @@ gridudrei = griddata(sat_llh(:,2),sat_llh(:,1),udrei(:),gridlon,gridlat,...
 nlat = length(svlat);
 nlon = length(svlon);
 
-ticklabels=num2str(MOPS_UDRE');
+ticklabels=num2str(MOPS_UDRE', 3);
 ticklabels(MOPS_UDREI_NM,:)=' NM ';
 ticklabels(MOPS_UDREI_DNU,:)='DNU ';
 

@@ -1,4 +1,4 @@
-function avail=avail_contour(lats, lons, vpl, hpl, isinbnd,percent,vhal,pa_mode)
+function [avail, coverage] =avail_contour(lats, lons, vpl, hpl, isinbnd,percent,vhal,pa_mode)
 %*************************************************************************
 %*     Copyright c 2007 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
@@ -47,6 +47,11 @@ end
 idx=find(avail==1);
 if(~isempty(idx))
   avail(idx)=GRAPH_AVAIL_CONTOURS(n_levels)+10*eps;
+end
+
+idx=find(avail==0);
+if(~isempty(idx))
+  avail(idx)=NaN;
 end
 
 %calculate coverage

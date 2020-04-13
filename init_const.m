@@ -1,6 +1,6 @@
 function init_const()
 %*************************************************************************
-%*     Copyright c 2007 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2013 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -17,6 +17,8 @@ function init_const()
 % References: 	Parkinson, et. al., GPS Theory and Applications, V. 1,
 %		AIAA, 1996.
 % AJHansen 12 May 1997			Initial coding
+% Added more precision to TEC2L1M
+
 
 global CONST_C CONST_F1 CONST_F2 CONST_F5 CONST_LAMBDA1 CONST_LAMBDA2 CONST_LAMBDA5
 global CONST_R_SV CONST_MU_E CONST_OMEGA_E CONST_R_E CONST_FLAT_E
@@ -50,7 +52,7 @@ CONST_GAMMA        = (CONST_F1/CONST_F2)^2; % ionospheric constant for L1/L2
 CONST_K_TEC        = CONST_F1^2*CONST_F2^2/(CONST_F1^2+CONST_F2^2)/40.3;
 CONST_SEC_PER_DAY  = 24*3600;
 CONST_SEC_PER_WEEK = 7*CONST_SEC_PER_DAY;
-CONST_TEC2L1M      = 0.163;
+CONST_TEC2L1M      = 0.16240549;
 
 CONST_R_GEO        = 42241095.8;
 CONST_H_GEO        = CONST_R_GEO - CONST_R_E;

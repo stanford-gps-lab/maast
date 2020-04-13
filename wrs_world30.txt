@@ -1,0 +1,31 @@
+1  -35.40   149.00   0  0 % Canberra
+2   2.00   -157.40   0  0 % Christmas Island
+3   11.50   42.90    0  0 % Djibouti
+4  -27.15  -109.38   0  0 % Easter Island
+5  -18.10  -178.40   0  0 % Fiji
+6  -0.74   -90.30    0  0 % Galapagos Island
+7  -25.89   27.71    0  0 % Hartebeesthoek
+8  -49.35   70.26    0  0 % Kerguelen
+9   67.86   20.97    0  0 % Kiruna
+10  5.25   -52.81    0  0 % Kourou
+11  55.99   92.79    0  0 % Krasnoyarsk
+12  0.35    9.67     0  0 % Libreville
+13  26.90   81.00    0  0 % Lucknow
+14  59.60   150.80   0  0 % Magadan
+15  30.60   131.00   0  0 % Masuda
+16 -31.05   116.19   0  0 % New Norcia
+17 -22.27   166.41   0  0 % Noumea
+18 -17.58  -149.61   0  0 % Papeete
+19 -9.40    147.20   0  0 % Port Moresby
+20 -21.20   55.60    0  0 % Reunion Island
+21 -23.00  -43.00    0  0 % Rio de Janeiro
+22 -53.79  -67.75    0  0 % Rio Grande
+23 -33.15  -70.67    0  0 % Santiago de Chile
+24  20.00  -76.20    0  0 % Santiago de Cuba
+25  46.50  -56.20    0  0 % St. Pierre & Miq.
+26  43.40   1.50     0  0 % Toulouse
+27  8.29    76.57    0  0 % Trivandrum
+28  49.00  -123.00   0  0 % Vancouver
+29 -71.70  -2.80     0  0 % Vesleskarvet
+30  62.50  -114.50   0  0 % Yellowknife
+%usrconus.txt

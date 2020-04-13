@@ -32,7 +32,7 @@ while(isstr(line))
   end
   line=fgets(fid);
 end
-%conuspoly = load('usrconus.dat');
+%conuspoly = load('usrconus.txt');
 
 if(~isempty(polyname))
   conuspoly = load(polyname);

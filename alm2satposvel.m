@@ -41,10 +41,10 @@ n0=sqrt(CONST_MU_E./axis.^3);
 
 %Modification
 Tk=time-alm_param(:,3);
-Tk = mod(Tk,604800);
-if Tk>302400
-    Tk = Tk - 604800;
-end
+% Tk = mod(Tk,604800); % commented out ensure continuous time results
+% if Tk>302400
+%     Tk = Tk - 604800;
+% end
 
 eccen=alm_param(:,2);
 Mk=alm_param(:,9)+n0.*Tk;

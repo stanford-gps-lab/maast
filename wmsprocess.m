@@ -5,7 +5,7 @@ function [satdata,igpdata,wrs2satdata] = wmsprocess(alm_param, satdata,...
                             trise, inv_igp_mask, truth_data, dual_freq)
                             
 %*************************************************************************
-%*     Copyright c 2007 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2013 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -22,23 +22,32 @@ function [satdata,igpdata,wrs2satdata] = wmsprocess(alm_param, satdata,...
 % WMS Processing
 
 global MOPS_SIN_WRSMASK CONST_H_IONO
-global COL_SAT_PRN COL_SAT_XYZ COL_USR_XYZ COL_USR_LL COL_SAT_SIG2CP ...
-        COL_SAT_UDREI COL_USR_EHAT COL_USR_NHAT COL_USR_UHAT  COL_IGP_LL ...
-        COL_IGP_UPMGIVEI COL_U2S_UID COL_U2S_PRN COL_U2S_LOSXYZ COL_U2S_GXYZB ...
+global COL_SAT_PRN COL_SAT_XYZ COL_USR_XYZ COL_USR_LL ...
+        COL_USR_EHAT COL_USR_NHAT COL_USR_UHAT  COL_IGP_LL ...
+        COL_IGP_GIVEI COL_IGP_UPMGIVEI COL_U2S_PRN COL_U2S_GXYZB ...
         COL_U2S_LOSENU COL_U2S_GENUB COL_U2S_EL COL_U2S_AZ COL_U2S_SIG2TRP ...
         COL_U2S_SIG2L1MP COL_U2S_SIG2L2MP COL_U2S_IPPLL COL_U2S_IPPXYZ ...
-        COL_U2S_TTRACK0 COL_U2S_IVPP COL_U2S_MAX COL_U2S_INITNAN 
-global UDRE_SIG2_WRECLK
-global CNMP_TL1 CNMP_TL2 CNMP_TL3
-global MOPS_MAX_GPSPRN MOPS_MIN_GEOPRN
+        COL_U2S_TTRACK0 COL_U2S_IVPP COL_U2S_INITNAN 
+global CNMP_TL3
+global MOPS_MIN_GPSPRN MOPS_MAX_GPSPRN MOPS_MIN_GLOPRN MOPS_MAX_GLOPRN 
+global MOPS_MIN_GALPRN MOPS_MAX_GALPRN MOPS_MIN_GEOPRN MOPS_MAX_GEOPRN
+global MOPS_MIN_BDUPRN MOPS_MAX_BDUPRN
 global TRUTH_FLAG CONST_R_E CONST_R_IONO;
 
 nsat = size(satdata,1);
 nwrs = size(wrsdata,1);
-nlos = nsat*nwrs;
-sgps=find(satdata(:,COL_SAT_PRN) <= MOPS_MAX_GPSPRN);
-sgeo=find(satdata(:,COL_SAT_PRN) >= MOPS_MIN_GEOPRN);
-ngeo=length(sgeo);
+sgps=find(satdata(:,COL_SAT_PRN) >= MOPS_MIN_GPSPRN & ...
+          satdata(:,COL_SAT_PRN) <= MOPS_MAX_GPSPRN);
+sglo=find(satdata(:,COL_SAT_PRN) >= MOPS_MIN_GLOPRN & ...
+          satdata(:,COL_SAT_PRN) <= MOPS_MAX_GLOPRN);
+sgal=find(satdata(:,COL_SAT_PRN) >= MOPS_MIN_GALPRN & ...
+          satdata(:,COL_SAT_PRN) <= MOPS_MAX_GALPRN);
+sbdu=find(satdata(:,COL_SAT_PRN) >= MOPS_MIN_BDUPRN & ...
+          satdata(:,COL_SAT_PRN) <= MOPS_MAX_BDUPRN);
+sgnss =[sgps; sglo; sgal; sbdu];
+
+sgeo=find(satdata(:,COL_SAT_PRN) >= MOPS_MIN_GEOPRN & ...
+          satdata(:,COL_SAT_PRN) <= MOPS_MAX_GEOPRN);
 
 % initialize some values to NaN
 wrs2satdata(:,COL_U2S_INITNAN) = NaN;
@@ -107,41 +116,53 @@ for i=1:length(abv_mask)
     end
 end
 
-ttrack = time-wrs2satdata(:,COL_U2S_TTRACK0) + 1; 
-gps=find(wrs2satdata(:,COL_U2S_PRN) <= MOPS_MAX_GPSPRN);
-geo=find(wrs2satdata(:,COL_U2S_PRN) >= MOPS_MIN_GEOPRN);
+ttrack = time-wrs2satdata(:,COL_U2S_TTRACK0) + 1;
+wgps=find(wrs2satdata(:,COL_U2S_PRN) >= MOPS_MIN_GPSPRN & ...
+          wrs2satdata(:,COL_U2S_PRN) <= MOPS_MAX_GPSPRN);
+wglo=find(wrs2satdata(:,COL_U2S_PRN) >= MOPS_MIN_GLOPRN & ...
+          wrs2satdata(:,COL_U2S_PRN) <= MOPS_MAX_GLOPRN);
+wgal=find(wrs2satdata(:,COL_U2S_PRN) >= MOPS_MIN_GALPRN & ...
+          wrs2satdata(:,COL_U2S_PRN) <= MOPS_MAX_GALPRN);
+wbdu=find(wrs2satdata(:,COL_U2S_PRN) >= MOPS_MIN_BDUPRN & ...
+          wrs2satdata(:,COL_U2S_PRN) <= MOPS_MAX_BDUPRN);
+wgnss =sort([wgps; wglo; wgal; wbdu]);
+
+wgeo=find(wrs2satdata(:,COL_U2S_PRN) >= MOPS_MIN_GEOPRN & ...
+          wrs2satdata(:,COL_U2S_PRN) <= MOPS_MAX_GEOPRN);
 
 % cnmp
 if ~isempty(wrsgpscnmpfun)
 %  wrs2satdata(gps,COL_U2S_SIG2L1MP) = feval('af_cnmpl1add',ttrack(gps),el(gps));
 %  wrs2satdata(gps,COL_U2S_SIG2L2MP) = feval(wrsgpscnmpfun,ttrack(gps),el(gps));
-  wrs2satdata(gps,COL_U2S_SIG2L1MP) = feval(wrsgpscnmpfun,ttrack(gps),el(gps));
-  wrs2satdata(gps,COL_U2S_SIG2L2MP) = wrs2satdata(gps,COL_U2S_SIG2L1MP);  
+  wrs2satdata(wgnss,COL_U2S_SIG2L1MP) = feval(wrsgpscnmpfun,ttrack(wgnss),el(wgnss));
+  wrs2satdata(wgnss,COL_U2S_SIG2L2MP) = wrs2satdata(wgnss,COL_U2S_SIG2L1MP);  
 end
 if ~isempty(wrsgeocnmpfun)
-  wrs2satdata(geo,COL_U2S_SIG2L1MP) = feval(wrsgeocnmpfun,ttrack(geo),el(geo));
-  wrs2satdata(geo,COL_U2S_SIG2L2MP) = wrs2satdata(geo,COL_U2S_SIG2L1MP);
+  wrs2satdata(wgeo,COL_U2S_SIG2L1MP) = feval(wrsgeocnmpfun,ttrack(wgeo),el(wgeo));
+  wrs2satdata(wgeo,COL_U2S_SIG2L2MP) = wrs2satdata(wgeo,COL_U2S_SIG2L1MP);
 end
 
 % udre
-satdata(sgps,:) = feval(gpsudrefun, satdata(sgps,:), wrsdata, ...
-                        wrs2satdata(gps,:), 1);
+satdata(sgnss,:) = feval(gpsudrefun, satdata(sgnss,:), wrsdata, ...
+                        wrs2satdata(wgnss,:), 1);
 
 % give
 if(~dual_freq)
-    igpdata = feval(givefun, time, igpdata, wrsdata, satdata(sgps,:), ...
-                    wrs2satdata(gps,:), truth_data);
+    igpdata = feval(givefun, time, igpdata, wrsdata, satdata(sgnss,:), ...
+                    wrs2satdata(wgnss,:), truth_data);
 
-    % GEO udre
-    sig2_uive = repmat(NaN,nlos,1);
-    %interpolate the UPM GIVEIs to the GEO LOSs
-    wrs2satdata(geo,COL_U2S_SIG2L2MP)=grid2uive(wrs2satdata(geo,COL_U2S_IPPLL), ...
+    %interpolate the SP and UPM GIVEIs to the GEO LOSs
+    wrs2satdata(wgeo,COL_U2S_IVPP)=grid2uive(wrs2satdata(wgeo,COL_U2S_IPPLL), ...
+                                                igpdata(:,COL_IGP_LL), ...
+                                                inv_igp_mask, ...
+                                                igpdata(:,COL_IGP_GIVEI));        
+    wrs2satdata(wgeo,COL_U2S_SIG2L2MP)=grid2uive(wrs2satdata(wgeo,COL_U2S_IPPLL), ...
                                                 igpdata(:,COL_IGP_LL), ...
                                                 inv_igp_mask, ...
                                                 igpdata(:,COL_IGP_UPMGIVEI));
 end
 
 satdata(sgeo,:) = feval(geoudrefun, satdata(sgeo,:), wrsdata, ...
-                        wrs2satdata(geo,:), 1, dual_freq);
+                        wrs2satdata(wgeo,:), 1, dual_freq);
 
 

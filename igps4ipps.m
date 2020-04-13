@@ -185,7 +185,7 @@ end
 
 %TODO add calculation for -75 to -85
 
-%TODO finish calculation for beyond 85 region
+%TODO finish calculation for above 85 region
 
 %compute for 85 degrees and above
 i=find(ll_ipp(:,1)>85.0);
@@ -193,14 +193,22 @@ if(~isempty(i))
 
   %specify the 4 IGPs
   lat_idx=85/IGPmask_increment - IGPmask_min_lat/IGPmask_increment + 1;
-  IGPs(i,1)=inv_IGPmask(lat_idx,180/IGPmask_increment + 1);
-  IGPs(i,2)=inv_IGPmask(lat_idx,270/IGPmask_increment + 1);
-  IGPs(i,3)=inv_IGPmask(lat_idx,0/IGPmask_increment + 1);
-  IGPs(i,4)=inv_IGPmask(lat_idx,90/IGPmask_increment + 1);
+  lon_idx = floor(ll_ipp(i,2)/90.0)*90.0;
+  IGPs(i,1)=inv_IGPmask(lat_idx,rem(lon_idx+180,360)/IGPmask_increment + 1);
+  IGPs(i,2)=inv_IGPmask(lat_idx,rem(lon_idx+270,360)/IGPmask_increment + 1);
+  IGPs(i,3)=inv_IGPmask(lat_idx,lon_idx/IGPmask_increment + 1);
+  IGPs(i,4)=inv_IGPmask(lat_idx,rem(lon_idx+90,360)/IGPmask_increment + 1);
+
+  % calculate the x and y for the SW corner
+  xyIPP(i,2)=(ll_ipp(i,1)-85.0)/10.0;
+  xyIPP(i,1)=((ll_ipp(i,2)-lon_idx)/90).*(1 - 2*xyIPP(i,2)) + xyIPP(i,2);
+
+  % check for number in the mask 
+  nBadIGPs(i) = sum((IGPs(i,:)'==MOPS_NOT_IN_MASK))';
 end
 
 %compute for -85 degrees and below
-i=find(ll_ipp(:,1)>85.0);
+i=find(ll_ipp(:,1)<-85.0);
 if(~isempty(i))
 
   %specify the 4 IGPs

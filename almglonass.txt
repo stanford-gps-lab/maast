@@ -1,0 +1,345 @@
+******** Week   703 almanac for GLO-715 ********
+ID:                         38
+Health:                     000
+Eccentricity:               0.0016025
+Time of Applicability(s):   101153.0000
+Orbital Inclination(rad):   1.150034096
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.540462
+Right Ascen at TOA(rad):    10.58473917
+Argument of Perigee(rad):   3.043033911
+Mean Anom(rad):             2.331958848
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-716 ********
+ID:                         39
+Health:                     000
+Eccentricity:               0.0022619
+Time of Applicability(s):   125740.0000
+Orbital Inclination(rad):   1.15000268
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.521463
+Right Ascen at TOA(rad):    10.58450160
+Argument of Perigee(rad):   5.937859697
+Mean Anom(rad):             2.379086229
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-717 ********
+ID:                         40
+Health:                     000
+Eccentricity:               0.0016738
+Time of Applicability(s):   184459.0000
+Orbital Inclination(rad):   1.150287169
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.537563
+Right Ascen at TOA(rad):    16.86826726
+Argument of Perigee(rad):   3.061839833
+Mean Anom(rad):             5.801839207
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-719 ********
+ID:                         41
+Health:                     000
+Eccentricity:               0.0011835
+Time of Applicability(s):   130606.0000
+Orbital Inclination(rad):   1.13372923
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.578240
+Right Ascen at TOA(rad):    6.41448911
+Argument of Perigee(rad):   5.965207261
+Mean Anom(rad):             5.704207234
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-720 ********
+ID:                         42
+Health:                     000
+Eccentricity:               0.0001925
+Time of Applicability(s):   147425.0000
+Orbital Inclination(rad):   1.133502337
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.589933
+Right Ascen at TOA(rad):    12.69681276
+Argument of Perigee(rad):   3.961223705
+Mean Anom(rad):             4.827299713
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-721 ********
+ID:                         43
+Health:                     000
+Eccentricity:               0.0002181
+Time of Applicability(s):   95235.0000
+Orbital Inclination(rad):   1.143448969
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.540122
+Right Ascen at TOA(rad):    10.58314376
+Argument of Perigee(rad):   2.635590288
+Mean Anom(rad):             2.574344939
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-723 ********
+ID:                         44
+Health:                     000
+Eccentricity:               0.0017482
+Time of Applicability(s):   95626.0000
+Orbital Inclination(rad):   1.143674116
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.538755
+Right Ascen at TOA(rad):    10.58357446
+Argument of Perigee(rad):   6.025155831
+Mean Anom(rad):             0.845692308
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-724 ********
+ID:                         45
+Health:                     000
+Eccentricity:               0.0022956
+Time of Applicability(s):   100028.0000
+Orbital Inclination(rad):   1.132017062
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.533107
+Right Ascen at TOA(rad):    6.40508248
+Argument of Perigee(rad):   5.825045105
+Mean Anom(rad):             2.754740425
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-725 ********
+ID:                         46
+Health:                     000
+Eccentricity:               0.0020807
+Time of Applicability(s):   188648.0000
+Orbital Inclination(rad):   1.132174142
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.549041
+Right Ascen at TOA(rad):    12.68856512
+Argument of Perigee(rad):   3.174853393
+Mean Anom(rad):             4.212106058
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-728 ********
+ID:                         47
+Health:                     000
+Eccentricity:               0.0004748
+Time of Applicability(s):   186377.0000
+Orbital Inclination(rad):   1.118668784
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.549184
+Right Ascen at TOA(rad):    14.76965807
+Argument of Perigee(rad):   5.770107376
+Mean Anom(rad):             3.042538237
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-730 ********
+ID:                         48
+Health:                     000
+Eccentricity:               0.0005285
+Time of Applicability(s):   183155.0000
+Orbital Inclination(rad):   1.122782525
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.546979
+Right Ascen at TOA(rad):    14.77337876
+Argument of Perigee(rad):   5.929825947
+Mean Anom(rad):             3.199801129
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-731 ********
+ID:                         49
+Health:                     000
+Eccentricity:               0.0029745
+Time of Applicability(s):   180230.0000
+Orbital Inclination(rad):   1.131765735
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.542658
+Right Ascen at TOA(rad):    12.68465062
+Argument of Perigee(rad):   6.195557561
+Mean Anom(rad):             5.402493912
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-732 ********
+ID:                         50
+Health:                     000
+Eccentricity:               0.0001799
+Time of Applicability(s):   95070.0000
+Orbital Inclination(rad):   1.131463793
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.545060
+Right Ascen at TOA(rad):    6.40175813
+Argument of Perigee(rad):   2.785932949
+Mean Anom(rad):             1.095946343
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-733 ********
+ID:                         51
+Health:                     000
+Eccentricity:               0.0006387
+Time of Applicability(s):   120928.0000
+Orbital Inclination(rad):   1.122470111
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.549460
+Right Ascen at TOA(rad):    8.48988319
+Argument of Perigee(rad):   2.493084154
+Mean Anom(rad):             5.628521031
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-734 ********
+ID:                         52
+Health:                     000
+Eccentricity:               0.0003113
+Time of Applicability(s):   122163.0000
+Orbital Inclination(rad):   1.122564359
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.546671
+Right Ascen at TOA(rad):    8.48980335
+Argument of Perigee(rad):   0.667591930
+Mean Anom(rad):             2.158220048
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-735 ********
+ID:                         53
+Health:                     000
+Eccentricity:               0.0006083
+Time of Applicability(s):   164892.0000
+Orbital Inclination(rad):   1.131645307
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.542271
+Right Ascen at TOA(rad):    12.68465987
+Argument of Perigee(rad):   1.691077438
+Mean Anom(rad):             5.964838997
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-736 ********
+ID:                         54
+Health:                     000
+Eccentricity:               0.0020366
+Time of Applicability(s):   176994.0000
+Orbital Inclination(rad):   1.136431
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.540019
+Right Ascen at TOA(rad):    16.87959949
+Argument of Perigee(rad):   0.119823834
+Mean Anom(rad):             2.045574753
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-737 ********
+ID:                         55
+Health:                     000
+Eccentricity:               0.0034709
+Time of Applicability(s):   108022.0000
+Orbital Inclination(rad):   1.136390857
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.539577
+Right Ascen at TOA(rad):    10.59705756
+Argument of Perigee(rad):   2.996156112
+Mean Anom(rad):             4.981482099
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-738 ********
+ID:                         56
+Health:                     000
+Eccentricity:               0.0020336
+Time of Applicability(s):   176719.0000
+Orbital Inclination(rad):   1.136106369
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.542563
+Right Ascen at TOA(rad):    16.87895596
+Argument of Perigee(rad):   2.796670215
+Mean Anom(rad):             0.101599106
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-742 ********
+ID:                         57
+Health:                     000
+Eccentricity:               0.0006456
+Time of Applicability(s):   187560.0000
+Orbital Inclination(rad):   1.128371069
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.546908
+Right Ascen at TOA(rad):    14.77155995
+Argument of Perigee(rad):   4.804130467
+Mean Anom(rad):             2.659742154
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-744 ********
+ID:                         58
+Health:                     000
+Eccentricity:               0.0014816
+Time of Applicability(s):   187587.0000
+Orbital Inclination(rad):   1.128041202
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.545937
+Right Ascen at TOA(rad):    14.77357609
+Argument of Perigee(rad):   4.600186999
+Mean Anom(rad):             3.656682949
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-745 ********
+ID:                         59
+Health:                     000
+Eccentricity:               0.0012987
+Time of Applicability(s):   180159.0000
+Orbital Inclination(rad):   1.128180828
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.546735
+Right Ascen at TOA(rad):    14.77409215
+Argument of Perigee(rad):   4.642610717
+Mean Anom(rad):             5.604555915
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+
+******** Week   703 almanac for GLO-746 ********
+ID:                         60
+Health:                     000
+Eccentricity:               0.0012391
+Time of Applicability(s):   186542.0000
+Orbital Inclination(rad):   1.131987392
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5050.542421
+Right Ascen at TOA(rad):    12.68650603
+Argument of Perigee(rad):   4.099849971
+Mean Anom(rad):             6.100555800
+Af0(s):                     0
+Af1(s/s):                   0
+week:                        703
+

@@ -22,9 +22,9 @@ function sig2=af_cnmp_mops(del_t,el)
 %created 12 October, 2007 by Todd Walter
 
 global CNMP_MOPS_A0 CNMP_MOPS_A1 CNMP_MOPS_THETA0
-global CNMP_MOPS_B0 CNMP_MOPS_B1 CNMP_MOPS_PHI0 CNMP_MOPS_PHI1
+global CNMP_MOPS_B0 CNMP_MOPS_B1 CNMP_MOPS_PHI0 
 
 sig2 = (CNMP_MOPS_A0 + CNMP_MOPS_A1*exp(-el/CNMP_MOPS_THETA0)).^2 +...
-    (CNMP_MOPS_B0 - CNMP_MOPS_B1*(el - CNMP_MOPS_PHI0)/CNMP_MOPS_PHI1).^2;
+       (CNMP_MOPS_B0 + CNMP_MOPS_B1*exp(-el/CNMP_MOPS_PHI0)).^2;
 
    

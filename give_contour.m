@@ -72,6 +72,9 @@ if(span360 < span180)
   plot(GRAPH_LL_WORLD(:,2)+360-dx,GRAPH_LL_WORLD(:,1)+dy,'w');
   plot(GRAPH_LL_STATE(:,2)+360-dx,GRAPH_LL_STATE(:,1)+dy,'w:');
   xticklabel=get(gca,'XTickLabel');
+  if iscell(xticklabel)
+      xticklabel = cell2mat(xticklabel);
+  end
   xticks=str2num(xticklabel);
   idx=find(xticks>=180);
   xticks(idx)=xticks(idx)-360;

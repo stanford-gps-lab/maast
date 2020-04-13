@@ -42,5 +42,5 @@ xyz2enu(:,3,2) = xyz2enu(:,1,1).*xyz2enu(:,2,3);
 xyz2enu(:,1,1) = -xyz2enu(:,1,1);
 
 if(n == 1)
-  xyz2enu=reshape(xyz2enu,3,3)';
+  xyz2enu=reshape(xyz2enu,3,3);
 end

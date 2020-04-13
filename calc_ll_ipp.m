@@ -35,7 +35,14 @@ sin_psi_pp=sin(psi_pp);
 ll_ipp(:,1)=asin(sin(ll_usr(:,1)).*cos(psi_pp) +...
                  cos(ll_usr(:,1)).*sin_psi_pp.*cos(az));
 
-%calulate IPP longitude
+%calulate IPP longitude TEMPORARY FIX THERE SHOULD NOT NEED TO BE A CALL TO
+%REAL
+% ll_ipp(:,2)=ll_usr(:,2) + real(asin(sin_psi_pp.*sin(az)./cos(ll_ipp(:,1))));
 ll_ipp(:,2)=ll_usr(:,2) + asin(sin_psi_pp.*sin(az)./cos(ll_ipp(:,1)));
+
+% fix ipps that look across the poles
+idx = find((ll_usr(:,1) > 70*pi/180 & tan(psi_pp).*cos(az) > tan(pi/2 - ll_usr(:,1))) | ...
+           (ll_usr(:,1) < -70*pi/180 & tan(psi_pp).*cos(az + pi) > tan(pi/2 + ll_usr(:,1))));
+ll_ipp(idx,2) = ll_ipp(idx,2) + pi;
 
 %[ll_usr el az ll_ipp]*180/pi

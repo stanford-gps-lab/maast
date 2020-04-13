@@ -50,8 +50,8 @@ GUI_UDREGEO_ALGO = {'af_geoadd','af_geoadd2','af_geoconst',...
                     'af_geocustom1','af_geocustom2'};
 GUI_GIVE_ALGO    = {'af_giveadd','af_giveadd1','af_giveconst',...
                     'af_giveadd2',''};
-GUI_IGPMASK_DAT  = {'igpjoint.dat','igpjoint_R6_7.dat', 'igpjoint_R8_9.dat',...
-                    'igpegnos.dat', 'igpmsas.dat', 'igpbrazil.dat'};
+GUI_IGPMASK_DAT  = {'igpjoint.txt','igpjoint_R6_7.txt', 'igpjoint_R8_9.txt',...
+                    'igpegnos.txt', 'igpmsas.txt', 'igpbrazil.txt'};
 GUI_USRTRP_ALGO  = {'af_trpmops','af_trpadd'};
 GUI_WRSCNMP_ALGO = {'af_cnmpadd','af_cnmpagg','af_wrscnmpcustom'};
 GUI_USRCNMP_ALGO = {'af_cnmp_mops','af_cnmpaad','af_cnmpaad'};
@@ -73,11 +73,11 @@ GUI_USR_MENU = {'CONUS','Alaska','Canada','Mexico','N. America','Europe',...
 GUI_SV_MENU = {'Alm MOPS','Alm Yuma'};
 GUI_GEO_MENU = {'AOR/POR','waasAOR','waasPOR','Custom'};
 
-GUI_WRS_DAT = {'wrs25.dat','wrs_R6_7.dat','wrs_R8_9.dat','egnos_rims.dat', ...
-               'rs_msas.dat','brazil_wrs.dat','wrs_world16.dat','wrs_world30.dat','',''};
-GUI_USR_DAT = {'usrconus.dat','usralaska.dat','usrcanada.dat','usrmexico.dat',...
-               'usrn_america.dat','usreurope.dat','usrmsas.dat','usrbrazil.dat','usrworld.dat'};
-GUI_SV_DAT = {'almmops.dat','almyuma.dat'};
+GUI_WRS_DAT = {'wrs25.txt','wrs_R6_7.txt','wrs_R8_9.txt','egnos_rims.txt', ...
+               'rs_msas.txt','brazil_wrs.txt','wrs_world16.txt','wrs_world30.txt','',''};
+GUI_USR_DAT = {'usrconus.txt','usralaska.txt','usrcanada.txt','usrmexico.txt',...
+               'usrn_america.txt','usreurope.txt','usrmsas.txt','usrbrazil.txt','usrworld.txt'};
+GUI_SV_DAT = {'almmops.txt','almyuma.txt'};
 GUI_GEO_DAT = {'GEO1','GEO2','GEO3','GEO4','GEO5','GEO6','GEO7','GEO8','GEO9',...
                'GEO10','GEO11'};
 
@@ -258,11 +258,11 @@ GUI_GPS_HNDL = findobj('Tag',GUI_GPS_TAG);
 GUI_GALILEO_HNDL = findobj('Tag',GUI_GALILEO_TAG);
 
 %GEO position menu buttons 
-%search through geo.dat and find PRNs latitudes and button names
-load geo.dat;
+%search through geo.txt and find PRNs latitudes and button names
+load geo.txt;
 GUI_GEOPOS_DAT=geo;
 ngeo=size(geo,1);
-fid=fopen('geo.dat');
+fid=fopen('geo.txt');
 line='%';
 while(ischar(line))
   if(line(1) ~= '%')

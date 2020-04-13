@@ -1,0 +1,359 @@
+******* Week   1745 almanac for BDU-M3 *******
+ID:                         174
+Health:                     000
+Eccentricity:               0.0023319
+Time of Applicability(s):   154342.0000
+Orbital Inclination(rad):   0.9657133644
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.604557
+Right Ascen at TOA(rad):    9.75719343
+Argument of Perigee(rad):   3.384626261
+Mean Anom(rad):             0.5158
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-M4 *******
+ID:                         175
+Health:                     000
+Eccentricity:               0.0026266
+Time of Applicability(s):   155691.0000
+Orbital Inclination(rad):   0.9645370125
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.614911
+Right Ascen at TOA(rad):    9.74878510
+Argument of Perigee(rad):   3.266196945
+Mean Anom(rad):             1.3012    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX1 ******
+ID:                         176
+Health:                     000
+Eccentricity:               0.0026266
+Time of Applicability(s):   155691.0000
+Orbital Inclination(rad):   0.9645370125
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.614911
+Right Ascen at TOA(rad):    9.74878510
+Argument of Perigee(rad):   3.266196945
+Mean Anom(rad):             2.0866    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX2 ******
+ID:                         177
+Health:                     000
+Eccentricity:               0.0026266
+Time of Applicability(s):   155691.0000
+Orbital Inclination(rad):   0.9645370125
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.614911
+Right Ascen at TOA(rad):    9.74878510
+Argument of Perigee(rad):   3.266196945
+Mean Anom(rad):             2.8720    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX3 ******
+ID:                         178
+Health:                     000
+Eccentricity:               0.0026266
+Time of Applicability(s):   155691.0000
+Orbital Inclination(rad):   0.9645370125
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.614911
+Right Ascen at TOA(rad):    9.74878510
+Argument of Perigee(rad):   3.266196945
+Mean Anom(rad):             3.6574    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX4 ******
+ID:                         179
+Health:                     000
+Eccentricity:               0.0026266
+Time of Applicability(s):   155691.0000
+Orbital Inclination(rad):   0.9645370125
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.614911
+Right Ascen at TOA(rad):    9.74878510
+Argument of Perigee(rad):   3.266196945
+Mean Anom(rad):             4.4428    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX5 ******
+ID:                         180
+Health:                     000
+Eccentricity:               0.0026266
+Time of Applicability(s):   155691.0000
+Orbital Inclination(rad):   0.9645370125
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.614911
+Right Ascen at TOA(rad):    9.74878510
+Argument of Perigee(rad):   3.266196945
+Mean Anom(rad):             5.2282    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX6 ******
+ID:                         181
+Health:                     000
+Eccentricity:               0.0026266
+Time of Applicability(s):   155691.0000
+Orbital Inclination(rad):   0.9645370125
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.614911
+Right Ascen at TOA(rad):    9.74878510
+Argument of Perigee(rad):   3.266196945
+Mean Anom(rad):             6.0136
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-M5 *******
+ID:                         183
+Health:                     000
+Eccentricity:               0.0024935
+Time of Applicability(s):   209278.0000
+Orbital Inclination(rad):   0.9581525981
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.613105
+Right Ascen at TOA(rad):    18.12963850
+Argument of Perigee(rad):   3.273129393
+Mean Anom(rad):             5.1903    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX8 ******
+ID:                         184
+Health:                     000
+Eccentricity:               0.0024935
+Time of Applicability(s):   209278.0000
+Orbital Inclination(rad):   0.9581525981
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.613105
+Right Ascen at TOA(rad):    18.12963850
+Argument of Perigee(rad):   3.273129393
+Mean Anom(rad):             5.9757    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX9 ******
+ID:                         185
+Health:                     000
+Eccentricity:               0.0024935
+Time of Applicability(s):   209278.0000
+Orbital Inclination(rad):   0.9581525981
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.613105
+Right Ascen at TOA(rad):    18.12963850
+Argument of Perigee(rad):   3.273129393
+Mean Anom(rad):             0.4779    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX10 *****
+ID:                         186
+Health:                     000
+Eccentricity:               0.0024935
+Time of Applicability(s):   209278.0000
+Orbital Inclination(rad):   0.9581525981
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.613105
+Right Ascen at TOA(rad):    18.12963850
+Argument of Perigee(rad):   3.273129393
+Mean Anom(rad):             1.2633    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX11 *****
+ID:                         187
+Health:                     000
+Eccentricity:               0.0024935
+Time of Applicability(s):   209278.0000
+Orbital Inclination(rad):   0.9581525981
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.613105
+Right Ascen at TOA(rad):    18.12963850
+Argument of Perigee(rad):   3.273129393
+Mean Anom(rad):             2.0487    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX12 *****
+ID:                         188
+Health:                     000
+Eccentricity:               0.0024935
+Time of Applicability(s):   209278.0000
+Orbital Inclination(rad):   0.9581525981
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.613105
+Right Ascen at TOA(rad):    18.12963850
+Argument of Perigee(rad):   3.273129393
+Mean Anom(rad):             2.8341    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX13 *****
+ID:                         189
+Health:                     000
+Eccentricity:               0.0024935
+Time of Applicability(s):   209278.0000
+Orbital Inclination(rad):   0.9581525981
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.613105
+Right Ascen at TOA(rad):    18.12963850
+Argument of Perigee(rad):   3.273129393
+Mean Anom(rad):             3.6195    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX14 *****
+ID:                         190
+Health:                     000
+Eccentricity:               0.0024935
+Time of Applicability(s):   209278.0000
+Orbital Inclination(rad):   0.9581525981
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.613105
+Right Ascen at TOA(rad):    18.12963850
+Argument of Perigee(rad):   3.273129393
+Mean Anom(rad):             4.4049
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX16 ******
+ID:                         192
+Health:                     000
+Eccentricity:               0.0018018
+Time of Applicability(s):   147512.0000
+Orbital Inclination(rad):   0.9599607592
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.609190
+Right Ascen at TOA(rad):    1.3796
+Argument of Perigee(rad):   3.660878721
+Mean Anom(rad):             3.5101    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX17 ******
+ID:                         193
+Health:                     000
+Eccentricity:               0.0018018
+Time of Applicability(s):   147512.0000
+Orbital Inclination(rad):   0.9599607592
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.609190
+Right Ascen at TOA(rad):    1.3796
+Argument of Perigee(rad):   3.660878721
+Mean Anom(rad):             4.2955    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX18 ******
+ID:                         194
+Health:                     000
+Eccentricity:               0.0018018
+Time of Applicability(s):   147512.0000
+Orbital Inclination(rad):   0.9599607592
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.609190
+Right Ascen at TOA(rad):    1.3796
+Argument of Perigee(rad):   3.660878721
+Mean Anom(rad):             5.0809    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX19 ******
+ID:                         195
+Health:                     000
+Eccentricity:               0.0018018
+Time of Applicability(s):   147512.0000
+Orbital Inclination(rad):   0.9599607592
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.609190
+Right Ascen at TOA(rad):    1.3796
+Argument of Perigee(rad):   3.660878721
+Mean Anom(rad):             5.8663    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX20 ******
+ID:                         196
+Health:                     000
+Eccentricity:               0.0018018
+Time of Applicability(s):   147512.0000
+Orbital Inclination(rad):   0.9599607592
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.609190
+Right Ascen at TOA(rad):    1.3796
+Argument of Perigee(rad):   3.660878721
+Mean Anom(rad):             0.3685    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX21 ******
+ID:                         197
+Health:                     000
+Eccentricity:               0.0018018
+Time of Applicability(s):   147512.0000
+Orbital Inclination(rad):   0.9599607592
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.609190
+Right Ascen at TOA(rad):    1.3796
+Argument of Perigee(rad):   3.660878721
+Mean Anom(rad):             1.1539    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX22 ******
+ID:                         198
+Health:                     000
+Eccentricity:               0.0018018
+Time of Applicability(s):   147512.0000
+Orbital Inclination(rad):   0.9599607592
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.609190
+Right Ascen at TOA(rad):    1.3796
+Argument of Perigee(rad):   3.660878721
+Mean Anom(rad):             1.9393    
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745
+
+******* Week   1745 almanac for BDU-MX23 ******
+ID:                         199
+Health:                     000
+Eccentricity:               0.0018018
+Time of Applicability(s):   147512.0000
+Orbital Inclination(rad):   0.9599607592
+Rate of Right Ascen(r/s):   0
+SQRT(A)  (m 1/2):           5282.609190
+Right Ascen at TOA(rad):    1.3796
+Argument of Perigee(rad):   3.660878721
+Mean Anom(rad):             2.7247
+Af0(s):                     0
+Af1(s/s):                   0
+week:                       1745

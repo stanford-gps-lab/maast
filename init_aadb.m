@@ -18,8 +18,8 @@ function init_aadb()
 
 global AAD_A0 AAD_A1 AAD_THETA0
 
-AAD_A0     = 0.0741;  % meters
-AAD_A1     = 0.18;    % meters
-AAD_THETA0 = 27.7*pi/180.0;   % radians
+AAD_A0     = 0.11;  % meters
+AAD_A1     = 0.13;    % meters
+AAD_THETA0 = 4*pi/180.0;   % radians
 
    

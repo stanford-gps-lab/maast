@@ -1,7 +1,7 @@
 function [igpdata,inv_igp_mask] = init_igpdata(igpfile)
 
 %*************************************************************************
-%*     Copyright c 2007 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -20,7 +20,7 @@ function [igpdata,inv_igp_mask] = init_igpdata(igpfile)
 global CONST_H_IONO;
 global COL_IGP_BAND COL_IGP_ID COL_IGP_LL COL_IGP_XYZ COL_IGP_WORKSET ...
         COL_IGP_EHAT COL_IGP_NHAT COL_IGP_MAGLAT COL_IGP_CORNERDEN ...
-        COL_IGP_GIVEI COL_IGP_FLOORI COL_IGP_MAX
+        COL_IGP_FLOORI COL_IGP_MAX
 igpraw = sortrows(load(igpfile),[3,4]);
 igp_mask = igpraw(:,3:4);
 
@@ -52,8 +52,7 @@ ll_give=([igp_mask(:,1)+2.5 igp_mask(:,2)+2.5 ...
           igp_mask(:,1)-2.5 igp_mask(:,2)+2.5 ...
           igp_mask(:,1)-2.5 igp_mask(:,2)-2.5]);
 %look for band 9 IGPs
-B9 = find(igpraw(:,1) == 9);
-if isempty(B9)
+if ~any(igpraw(:,1) == 9)
     %adjust IGPs at or above 55 degrees for larger cells
     idx=find(igp_mask(:,1)==55);
     if ~isempty(idx)
@@ -137,7 +136,7 @@ igp_mag_lat=igp_mask(:,1) + 0.064*180*cos(igp_mask_rad(:,2)-1.617*pi);
 %find the inverse IGP mask
 inv_igp_mask=find_inv_IGPmask(igp_mask);
 
-igpdata = repmat(NaN,n_igp,COL_IGP_MAX);
+igpdata = zeros(n_igp,COL_IGP_MAX);
 igpdata(:,COL_IGP_BAND) = igpraw(:,1);
 igpdata(:,COL_IGP_ID) = igpraw(:,2);
 igpdata(:,COL_IGP_LL) = igp_mask;

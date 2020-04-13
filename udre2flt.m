@@ -1,7 +1,7 @@
-function sig2_flt=UDRE2flt(los_xyzb, prn, sig2_udre, mt28_cov, mt28_sf)
+function sig_flt = udre2flt(los_xyzb, prn, sig_udre, mt28_cov, mt28_sf)
 
 %*************************************************************************
-%*     Copyright c 2001 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -12,7 +12,7 @@ function sig2_flt=UDRE2flt(los_xyzb, prn, sig2_udre, mt28_cov, mt28_sf)
 %
 %UDRE2FLT      calculates fast/long-term variance given UDREs and MT28 info
 %
-%SIG2_FLT=UDRE2FLT(LOS_XYZB, PRN, SIG2UDRE, MT28_COV, MT28_SF)
+%SIG_FLT=UDRE2FLT(LOS_XYZB, PRN, SIG2UDRE, MT28_COV, MT28_SF)
 %   Given n_los of user lines of sight vectors in ECEF WGS-84 coordinates 
 %   (X in first column, Y in second column ...) in LOS_XYZ(nlos,4), the
 %   corresponding satellite PRN numbers in PRN (n_los,1), the UDREs as
@@ -29,20 +29,20 @@ function sig2_flt=UDRE2flt(los_xyzb, prn, sig2_udre, mt28_cov, mt28_sf)
 %   See also: GRID2UIVE
 
 %2001Mar12 Created by Todd Walter
-
+%2020Apr10 Modified by Todd Walter to return sigma instead of sigma^2
 
 global MOPS_NOT_MONITORED MOPS_C_COVARIANCE;
 
 %initialize return value
-[n_los temp]=size(los_xyzb);
-sig2_flt=repmat(MOPS_NOT_MONITORED,n_los,1);
+[n_los , ~]=size(los_xyzb);
+sig_flt=repmat(MOPS_NOT_MONITORED,n_los,1);
 
 
 for ipair=1:n_los
   dUDRE=sqrt(los_xyzb(ipair,:)*mt28_cov(:,:,prn(ipair))*los_xyzb(ipair,:)')...
                     + MOPS_C_COVARIANCE*mt28_sf(prn(ipair));
 
-  sig2_flt(ipair) = sig2_udre(prn(ipair))*dUDRE^2;
+  sig_flt(ipair) = sig_udre(prn(ipair))*dUDRE;
 
 end
 

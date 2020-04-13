@@ -17,9 +17,9 @@ global GUI_GIVE_MENU
 global GUI_UDREGPS_ALGO GUI_UDREGEO_ALGO GUI_GIVE_ALGO GUI_IGPMASK_DAT ...
         GUI_WRSCNMP_ALGO GUI_USRCNMP_ALGO GUI_GPS_SV ...
         GUI_GALILEO_SV
-global GUI_UDREGPS_INIT GUI_UDREGEO_INIT GUI_GIVE_INIT GUI_WRSTRP_INIT ...
-        GUI_USRTRP_INIT GUI_WRSCNMP_INIT GUI_USRCNMP_INIT 
-global GUI_WRS_DAT GUI_USR_DAT GUI_SV_DAT GUI_GEOPOS_DAT 
+global GUI_UDREGPS_INIT GUI_UDREGEO_INIT GUI_GIVE_INIT  ...
+         GUI_WRSCNMP_INIT GUI_USRCNMP_INIT 
+global GUI_WRS_DAT GUI_USR_DAT  GUI_GEOPOS_DAT 
 global GUI_UDREGPS_HNDL GUI_UDREGEO_HNDL GUI_GIVE_HNDL GUI_IGPMASK_HNDL ...
         GUI_WRSCNMP_HNDL GUI_USRCNMP_HNDL ...
         GUI_WRS_HNDL GUI_WRSPB_HNDL GUI_USR_HNDL GUI_SV_HNDL GUI_GEO_HNDL ...
@@ -39,7 +39,7 @@ global MOPS_VAL MOPS_HAL MOPS_NPA_HAL
 if ismember(hndl,GUI_UDREGPS_HNDL)
     gui_mexclude(GUI_UDREGPS_HNDL,hndl);
 	%only activate popup menu if constant is selected
-	if(hndl == GUI_UDREGPS_HNDL(3))
+    if(hndl == GUI_UDREGPS_HNDL(3))
 		set(GUI_UDRECONST_HNDL, 'Enable', 'on');
 	else
 		set(GUI_UDRECONST_HNDL, 'Enable', 'off');
@@ -47,15 +47,15 @@ if ismember(hndl,GUI_UDREGPS_HNDL)
 elseif ismember(hndl,GUI_UDREGEO_HNDL)
     gui_mexclude(GUI_UDREGEO_HNDL,hndl);
 	%only activate popup menu if constant is selected
-	if(hndl == GUI_UDREGEO_HNDL(3))
+    if(hndl == GUI_UDREGEO_HNDL(3))
 		set(GUI_GEOCONST_HNDL, 'Enable', 'on');
-	else
+    else
 		set(GUI_GEOCONST_HNDL, 'Enable', 'off');
     end
 elseif ismember(hndl,GUI_GIVE_HNDL)
     gui_mexclude(GUI_GIVE_HNDL,hndl);
 	%only activate popup menu if constant is selected
-	if(hndl == GUI_GIVE_HNDL(3))
+    if(hndl == GUI_GIVE_HNDL(3))
 		set(GUI_GIVECONST_HNDL, 'Enable', 'on');
 	else
 		set(GUI_GIVECONST_HNDL, 'Enable', 'off');
@@ -80,7 +80,7 @@ elseif hndl == GUI_GALILEO_HNDL
     if (get(GUI_GPS_HNDL,'Value') + get(GUI_GALILEO_HNDL,'Value')) == 0
         set(GUI_GPS_HNDL,'Value', 1);
     end    
-    if get(GUI_GALILEO_HNDL,'Value');
+    if get(GUI_GALILEO_HNDL,'Value')
         set(GUI_SV_HNDL(2),'Value', 0, 'Enable', 'off');
         set(GUI_WEEKNUM_HNDL, 'Enable', 'off');
         set(GUI_SV_HNDL(1),'Value', 1);
@@ -89,7 +89,7 @@ elseif hndl == GUI_GALILEO_HNDL
         set(GUI_WEEKNUM_HNDL, 'Enable', 'on');
     end
 elseif ismember(hndl,GUI_GEO_HNDL)
-    ;   % do nothing
+       % do nothing
 elseif ismember(hndl,GUI_PAMODE_HNDL)
     gui_mexclude(GUI_PAMODE_HNDL,hndl);
     if get(GUI_PAMODE_HNDL(2),'Value')
@@ -99,8 +99,8 @@ elseif ismember(hndl,GUI_PAMODE_HNDL)
         set(GUI_VAL_HNDL, 'Enable', 'on');
         set(GUI_HAL_HNDL, 'String', num2str(MOPS_HAL));        
     end
-elseif ismember(hndl,GUI_OUT_HNDL),
-    ;   % do nothing
+elseif ismember(hndl,GUI_OUT_HNDL)
+       % do nothing
 elseif ismember(hndl,SETTINGS_TR_HNDL)   % Settings Truth-Data input menu
     gui_mexclude([SETTINGS_TR_HNDL SETTINGS_BR_HNDL], hndl)
     if (hndl == SETTINGS_TR_HNDL(1))
@@ -135,11 +135,11 @@ elseif ismember(hndl, SETTINGS_BR_HNDL)
 elseif hndl == SETTINGS_CLOSE_HNDL
     set(SETTINGS_WIND_HNDL, 'Visible', 'Off');
 elseif ismember(hndl, GUISET_RUN_HNDL)
-    ;   % do nothing
-else,   % Other non-option buttons
+       % do nothing
+else   % Other non-option buttons
 
-    switch (hndl),
-    case {GUI_RUN_HNDL,GUI_PLOT_HNDL,GUI_WRSPB_HNDL(1),GUI_WRSPB_HNDL(2)},
+    switch (hndl)
+    case {GUI_RUN_HNDL,GUI_PLOT_HNDL,GUI_WRSPB_HNDL(1),GUI_WRSPB_HNDL(2)}
 
     % READ SELECTIONS FROM EACH MENU
     
@@ -175,7 +175,7 @@ else,   % Other non-option buttons
           feval(GUI_UDREGPS_INIT{i});
         end
         % check udre constant
-        if strcmp(gpsudrefun,'af_udreconst'),
+        if strcmp(gpsudrefun,'af_udreconst')
             UDREI_CONST = get(GUI_UDRECONST_HNDL,'Value');
         end
 
@@ -187,8 +187,12 @@ else,   % Other non-option buttons
           feval(GUI_UDREGEO_INIT{i});
         end
         % check udre constant
-        if strcmp(geoudrefun,'af_geoconst'),
+        if strcmp(geoudrefun,'af_geoconst')
             GEOUDREI_CONST = get(GUI_GEOCONST_HNDL,'Value');
+        end
+        % see if geo cnmp function needs to be initialized
+        if strcmp(geoudrefun,'af_geoadd2')
+            init_geo_cnmp;
         end
 
 
@@ -200,7 +204,7 @@ else,   % Other non-option buttons
           feval(GUI_GIVE_INIT{i});
         end
         % check give constant
-        if strcmp(givefun,'af_giveconst'),
+        if strcmp(givefun,'af_giveconst')
             GIVEI_CONST = get(GUI_GIVECONST_HNDL,'Value');
         end
         % check dual frequency
@@ -267,17 +271,17 @@ else,   % Other non-option buttons
         
         i = gui_readselect(GUI_SV_HNDL);        
         % check week number for almanac
-        if i==2, % using yuma
-            svfile = ['almyuma'  get(GUI_WEEKNUM_HNDL,'String')  '.dat']; 
+        if i==2 % using yuma
+            svfile = ['almyuma'  get(GUI_WEEKNUM_HNDL,'String')  '.txt']; 
         else
             if GUI_GPS_SV
                 if GUI_GALILEO_SV
-                  svfile = {'almmops.dat', 'almgalileo.dat'};
+                  svfile = {'almmops.txt', 'almgalileo.txt'};
                 else
-                  svfile = 'almmops.dat';
+                  svfile = 'almmops.txt';
                 end
             else     
-                svfile =  'almgalileo.dat';
+                svfile =  'almgalileo.txt';
             end
         end
         % check if file(s) exist
@@ -289,10 +293,10 @@ else,   % Other non-option buttons
             fid=fopen(svfile);
             i = size(svfile,2);
           end
-          if fid==-1,
+          if fid==-1
               fprintf('Almanac file not found.  Please try again.\n');
               return;
-          else,
+          else
               fclose(fid);
           end 
           i=i+1;
@@ -309,7 +313,7 @@ else,   % Other non-option buttons
         %end
         TStep = gui_readnum(GUI_TSTEP_HNDL,1,inf,...
             'Please input valid TStep and run again.');
-        if isnan(TStart) | isnan(TEnd) | isnan(TStep) 
+        if isnan(TStart) || isnan(TEnd) || isnan(TStep) 
             return;
         end
 
@@ -334,9 +338,9 @@ else,   % Other non-option buttons
     % RUN Simulation
 
     
-        if hndl==GUI_RUN_HNDL,
+        if hndl==GUI_RUN_HNDL
             % do simulation run
-            if (RTR_FLAG & ~TRUTH_FLAG)
+            if (RTR_FLAG && ~TRUTH_FLAG)
                 fprintf('Can''t use Real Time R-irreg without using Real Data');
                 return;
             end;
@@ -372,7 +376,7 @@ else,   % Other non-option buttons
             set(SETTINGS_WIND_HNDL, 'Visible', 'On');
         end;
 
-    otherwise,
+    otherwise
         disp('Function not yet operational.');
     end
 end    

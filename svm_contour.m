@@ -3,7 +3,7 @@ function svm_contour(lons, lats, data, cnt_int, tick_text, colors, ...
 
 
 %*************************************************************************
-%*     Copyright c 2007 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2013 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -17,7 +17,7 @@ global GRAPH_LL_WORLD GRAPH_LL_STATE
 if nargin < 8, loc = 'horiz'; end;
 
 
-c=contourf(lons,lats,data,cnt_int);
+c=contourf(lons,lats,data,cnt_int, 'LineColor', 'none');
 
 %get the existing colormap
 m=colormap;
@@ -79,6 +79,12 @@ plot(GRAPH_LL_WORLD(:,2)+dx,GRAPH_LL_WORLD(:,1)-dy,'k');
 plot(GRAPH_LL_STATE(:,2)+dx,GRAPH_LL_STATE(:,1)-dy,'k:');
 plot(GRAPH_LL_WORLD(:,2)-dx,GRAPH_LL_WORLD(:,1)+dy,'w');
 plot(GRAPH_LL_STATE(:,2)-dx,GRAPH_LL_STATE(:,1)+dy,'w:');
+if ax(1) < -180
+    plot(GRAPH_LL_WORLD(:,2)+dx - 360,GRAPH_LL_WORLD(:,1)-dy,'k');
+    plot(GRAPH_LL_STATE(:,2)+dx - 360,GRAPH_LL_STATE(:,1)-dy,'k:');
+    plot(GRAPH_LL_WORLD(:,2)-dx - 360,GRAPH_LL_WORLD(:,1)+dy,'w');
+    plot(GRAPH_LL_STATE(:,2)-dx - 360,GRAPH_LL_STATE(:,1)+dy,'w:');
+end
 xlabel('Longitude (deg)', 'FontSize', 12);
 ylabel('Latitude (deg)', 'FontSize', 12);
-
+axis(ax)
