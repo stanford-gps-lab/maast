@@ -40,7 +40,7 @@ llh(:,3) = p./cos(llh(:,1)) - r_N;
 old_H  = -1e-9;
 num    = xyz(:,3)./p;
 
-while abs(llh(:,3)- old_H) > 1e-4
+while any(abs(llh(:,3)- old_H) > 1e-4)
 
 	  old_H  = llh(:,3);
 	  den    =  1- e2 * r_N./(r_N+llh(:,3));

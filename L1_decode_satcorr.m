@@ -67,7 +67,7 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
     
     idx = svdata.mt6_time - svdata.mt2_fc_time(:,1) > 0;
     if any(idx)
-        tudrei(idx) = time - svdata.mt6_time(idx); 
+        tudrei(idx) = time - svdata.mt6_time; 
         svdata.udrei(idx) = svdata.mt6_udrei(idx);
     end
         
@@ -133,8 +133,9 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
     end
     % put in the ltc degradations for the GEOs
     idx = ~isnan(svdata.geo_deg);
-    if any(idx)
+    if any(idx) && svdata.mt1_ngeo
         k = svdata.mt1_ngps + svdata.mt1_nglo + (1:svdata.mt1_ngeo);
+        idx = idx(1:svdata.mt1_ngeo);
         eps_ltc_deg(k(idx)) = svdata.geo_deg(idx);
     end    
     

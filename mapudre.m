@@ -29,7 +29,9 @@ svlon = [-180:5:179];
 [t1,t2] = meshgrid(svlat,svlon);
 gridlat = t1(:);
 gridlon = t2(:);
-gridudrei = griddata(sat_llh(:,2),sat_llh(:,1),udrei(:),gridlon,gridlat,...
+udrei = udrei(:);
+idx = ~isnan(sat_llh(:,2)) & ~isnan(sat_llh(:,1)) & ~isnan(udrei(:));
+gridudrei = griddata(sat_llh(idx,2),sat_llh(idx,1),udrei(idx),gridlon,gridlat,...
                      'nearest');
 
 nlat = length(svlat);

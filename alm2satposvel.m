@@ -1,6 +1,6 @@
 function [prn,sv_xyz,sv_xyz_dot]=alm2satposvel(time, alm_param)
 %*************************************************************************
-%*     Copyright c 2001 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -26,10 +26,10 @@ global CONST_MU_E CONST_OMEGA_E;
 if nargin < 2
   error('you must specify a time and the almanac parameters')
 end
-if size(time,2)~=1,
+if size(time,2)~=1
     error('time must be specified as a column vector');
 end
-if size(time,1)>1,
+if size(time,1)>1
     nsat=size(alm_param,1);
     alm_param = repmat(alm_param,size(time,1),1);
     time = repmat(time,1,nsat)';
@@ -51,7 +51,7 @@ Mk=alm_param(:,9)+n0.*Tk;
 E0=Mk+100;
 Ek=Mk;
 i=1;
-while(abs(Ek-E0)>1e-12 & i < 250)
+while(any(abs(Ek-E0)>1e-12) && i < 250)
   E0=Ek;
   Ek=Mk + eccen.*sin(E0);
   i=i+1;

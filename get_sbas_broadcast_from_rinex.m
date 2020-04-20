@@ -13,7 +13,7 @@ function get_sbas_broadcast_from_rinex()
 
 
 year = 2020;
-doy = 79;
+doy = 1;
 
 directoryname = '~/Desktop/Ephemeris/rinex/';
 
@@ -26,7 +26,7 @@ for pdx = 120:158
                         year, doy, pdx, doy, mod(year,100)); 
     if exist(filename, 'file')
  
-        % read in day before's data
+        % read in day's data
         [msg, time, prn, band] = read_sbas_rinex(filename);  
 
         %check that data is valid
@@ -40,8 +40,16 @@ for pdx = 120:158
             sbas.band(sbas.n_geos,:) = band;
 
             %see if a file exists for the day before
-            dayb4fname = sprintf('%s%4d/%03d/M%3d%03d0.%02db', directoryname, ...
-                            year, doy-1, pdx, doy-1, mod(year,100));   %TODO MAKE IT ALSO WORK FOR DOY = 1
+            if doy > 1
+                dayb4fname = sprintf('%s%4d/%03d/M%3d%03d0.%02db', directoryname, ...
+                            year, doy-1, pdx, doy-1, mod(year,100));
+            else
+                %make sure it works for leap years
+                [tmp_doy, tmp_year] = jd2doy(doy2jd(year, doy-1));
+                
+                dayb4fname = sprintf('%s%4d/%03d/M%3d%03d0.%02db', directoryname, ...
+                            tmp_year, tmp_doy, pdx, tmp_doy, mod(tmp_year,100));
+            end
 
             if exist(dayb4fname, 'file')
                 

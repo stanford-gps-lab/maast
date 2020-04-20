@@ -53,23 +53,17 @@ function svmrun(gpsudrefun, geoudrefun, givefun, usrcnmpfun,...
 % Clean up 2013 Aug 30 by Todd Walter
 %Modified by Todd Walter March 29, 2020 to add the capability to decode and
 %    use broadcast 250 bit messages in place of emulating the WMS
-global COL_SAT_UDREI COL_SAT_DEGRAD COL_SAT_COV COL_SAT_XYZ COL_SAT_MINMON ...
-        COL_U2S_UID  COL_U2S_GENUB COL_SAT_PRN COL_SAT_SCALEF ...
-        COL_IGP_GIVEI COL_IGP_BAND COL_IGP_ID COL_IGP_MINMON COL_IGP_BETA...
-        COL_IGP_DEGRAD COL_IGP_LL COL_IGP_DELAY COL_IGP_CHI2RATIO
-global  COL_USR_XYZ COL_USR_EHAT ...
-        COL_USR_NHAT COL_USR_UHAT COL_USR_INBND 
-global COL_U2S_SIGFLT COL_U2S_SIG2UIRE COL_U2S_OB2PP
+global COL_SAT_UDREI COL_SAT_DEGRAD COL_SAT_XYZ COL_SAT_MINMON
+global COL_IGP_GIVEI COL_IGP_MINMON COL_IGP_BETA COL_IGP_DEGRAD COL_IGP_CHI2RATIO
+global  COL_USR_XYZ COL_USR_EHAT COL_USR_NHAT COL_USR_UHAT COL_USR_INBND 
+global COL_U2S_SIGFLT COL_U2S_SIG2UIRE COL_U2S_OB2PP COL_U2S_UID  COL_U2S_GENUB
 global HIST_UDRE_NBINS HIST_GIVE_NBINS HIST_UDRE_EDGES HIST_GIVE_EDGES
 global HIST_UDREI_NBINS HIST_GIVEI_NBINS HIST_UDREI_EDGES HIST_GIVEI_EDGES
 global MOPS_SIN_USRMASK MOPS_SIN_WRSMASK MOPS_NOT_MONITORED
 global MOPS_UDREI_NM MOPS_GIVEI_NM
-global CNMP_TL3 MT27
+global CNMP_TL3
 
-global SBAS_MESSAGE_FILE SBAS_PRIMARY_SOURCE
-global MOPS_MAX_GPSPRN MOPS_MIN_GEOPRN MOPS_MAX_GEOPRN 
-global MOPS_MIN_GLOPRN MOPS_MAX_GLOPRN
-global MOPS_MT1_PATIMEOUT MOPS_MT18_PATIMEOUT 
+global SBAS_MESSAGE_FILE
 
 global TRUTH_FLAG 
 
@@ -94,17 +88,17 @@ end
 % initialize sat & wrs matrices
 % see documentation for format of SATDATA & WRSDATA
 satdata=[];
-satdata = init_satdata(geodata, alm_param, satdata, 0);
+satdata = init_satdata(geodata, alm_param, satdata, tstart);
 ngps = size(alm_param,1);
 ngeo = size(geodata,1);
 nsat = ngps + ngeo;
 wrsdata = init_wrsdata(wrsfile);
 nwrs=size(wrsdata,1);
-added_prns = [];
   
 %Run using either recorded SBAS 250 bit messages or simulate the SBAS
 %processing  to create UDREs/DFREs and GIVEIs
 if isempty(SBAS_MESSAGE_FILE)
+    % SIMULATED DATA INITIALIZATION:
     % initialize wrs2satdata & igp matrices
     % see documentation for format of WRS2SATDATA & IGPDATA
 
@@ -131,152 +125,14 @@ if isempty(SBAS_MESSAGE_FILE)
     satdata(:, COL_SAT_DEGRAD) = 0;
     rss_udre = 1;    
 else
+    % RECORDED DATA INITIALIZATION:
     % read in the MOPS messages that correspond to the almanac day
-    % file can be generated with get_sbas_broadcast_from_rinex.m
-    % make sure that the times correspond and include data from before the 
-    % start time so that the msg data can be initialized
-    load(SBAS_MESSAGE_FILE, 'sbas', 'sbas_msgs', 'sbas_msg_time');
-     
-    % Find the corresponding geo message channels
-    [idx, gdx] = ismember(geodata(:,1), sbas.prns);
-    n_channels = sum(idx);
-    if n_channels < 1
-        error(['No matching SBAS messages found in ' SBAS_MESSAGE_FILE]);
-    elseif n_channels < ngeo
-        disp(['Message streams only found  for ' geodata(idx,1)]);
-    end    
-    % Remove uneeded geo data channels
-    sbas_msgs = sbas_msgs(gdx);
-    sbas_msg_time = sbas_msg_time(gdx);
-    sbas.prns = sbas.prns(gdx);
-
-    % Make sure the primary source is included
-    [idx, gprime] = ismember(SBAS_PRIMARY_SOURCE, sbas.prns);
-    if sum(idx) < 1
-        fprintf('Primary source %d not located, using %d instead\n', ...
-                  SBAS_PRIMARY_SOURCE, sbas.prns(1));
-        gprime = 1;
-    end
-    
-    % Loop over all geo SBAS message channels (backwards to preallocate)
-    for gdx = n_channels:-1:1
-        %init decoding data
-        svdata(gdx) = init_svdata();
-        ionodata(gdx) = init_igp_msg_data();
-        mt10(gdx) = init_mt10data();
-
-        %initialize decoded message data with prior ten minutes 
-        idx = find(sbas_msg_time{gdx} < tstart & ...
-                    sbas_msg_time{gdx} >= (tstart - 600));
-        if ~isempty(idx)
-            for i = 1:length(idx)
-                msg = reshape(dec2bin(sbas_msgs{gdx}(idx(i),:))', 1,256);
-                [svdata(gdx), ionodata(gdx), mt10(gdx), ~] = ...
-                    L1_decode_messages(sbas_msg_time{gdx}(idx(i)), msg, ...
-                    svdata(gdx), ionodata(gdx), mt10(gdx));
-            end
-        end
-        smtidx(gdx) = idx(end) + 1;
-        
-        % Only need to match satdata and get iono mask from primary source
-        if gdx == gprime
-            % check PRN mask and initialize  svdata
-            if svdata(gdx).mt1_time >= tstart - MOPS_MT1_PATIMEOUT
-                kdx = 1:212;
-                prns = kdx(svdata(gdx).mt1_mask>0)';
-                svdata(gdx).prns(1:length(prns)) = prns;
-                svdata(gdx).mt1_ngps = sum(prns <= MOPS_MAX_GPSPRN);
-                svdata(gdx).mt1_nglo = sum(prns >= MOPS_MIN_GLOPRN & ...
-                                            prns <= MOPS_MAX_GLOPRN);
-                svdata(gdx).mt1_ngeo = sum(prns >= MOPS_MIN_GEOPRN & ...
-                                            prns <= MOPS_MAX_GEOPRN);
-                %check that the mask matches the almanac
-                while svdata(gdx).mt1_ngps ~= ngps || svdata(gdx).mt1_ngeo ~= ngeo || ...
-                                       ~isequal(prns, satdata(:,COL_SAT_PRN))
-                    if svdata(gdx).mt1_ngps > ngps %needs to also handle different number of geos
-                        [missing_prns, idx] = setdiff(prns(1:svdata(gdx).mt1_ngps), ...
-                                                 satdata(1:ngps,COL_SAT_PRN));
-                        while ~isempty(missing_prns)
-                            %creates a repeated row that hopefully is always set to NM
-                            satdata(idx(1):(end+1),:) = satdata((idx(1)-1):end,:);
-                            satdata(idx(1),COL_SAT_PRN) = missing_prns(1);
-                            satdata(idx(1),(COL_SAT_PRN+1):end) = NaN;
-                            alm_param(idx(1):(end+1),:) = alm_param((idx(1)-1):end,:);
-                            alm_param(idx(1),1) = missing_prns(1); 
-                            alm_param(idx(1),2:end) = NaN; 
-                            ngps = ngps + 1;
-                            nsat = nsat + 1;
-                            added_prns = [added_prns missing_prns(1)];
-                            [missing_prns, idx] = setdiff(prns(1:svdata(gdx).mt1_ngps), ...
-                                                 satdata(1:ngps,COL_SAT_PRN));
-                        end
-                    elseif svdata(gdx).mt1_ngps < ngps
-                        % delete uneeded row(s) in satdata and almparam
-                        [missing_prns, idx] = setdiff(satdata(1:ngps,COL_SAT_PRN), ...
-                                                 prns(1:svdata(gdx).mt1_ngps));
-                        satdata(idx,:) = [];
-                        alm_param(idx,:) = []; 
-                        ngps = ngps - length(idx);
-                        nsat = nsat - length(idx);
-                    else 
-                        %erase previous GEO data and just put in mask PRNs
-                        ngeo = svdata(gdx).mt1_ngeo;
-                        nsat = ngps + ngeo;
-                        satdata((ngps+1):end,:) = [];
-                        satdata(ngps + (1:ngeo),:) = NaN(ngeo,size(satdata,2));
-                        satdata(ngps + (1:ngeo),COL_SAT_PRN) = ...
-                                         prns(ngps + (1:ngeo));
-                    end
-                end
-                satdata(:,COL_SAT_UDREI) = MOPS_UDREI_NM;
-            else
-                warning('MT1 PRN mask has not been received')    
-            end
-
-            %check IGP mask and initalize igpdata
-            if sum(ionodata(gdx).mt18_num_bands)
-                idx = find(ionodata(gdx).mt18_num_bands > 0);
-                IODI = ionodata(gdx).mt18_iodi(idx (1));
-                num_bands = ionodata(gdx).mt18_num_bands(idx (1));
-                % make sure all MT18s have the same IODI, the same number of
-                % messages and have not timed out
-                if all(ionodata(gdx).mt18_iodi(idx) == IODI) && ...
-                     all(ionodata(gdx).mt18_num_bands(idx) == num_bands) && ...
-                     length(idx) == num_bands && all(ionodata(gdx).mt18_time(idx) >= ...
-                     tstart - MOPS_MT18_PATIMEOUT)
-                   bandnum = [];
-                    for i = 1:length(idx)
-                        kdx = 1:201; 
-                        igps = kdx(ionodata(gdx).mt18_mask(idx(i),:)>0)';
-                        bandnum = [bandnum; [(idx(i)-1)*ones(size(igps)) igps ...
-                                             (1:length(igps))']];
-                    end
-                    igp_mask = mt18bandnum2ll(bandnum);
-                    %find the inverse IGP mask
-                    inv_igp_mask=find_inv_IGPmask(igp_mask);
-                    igpdata(:,[COL_IGP_BAND COL_IGP_ID]) = bandnum(:,1:2);
-                    igpdata(:,COL_IGP_LL) = igp_mask;
-                    igpdata(:,COL_IGP_GIVEI) = MOPS_GIVEI_NM;
-                    igpdata(:,COL_IGP_DELAY) = 0;
-                    %find mapping between decoded MT26 data and igpdata matrix
-                    mt26_to_igpdata = sub2ind(size(ionodata(gdx).mt26_givei), ...
-                                         bandnum(:,1) + 1, bandnum(:,3));
-                else
-                    warning('MT18 iono mask is not complete')
-                end
-            else
-                warning('MT18 iono mask has not been received')
-            end
-        end
-    end
-    %check the PRNS match the channels
-    svdata = L1_decode_geocorr(tstart - 1, svdata, mt10);
-    for gdx = 1:n_channels
-        if svdata(gdx).geo_prn ~= sbas.prns(gdx)
-            error('Mismatched prns - expected %d and found %d\n', ...
-                    sbas.prns(gdx), svdata(gdx).geo_prn);
-        end
-    end
+    % file that can be generated with get_sbas_broadcast_from_rinex.m
+    % make sure that the times correspond and include data from 10 minutes 
+    % before the start time so that the msg data can be initialized
+    [sbas_msgs, sbas_msg_time, smtidx, gprime, svdata, ionodata, mt10, ...
+          satdata, alm_param, igpdata, inv_igp_mask, mt26_to_igpdata] = ...
+                           init_read_sbas_msgs(tstart, satdata, alm_param);
 end
 % initialize usr matrices
 % see documentation for format of USRDATA,IGPDATA & USR2SATDATA
@@ -354,45 +210,13 @@ while tcurr<=tend
                                 sum(isnan(satdata(hist_idx,COL_SAT_UDREI)));
     else
         % loop over the geo channels and read in the previously unread 
-         %  messages up to the current time
-        for gdx = 1:n_channels
-            while sbas_msg_time{gdx}(smtidx(gdx)) <= tcurr
-                msg = reshape(dec2bin(sbas_msgs{gdx}(smtidx(gdx),:),8)', 1,256);
-                [svdata(gdx), ionodata(gdx), mt10(gdx), ~] = ...
-                    L1_decode_messages(sbas_msg_time{gdx}(smtidx(gdx)), ...
-                              msg, svdata(gdx), ionodata(gdx), mt10(gdx));
-                smtidx(gdx) = smtidx(gdx) + 1;
-            end
-        end
-        %check the message data for timeouts and compute corrections and degradations
-        % check across all geos to obtain MT 9 positions
-        svdata = L1_decode_geocorr(tcurr, svdata, mt10);
-        for gdx = 1:n_channels
-            if svdata(gdx).geo_prn ~= sbas.prns(gdx)
-                error('Mismatched prns - expected %d and found %d\n', ...
-                        sbas.prns(gdx), svdata(gdx).geo_prn);
-            end
-        end
-    
-        % only check other data on the prime channel used for corrections
-        svdata(gprime)  = L1_decode_satcorr(tcurr, svdata(gprime), mt10(gprime));
-        ionodata(gprime) = L1_decode_ionocorr(tcurr, ionodata(gprime), mt10(gprime));
-        
-        %transfer data to MAAST matrices
-        satdata(:, COL_SAT_UDREI) = svdata(gprime).udrei(1:nsat);
-        satdata(:, COL_SAT_DEGRAD) = svdata(gprime).degradation(1:nsat);
+        %  messages up to the current time
+        [smtidx, svdata, ionodata, mt10, satdata, igpdata] = ...
+             read_in_sbas_messages(tcurr, sbas_msgs, sbas_msg_time, ...
+                    smtidx, gprime, svdata, ionodata, mt10, satdata, ...
+                    igpdata, mt26_to_igpdata);
         rss_udre = mt10(gprime).rss_udre;
-        if isempty(svdata(gprime).mt27_polygon)        
-            satdata(:, COL_SAT_COV) = svdata(gprime).mt28_dCov(1:nsat,:);
-            satdata(:, COL_SAT_SCALEF) = 2.^(svdata(gprime).mt28_sc_exp(1:nsat,:) - 5);
-        else
-            MT27 = svdata(gprime).mt27_polygon;
-        end
-        satdata(ngps + (1:ngeo), COL_SAT_XYZ) = svdata(gprime).geo_xyzb(1:ngeo,1:3);
-        igpdata(:, COL_IGP_GIVEI) = ionodata(gprime).givei(mt26_to_igpdata);
-        igpdata(:, COL_IGP_DEGRAD) = ionodata(gprime).eps_iono(mt26_to_igpdata);
         rss_iono = mt10(gprime).rss_iono;
-        igpdata(:, COL_IGP_DELAY) = ionodata(gprime).mt26_Iv(mt26_to_igpdata);
     end
     
     %store the GIVE indices
@@ -429,23 +253,6 @@ while tcurr<=tend
     N_nm_igp=sum(is_nm_igp);
 	give_hist(HIST_GIVE_NBINS+1) = give_hist(HIST_GIVE_NBINS+1) + N_nm_igp;
 
-    % create a histogram of IGP regions with Not Monitored UIVEs
-% if 0
-%     nm_igp_idx = find(is_nm_igp);
-%     %two temporary lines to count all ipps
-%     mask_idx = floor(usr2satdata(hist_idx, COL_U2S_IPPLL)/5);
-%     N_nm_igp=length(hist_idx);
-% %    mask_idx = floor(usr2satdata(hist_idx(nm_igp_idx), COL_U2S_IPPLL)/5);
-%     mask_idx(:,2)=mod(mask_idx(:,2),72)+1;
-% 
-%     % adjust the latitude indicies to run from 1 to N
-%     mask_idx(:,1)=mask_idx(:,1) + 19;
-% 
-%     for ii = 1:N_nm_igp
-%       nm_igp_hist(mask_idx(ii,1),mask_idx(ii,2)) = ...
-%                                nm_igp_hist(mask_idx(ii,1),mask_idx(ii,2)) + 1;
-%     end
-% end
     % update time
     if tstep==0
         break;
@@ -463,14 +270,6 @@ end
 %profile off;
 if (TRUTH_FLAG)
     fprintf('%d Chi2 Trips\n', TRIP_COUNT);
-end
-
-%remove added prns that have no corresponding positions
-if ~isempty(added_prns)
-    [~, idx] = ismember(added_prns, satdata(:,COL_SAT_PRN));
-    satdata(idx,:) = [];
-    udrei(idx,:) = [];
-    sat_xyz(isnan(sat_xyz(:,1)),:) = [];
 end
 
 save 'outputs' satdata usrdata wrsdata igpdata inv_igp_mask sat_xyz udrei ...

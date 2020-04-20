@@ -111,6 +111,10 @@ elseif sdx
         svdata.mt25_time(sdx2) = time;
         svdata.mt25_dxyzb_dot(sdx2, :) = 0; % make sure the derivatives are set to 0
         svdata.mt25_t0(sdx2) = NaN;
+    else
+        idx = idx + 45; 
+        svdata.mt25_iodp(sdx) = bin2dec(msg(idx:(idx+1))); %IODP
+        idx = idx + 2 + 1; %extra bit is a spare
     end
 end
 

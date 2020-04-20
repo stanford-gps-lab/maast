@@ -150,6 +150,7 @@ if(~isempty(good_udre))
                (CONST_F1^4 + CONST_F5^4)/((CONST_F1^2 - CONST_F5^2)^2)...
                + sig2_trop(good_los);              
     else
+        good_los = [];
         obl2(good_sat) = obliquity2(el(good_sat));
         if (pa_mode)
             sig2_uire(good_sat) = grid2uive(usr2satdata(good_sat,COL_U2S_IPPLL), ...
@@ -193,20 +194,22 @@ if(~isempty(good_udre))
                    sig2_trop(good_los) + sig2_cnmp(good_los);        
         end
     end
+    
+    if(~isempty(good_los))
+        usr2satdata(good_los, COL_U2S_SIGFLT) = sig_flt(good_los);
+        usr2satdata(good_los, COL_U2S_SIG2UIRE) = sig2_uire(good_los);
+        usr2satdata(good_los, COL_U2S_OB2PP) = obl2(good_los);
 
-    usr2satdata(good_los, COL_U2S_SIGFLT) = sig_flt(good_los);
-    usr2satdata(good_los, COL_U2S_SIG2UIRE) = sig2_uire(good_los);
-    usr2satdata(good_los, COL_U2S_OB2PP) = obl2(good_los);
-    
-    % calculate VPL and HPL
-    vhpl(1:max(usridx(good_los)),:) = usr_vhpl(los_enub(good_los,:), ...
-                                             usridx(good_los), sig2, ...
-                                             usr2satdata(good_los,COL_U2S_PRN),...
-                                             pa_mode);
-    
-    bad_usr=find(vhpl(:,1) <= 0 | vhpl(:,2) <= 0);
-    if(~isempty(bad_usr))
-      vhpl(bad_usr,:)=NaN;
+        % calculate VPL and HPL
+        vhpl(1:max(usridx(good_los)),:) = usr_vhpl(los_enub(good_los,:), ...
+                                                 usridx(good_los), sig2, ...
+                                                 usr2satdata(good_los,COL_U2S_PRN),...
+                                                 pa_mode);
+
+        bad_usr=find(vhpl(:,1) <= 0 | vhpl(:,2) <= 0);
+        if(~isempty(bad_usr))
+          vhpl(bad_usr,:)=NaN;
+        end
     end
 end
 

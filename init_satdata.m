@@ -14,9 +14,10 @@ function satdata = init_satdata(geodata, alm_param, satdata, t)
 %May 2008 added GEO MT28 loading
 %April 2020 commented out reset of entire matrix to NaN
 
-global COL_SAT_PRN COL_SAT_XYZ COL_SAT_XYZDOT  ...
+global COL_SAT_PRN COL_SAT_UDREI COL_SAT_XYZ COL_SAT_XYZDOT  ...
         COL_SAT_COV COL_SAT_SCALEF COL_SAT_MAX
 global CONST_H_GEO
+global MOPS_UDREI_NM
 
 % get sat positions
 if isempty(satdata) % get from almanac
@@ -48,6 +49,7 @@ ngps = size(prn,1);
 gps=1:ngps;
 % satdata(gps,:) = NaN(ngps,COL_SAT_MAX);
 satdata(gps,COL_SAT_PRN) = prn;
+satdata(gps,COL_SAT_UDREI) = MOPS_UDREI_NM;
 satdata(gps,COL_SAT_XYZ) = satxyz;
 satdata(gps,COL_SAT_XYZDOT) = satvel;
 
