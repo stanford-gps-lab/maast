@@ -46,8 +46,6 @@ function [sbas_msgs, sbas_msg_time, smtidx, gprime, svdata, ionodata, mt10, ...
 global COL_SAT_PRN COL_SAT_XYZ COL_SAT_UDREI
 global COL_IGP_BAND COL_IGP_ID COL_IGP_LL COL_IGP_GIVEI COL_IGP_DELAY
 global MOPS_UDREI_NM MOPS_GIVEI_NM MOPS_MT1_PATIMEOUT MOPS_MT18_PATIMEOUT  
-global MOPS_MAX_GPSPRN MOPS_MIN_GLOPRN MOPS_MAX_GLOPRN 
-global MOPS_MIN_GEOPRN MOPS_MAX_GEOPRN
 global SBAS_MESSAGE_FILE SBAS_PRIMARY_SOURCE
 
 ngps = size(alm_param,1);
@@ -111,22 +109,16 @@ for gdx = n_channels:-1:1
     if gdx == gprime
         % check PRN mask and initialize  svdata
         if svdata(gdx).mt1_time >= tstart - MOPS_MT1_PATIMEOUT
-            kdx = 1:212;
-            prns = kdx(svdata(gdx).mt1_mask>0)';
-            svdata(gdx).prns(1:length(prns)) = prns;
-            svdata(gdx).mt1_ngps = sum(prns <= MOPS_MAX_GPSPRN);
-            svdata(gdx).mt1_nglo = sum(prns >= MOPS_MIN_GLOPRN & ...
-                                        prns <= MOPS_MAX_GLOPRN);
-            svdata(gdx).mt1_ngeo = sum(prns >= MOPS_MIN_GEOPRN & ...
-                                        prns <= MOPS_MAX_GEOPRN);
+            
+            prns = svdata(gdx).prns;
             %check that the gps mask matches the gps almanac
             while svdata(gdx).mt1_ngps ~= ngps || ...
                     ~isequal(prns(1:ngps), satdata(1:ngps,COL_SAT_PRN))
-                if svdata(gdx).mt1_ngps > ngps %needs to also handle different number of geos
+                if svdata(gdx).mt1_ngps > ngps 
                     [missing_prns, idx] = setdiff(prns(1:svdata(gdx).mt1_ngps), ...
                                              satdata(1:ngps,COL_SAT_PRN));
                     while ~isempty(missing_prns)
-                        %creates a repeated row that hopefully is always set to NM
+                        %creates a repeated row that is always set to NM
                         satdata(idx(1):(end+1),:) = satdata((idx(1)-1):end,:);
                         satdata(idx(1),COL_SAT_PRN) = missing_prns(1);
                         satdata(idx(1),(COL_SAT_PRN+1):end) = NaN;

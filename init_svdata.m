@@ -77,9 +77,9 @@ svdata.udrei  = NaN(max_sats,1);
 svdata.degradation  = NaN(max_sats,1);
 
 %Geo data (max 5 channels)
-svdata.geo_prn   = NaN;
-svdata.geo_spid  = NaN;      % Service provider ID
-svdata.geo_flags = NaN(4,1); % [ranging, precise corr, basic corr, reserved] [0: on / 1: off]
+svdata.geo_prn      = NaN;
+svdata.geo_spid     = NaN;      % Service provider ID
+svdata.geo_flags    = NaN(4,1); % [ranging, precise corr, basic corr, reserved] [0: on / 1: off]
 svdata.geo_prn_time = NaN;
-svdata.geo_xyzb  = NaN(5,4);
-svdata.geo_deg   = NaN(5,1);
+svdata.geo_xyzb     = NaN(5,4);
+svdata.geo_deg      = NaN(5,1);

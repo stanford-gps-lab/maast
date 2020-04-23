@@ -36,6 +36,14 @@ nsat = size(satdata,1);
 nusr = size(usrdata,1);
 nlos = nsat*nusr;
 
+% set the RSS bits if they are unspecified
+if isempty(rss_udre)  || isnan(rss_udre)
+    rss_udre = true;
+end
+if isempty(rss_iono)  || isnan(rss_iono)
+    rss_iono = true;
+end
+
 % initialize some values to NaN
 usr2satdata(:,COL_U2S_INITNAN) = NaN;
 

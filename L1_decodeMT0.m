@@ -1,4 +1,20 @@
 function [svdata, igpdata, mt10] = L1_decodeMT0(time, msg, svdata, igpdata, mt10, test_mode)
+%*************************************************************************
+%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*                      Junior University. All rights reserved.          *
+%*     This script file may be distributed and used freely, provided     *
+%*     this copyright notice is always kept with it.                     *
+%*                                                                       *
+%*     Questions and comments should be directed to Todd Walter at:      *
+%*     twalter@stanford.edu                                              *
+%*************************************************************************
+%
+% Decodes Message Type 0 
+%   per DO-229E
+%
+% SEE ALSO: L1_decode_messages
+
+%created 13 April, 2020 by Todd Walter
 
 %if not in test mode or if it is a zero filled type zero (ZFTZ), erase all old data 
 if ~test_mode || strcmp(msg(15:226), repmat('0',1, 212))

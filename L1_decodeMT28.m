@@ -1,5 +1,20 @@
 function svdata = L1_decodeMT28(time, msg, svdata)
+%*************************************************************************
+%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*                      Junior University. All rights reserved.          *
+%*     This script file may be distributed and used freely, provided     *
+%*     this copyright notice is always kept with it.                     *
+%*                                                                       *
+%*     Questions and comments should be directed to Todd Walter at:      *
+%*     twalter@stanford.edu                                              *
+%*************************************************************************
+%
+% Decodes Message Type 28 
+%   per DO-229E
+%
+% SEE ALSO: L1_decode_messages
 
+%created 13 April, 2020 by Todd Walter
 
 
 iodp = bin2dec(msg(15:16));

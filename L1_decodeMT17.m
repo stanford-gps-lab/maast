@@ -1,4 +1,20 @@
 function svdata = L1_decodeMT17(time, msg, svdata)
+%*************************************************************************
+%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*                      Junior University. All rights reserved.          *
+%*     This script file may be distributed and used freely, provided     *
+%*     this copyright notice is always kept with it.                     *
+%*                                                                       *
+%*     Questions and comments should be directed to Todd Walter at:      *
+%*     twalter@stanford.edu                                              *
+%*************************************************************************
+%
+% Decodes Message Type 17 
+%   per DO-229E
+%
+% SEE ALSO: L1_decode_messages
+
+%created 13 April, 2020 by Todd Walter
 
 t0 = bin2dec(msg(216:226))*64 + floor(time/86400)*86400; %t0
 if t0 - time < -43200 %adjust for day rollover

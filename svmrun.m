@@ -125,7 +125,7 @@ if isempty(SBAS_MESSAGE_FILE)
     satdata(:, COL_SAT_DEGRAD) = 0;
     rss_udre = 1;    
 else
-    % RECORDED DATA INITIALIZATION:
+    % REPLAY RECORDED DATA INITIALIZATION:
     % read in the MOPS messages that correspond to the almanac day
     % file that can be generated with get_sbas_broadcast_from_rinex.m
     % make sure that the times correspond and include data from 10 minutes 

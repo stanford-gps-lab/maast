@@ -9,6 +9,13 @@ function svdata = L1_decodeMT27(time, msg, svdata)
 %*     twalter@stanford.edu                                              *
 %*************************************************************************
 %
+% Decodes Message Type 27 
+%   per DO-229E
+%
+% SEE ALSO: L1_decode_messages
+
+%created 13 April, 2020 by Todd Walter
+
 global MOPS_MT27_PATIMEOUT
 
 idx = 15;

@@ -1,5 +1,20 @@
 function mt10 = L1_decodeMT10(time, msg)
+%*************************************************************************
+%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*                      Junior University. All rights reserved.          *
+%*     This script file may be distributed and used freely, provided     *
+%*     this copyright notice is always kept with it.                     *
+%*                                                                       *
+%*     Questions and comments should be directed to Todd Walter at:      *
+%*     twalter@stanford.edu                                              *
+%*************************************************************************
+%
+% Decodes Message Type 10 
+%   per DO-229E
+%
+% SEE ALSO: L1_decode_messages
 
+%created 13 April, 2020 by Todd Walter
 
 mt10.brrc = bin2dec(msg(15:24))*0.002;
 mt10.cltc_lsb = bin2dec(msg(25:34))*0.002;

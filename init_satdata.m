@@ -29,7 +29,6 @@ if isempty(satdata) % get from almanac
       satdata(geo,COL_SAT_PRN) = geodata(:,1);
       satdata(geo,COL_SAT_XYZ) = llh2xyz([zeros(ngeo,1) geodata(:,2) ...
 	                                        CONST_H_GEO*ones(ngeo,1)]);
-      satdata(geo,COL_SAT_XYZDOT) = zeros(ngeo,3);
       SF = 2.^(geodata(:,13)-5);
       satdata(geo,COL_SAT_SCALEF) = SF;
       

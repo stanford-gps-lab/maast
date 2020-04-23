@@ -1,4 +1,20 @@
 function svdata = L1_decodeMT2345(time, msg, svdata)
+%*************************************************************************
+%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*                      Junior University. All rights reserved.          *
+%*     This script file may be distributed and used freely, provided     *
+%*     this copyright notice is always kept with it.                     *
+%*                                                                       *
+%*     Questions and comments should be directed to Todd Walter at:      *
+%*     twalter@stanford.edu                                              *
+%*************************************************************************
+%
+% Decodes Message Types 2, 3, 4, & 5 
+%   per DO-229E
+%
+% SEE ALSO: L1_decode_messages
+
+%created 13 April, 2020 by Todd Walter
 
 mtype = bin2dec(msg(9:14));
 jdx = (mtype - 2)*13 + 1;

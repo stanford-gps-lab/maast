@@ -8,6 +8,13 @@ function svdata = L1_decodeMT25(time, msg, svdata)
 %*     Questions and comments should be directed to Todd Walter at:      *
 %*     twalter@stanford.edu                                              *
 %*************************************************************************
+%
+% Decodes Message Type 25 
+%   per DO-229E
+%
+% SEE ALSO: L1_decode_messages
+
+%created 13 April, 2020 by Todd Walter
 
 C = 299792458.0; % speed of light,  m/sec
 

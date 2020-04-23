@@ -21,7 +21,7 @@ global CONST_H_IONO;
 global COL_IGP_BAND COL_IGP_ID COL_IGP_LL COL_IGP_XYZ COL_IGP_WORKSET ...
         COL_IGP_EHAT COL_IGP_NHAT COL_IGP_MAGLAT COL_IGP_CORNERDEN ...
         COL_IGP_FLOORI COL_IGP_MAX
-igpraw = sortrows(load(igpfile),[3,4]);
+igpraw = sortrows(load(igpfile),[1,2]);
 igp_mask = igpraw(:,3:4);
 
 
