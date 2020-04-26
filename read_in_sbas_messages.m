@@ -51,7 +51,8 @@ sdx = 1:nsat;
 satdata(sdx, COL_SAT_DXYZB) = svdata(gprime).dxyzb(sdx,:);
 satdata(sdx, COL_SAT_UDREI) = svdata(gprime).udrei(sdx);
 satdata(sdx, COL_SAT_DEGRAD) = svdata(gprime).degradation(sdx);
-if isempty(svdata(gprime).mt27_polygon)        
+if isempty(svdata(gprime).mt27_polygon)
+    sdx = ~isnan(svdata(gprime).mt28_time);
     satdata(sdx, COL_SAT_COV) = svdata(gprime).mt28_dCov(sdx,:);
     satdata(sdx, COL_SAT_SCALEF) = 2.^(svdata(gprime).mt28_sc_exp(sdx) - 5);
 else
