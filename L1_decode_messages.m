@@ -55,4 +55,10 @@ switch mt
         svdata = L1_decodeMT27(time, msg, svdata);        
     case 28
         svdata = L1_decodeMT28(time, msg, svdata);  
+    case 50
+        warning('gdx not implemented correctly with L1_decodeMT50');
+        gdx = 1;
+        L1_decodeMT50(time, msg, gdx);
+end
+        
 end
