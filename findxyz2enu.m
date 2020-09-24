@@ -1,6 +1,6 @@
 function [xyz2enu] = findxyz2enu(lat, lon)
 %*************************************************************************
-%*     Copyright c 2009 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -17,6 +17,7 @@ function [xyz2enu] = findxyz2enu(lat, lon)
 
 %   TWalter 14 Mar 00
 %   2009 fixed transpose problem if only a single location
+%   2020 Apr 28 Todd Walter fixed transpose problem if only a single location again
 
 if (nargin < 2)
   error('You must supply lat and lon in radians!');
@@ -42,5 +43,5 @@ xyz2enu(:,3,2) = xyz2enu(:,1,1).*xyz2enu(:,2,3);
 xyz2enu(:,1,1) = -xyz2enu(:,1,1);
 
 if(n == 1)
-  xyz2enu=reshape(xyz2enu,3,3);
+  xyz2enu=reshape(xyz2enu,3,3)';
 end

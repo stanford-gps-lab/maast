@@ -48,7 +48,7 @@ global MOPS_MT7_AI
 max_sats = size(svdata.mt2_udrei,1);
 
 %Initialize satellite correction data
-svdata.dxyzb  = NaN(max_sats, 4); 
+svdata.dxyzb  = zeros(max_sats, 4);
 svdata.udrei  = repmat(MOPS_UDREI_NM, max_sats, 1);
 svdata.degradation  = NaN(max_sats, 1);
 
@@ -111,8 +111,9 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
     
     %find the long-term corrections
     tmt0 = time - svdata.mt25_t0;
+    idx = ~isnan(svdata.mt25_dxyzb(:,1));
     tmt0(isnan(tmt0)) = 0; %fix the velocity code 0 cases
-    svdata.dxyzb = svdata.mt25_dxyzb + svdata.mt25_dxyzb_dot.*tmt0;
+    svdata.dxyzb(idx,:) = svdata.mt25_dxyzb(idx,:) + svdata.mt25_dxyzb_dot(idx,:).*tmt0(idx);
     
     %add in the fast correction
     svdata.dxyzb(:,4) = svdata.dxyzb(:,4) + svdata.mt2_fc(:,1) + rrc.*dtfc;
@@ -166,8 +167,9 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
              mt28_iodp ~= svdata.mt1_iodp) & ...
              (svdata.prns < MOPS_MIN_GEOPRN | svdata.prns > MOPS_MAX_GEOPRN);
      if any(idx)
-         svdata.udrei(idx)  = MOPS_UDREI_NM;
-         svdata.degradation(idx)  = NaN;
+         svdata.udrei(idx) = MOPS_UDREI_NM;
+         svdata.degradation(idx) = NaN;
+         svdata.dxyzb(idx,:) = NaN;
      end
     %set the UDREs to NM for any SV with a timed out correction component
     % or whose iodps do not match and are GEOs
@@ -179,6 +181,7 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
      if any(idx)
          svdata.udrei(idx)  = MOPS_UDREI_NM;
          svdata.degradation(idx)  = NaN;
+         svdata.dxyzb(idx,:) = NaN;         
      end     
 end
 

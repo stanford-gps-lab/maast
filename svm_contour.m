@@ -40,6 +40,9 @@ end
 %adjust the colors for the colorbar
 idx=fix((cnt_int-min_int)*(size(m,1))/(max_int-min_int))+1;
 idx(length(idx))=size(m,1);
+
+m(idx(2:end)-1,:)=colors(2:end,:);
+m(idx(1:(end-1))+1,:)=colors(1:(end-1),:);
 m(idx,:)=colors;
 colormap(m);
 caxis([min_int max_int]);
