@@ -64,6 +64,11 @@ while i<=size(filename,2)
             prn = str2double(tmp{1}(1:2));
             svn = prn;
             
+        elseif strcmp(sat_type,'NAVSTAR')
+            tmp = txt_data{2}(line_num);
+            prn = str2double(tmp{1}(1:2));
+            svn = prn;
+            
         elseif strcmp(sat_type,'COSMOS') == 1
                 tmp = txt_data{3}(line_num);
                 svn = str2double(tmp{1}(2:4));
@@ -124,7 +129,7 @@ while i<=size(filename,2)
             %get right ascention (RAAN)
             raan = str2double(txt_data{1,4}{line_num+2})*pi/180;
 
-            %get Longitude of the ascending node (LAAN)
+            %get Longitude of the ascending node (LAN)
             gmst = utc2gmst(UTC_date);   % sidereal time [rad]
             alm_param(prn,7) = raan-gmst+CONST_OMEGA_E*mod(alm_param(prn,3),604800); % [rad]
 
@@ -136,7 +141,7 @@ while i<=size(filename,2)
         end
         line_num = line_num + 3;
 
-    end;
+    end
 
     fclose(fid);
     i = i+1;

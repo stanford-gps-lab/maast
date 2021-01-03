@@ -1,9 +1,9 @@
 function [vhpl, usr2satdata] = usrprocess(satdata, usrdata, igpdata, ...
                             inv_igp_mask, usr2satdata, usrtrpfun, ...
                             usrcnmpfun, time, pa_mode, dual_freq, ...
-                            rss_udre, rss_iono)
+                            rss_udre, rss_iono, mops_sig_udre)
 %*************************************************************************
-%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2021 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -18,6 +18,7 @@ function [vhpl, usr2satdata] = usrprocess(satdata, usrdata, igpdata, ...
 %Modified by Todd Walter Sept. 4, 2013 to include MT27 & other constellations
 %Modified by Todd Walter Mar. 26, 2020 to change MT27 format and outputs now included in usr2satdata
 %Modified by Todd Walter Apr. 10, 2020 to include MOPS degradation terms
+%Modified by Todd Walter Jan.  1, 2021 to work with L5 MOPS
 
 global MOPS_SIN_USRMASK MT27 
 global COL_SAT_XYZ COL_USR_XYZ COL_USR_LL COL_SAT_UDREI COL_SAT_DEGRAD ...
@@ -27,7 +28,7 @@ global COL_SAT_XYZ COL_USR_XYZ COL_USR_LL COL_SAT_UDREI COL_SAT_DEGRAD ...
         COL_U2S_LOSENU COL_U2S_GENUB COL_U2S_EL COL_U2S_AZ ...
         COL_U2S_IPPLL COL_U2S_TTRACK0 COL_U2S_INITNAN ...
         COL_SAT_COV COL_SAT_SCALEF COL_IGP_LL COL_IGP_GIVEI COL_IGP_DEGRAD
-global MOPS_SIG_UDRE MOPS_MT27_DUDRE MOPS_UDREI_NM MOPS_UDREI_DNU 
+global MOPS_MT27_DUDRE 
 global MOPS_MIN_GEOPRN MOPS_MAX_GEOPRN
 global MOPS_UIRE_NUM MOPS_UIRE_DEN MOPS_UIRE_CONST
 global CONST_F1 CONST_F5
@@ -93,19 +94,10 @@ los_xyzb = usr2satdata(:,COL_U2S_GXYZB);
 los_enub = usr2satdata(:,COL_U2S_GENUB);
 mt28_cov = reshape(satdata(:,COL_SAT_COV)',4,4,nsat);
 mt28_sf = satdata(:,COL_SAT_SCALEF);
-ll_usr_ipp = usr2satdata(:,COL_U2S_IPPLL);
 el = usr2satdata(:,COL_U2S_EL);
 
 % check for valid UDRE
-if (pa_mode)
-    mops_sig_udre = MOPS_SIG_UDRE;
-    mops_sig_udre(13:end) = NaN;
-    sig_udre = mops_sig_udre(satdata(:,COL_SAT_UDREI))';
-else
-    mops_sig_udre = MOPS_SIG_UDRE;
-    mops_sig_udre([MOPS_UDREI_NM MOPS_UDREI_DNU]) = NaN;
-    sig_udre = mops_sig_udre(satdata(:,COL_SAT_UDREI))';
-end
+sig_udre = mops_sig_udre(satdata(:,COL_SAT_UDREI))';
 
 % look for above the elevation mask with a valid udre or if it is a GEO
 good_udre = find((sig_udre(satidx(abv_mask)) > 0) | ...
@@ -143,9 +135,13 @@ if(~isempty(good_udre))
                                  (MOPS_MT27_DUDRE(d_udre2(:, 2) + 1)');
     else
         %Otherwise apply Message Type 28 dUDRE
-        sig_flt(good_sat)=udre2flt(los_xyzb(good_sat,:), ....
+        [sig_flt(good_sat), dudre] = udre2flt(los_xyzb(good_sat,:), ....
                                     satidx(good_sat), ...
                                     sig_udre, mt28_cov, mt28_sf);
+         if dual_freq && rss_udre
+             satdata(satidx(good_sat), COL_SAT_DEGRAD) = ...
+                     satdata(satidx(good_sat), COL_SAT_DEGRAD).*(dudre.^2);
+         end
     end
 
     if (dual_freq)

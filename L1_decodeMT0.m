@@ -18,7 +18,7 @@ function [svdata, igpdata, mt10] = L1_decodeMT0(time, msg, svdata, igpdata, mt10
 
 %if not in test mode or if it is a zero filled type zero (ZFTZ), erase all old data 
 if ~test_mode || strcmp(msg(15:226), repmat('0',1, 212))
-    svdata = init_svdata();
+    svdata = init_L1svdata();
     igpdata = init_igp_msg_data();
     mt10 = init_mt10data();
 else

@@ -31,8 +31,9 @@ usrlon(idx) = usrlon(idx)-360;
 
 inbnd = usrdata(:,COL_USR_INBND);
 inbndidx=find(inbnd);
-igp_mask = igpdata(:,COL_IGP_LL);
-
+if ~isempty(igpdata)
+    igp_mask = igpdata(:,COL_IGP_LL);
+end
 nt = size(usrvpl,2);
 
 % rearrange usrvpl, usrhpl to be lat-wise first then lon-wise

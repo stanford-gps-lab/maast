@@ -1,7 +1,7 @@
 function satdata = af_geoconst(satdata,wrsdata,wrs2satdata,do_mt28, dual_freq)
 
 %*************************************************************************
-%*     Copyright c 2009 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2021 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -19,7 +19,7 @@ nwrs = size(wrsdata,1);
 nlos = size(wrs2satdata,1);
 
 %all satellite meet the minimum monitoring criteria (used for histogram)
-satdata(:,COL_SAT_MINMON)=repmat(1,nsat,1);
+satdata(:,COL_SAT_MINMON)=ones(nsat,1);
 
 %all satellites have the same UDREI value
 satdata(:,COL_SAT_UDREI) = repmat(GEOUDREI_CONST,nsat,1);
@@ -32,8 +32,8 @@ if do_mt28
     a=eye(4);
     a(4,4)=0;
     a=a(:)';
-    satdata(i,COL_SAT_COV)=repmat(a,nsat,1);
-    satdata(i,COL_SAT_SCALEF)=repmat(0,nsat,1);
+    satdata(i,COL_SAT_COV)=repmat(a,length(i),1);
+    satdata(i,COL_SAT_SCALEF)=zeros(length(i),1);
   end
 end   
 

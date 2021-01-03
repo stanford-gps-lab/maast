@@ -1,7 +1,7 @@
-function sig_flt = udre2flt(los_xyzb, prn, sig_udre, mt28_cov, mt28_sf)
+function [sig_flt, dudre_vec] = udre2flt(los_xyzb, prn, sig_udre, mt28_cov, mt28_sf)
 
 %*************************************************************************
-%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2021 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -30,20 +30,22 @@ function sig_flt = udre2flt(los_xyzb, prn, sig_udre, mt28_cov, mt28_sf)
 
 %2001Mar12 Created by Todd Walter
 %2020Apr10 Modified by Todd Walter to return sigma instead of sigma^2
+%2021Jan02 Modified by Todd Walter to return sigma dUDRE as well
 
 global MOPS_NOT_MONITORED MOPS_C_COVARIANCE;
 
 %initialize return value
 [n_los , ~]=size(los_xyzb);
-sig_flt=repmat(MOPS_NOT_MONITORED,n_los,1);
+sig_flt = repmat(MOPS_NOT_MONITORED,n_los,1);
+dudre_vec = NaN(n_los,1);
 
 
 for ipair=1:n_los
-  dUDRE=sqrt(los_xyzb(ipair,:)*mt28_cov(:,:,prn(ipair))*los_xyzb(ipair,:)')...
+    dUDRE = sqrt(los_xyzb(ipair,:)*mt28_cov(:,:,prn(ipair))*los_xyzb(ipair,:)')...
                     + MOPS_C_COVARIANCE*mt28_sf(prn(ipair));
 
-  sig_flt(ipair) = sig_udre(prn(ipair))*dUDRE;
-
+    sig_flt(ipair) = sig_udre(prn(ipair))*dUDRE;
+    dudre_vec(ipair) = dUDRE;
 end
 
 

@@ -29,7 +29,8 @@ function gmst = utc2gmst(date1)
 %% IMPLEMENTATION
 
 % compute the Julian date for the given input date vector
-JD = juliandate(date1);
+% JD = juliandate(date1);
+JD = juliandate(datetime(date1(1), date1(2),date1(3), date1(4),date1(5), date1(6)));
 
 % compute UT1
 UT1 = (JD-2451545.0)/36525;

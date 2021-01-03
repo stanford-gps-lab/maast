@@ -38,7 +38,7 @@ function svdata = L1_decode_satcorr(time, svdata, mt10)
 
 %Created March 29, 2020 by Todd Walter
 
-global MOPS_UDREI_NM
+global MOPS_UDREI_NM MOPS_UDREI_DNU
 global MOPS_MIN_GEOPRN MOPS_MAX_GEOPRN
 global MOPS_MT1_PATIMEOUT MOPS_MT2_PATIMEOUT MOPS_MT7_PATIMEOUT 
 global MOPS_MT10_PATIMEOUT MOPS_MT25_PATIMEOUT MOPS_MT27_PATIMEOUT 
@@ -60,27 +60,27 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
 
     eps_rrc_deg  = zeros(max_sats, 1);
     eps_ltc_deg  = zeros(max_sats, 1);
-    
+
     %find the most recent UDREI
     tudrei = time - svdata.mt2_fc_time(:,1); 
     svdata.udrei = svdata.mt2_udrei;
-    
+
     idx = svdata.mt6_time - svdata.mt2_fc_time(:,1) > 0;
     if any(idx)
         tudrei(idx) = time - svdata.mt6_time; 
         svdata.udrei(idx) = svdata.mt6_udrei(idx);
     end
-        
+
     %find the time since the most recent fast correction (fc)
     dtfc = time - svdata.mt2_fc_time(:,1);
-    
+
     %find the range rate correction (rrc)
     dtrrc = svdata.mt2_fc_time(:,1) - svdata.mt2_fc_time(:,2); %TODO optimize to find best choice
     rrc = (svdata.mt2_fc(:,1) - svdata.mt2_fc(:,2))./dtrrc;
-    
+
     %find the fast correction degradation
     eps_fc_deg = MOPS_MT7_AI(svdata.mt7_ai+1).*((dtfc + svdata.mt7_t_lat).^2)/2;
-    
+
     %find the rrc degradation 
     %look for non sequential IODFs
     e = ones(size(svdata.mt7_ai));
@@ -90,7 +90,7 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
         eps_rrc_deg(idx) = (MOPS_MT7_AI(svdata.mt7_ai(idx)+1)*MOPS_MT2_PATIMEOUT/4 + ...
                        (e(idx)*mt10.brrc)./dtrrc(idx)).*dtfc(idx);
     end
-    
+
     %look for IODFs equal to 3 and not at the expected interval
     idx = (svdata.mt2_fc_iodf(:,1) == 3 | svdata.mt2_fc_iodf(:,2) == 3 | ...
            dtrrc ~= MOPS_MT2_PATIMEOUT/2) & ~isnan(dtrrc);
@@ -98,26 +98,26 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
         eps_rrc_deg(idx) = (MOPS_MT7_AI(svdata.mt7_ai(idx)+1).*abs(dtrrc(idx) - MOPS_MT2_PATIMEOUT/2)/2 + ...
                        (e(idx)*mt10.brrc)./dtrrc(idx)).*dtfc(idx);
     end
-    
+
     %if ai from MT 7 is 0, the the rrc is 0
     idx = svdata.mt7_ai == 0;
     if any(idx)
         rrc(idx) = 0;
         dtrrc(idx) = 0;
     end
-    
+
     %find the time since the most recent long-term correction
     dt25 = time - svdata.mt25_time;
-    
+
     %find the long-term corrections
     tmt0 = time - svdata.mt25_t0;
     idx = ~isnan(svdata.mt25_dxyzb(:,1));
     tmt0(isnan(tmt0)) = 0; %fix the velocity code 0 cases
     svdata.dxyzb(idx,:) = svdata.mt25_dxyzb(idx,:) + svdata.mt25_dxyzb_dot(idx,:).*tmt0(idx);
-    
+
     %add in the fast correction
     svdata.dxyzb(:,4) = svdata.dxyzb(:,4) + svdata.mt2_fc(:,1) + rrc.*dtfc;
-    
+
     %find the long-term correction degradation factor for velocity code = 1
     idx = (svdata.mt25_t0 <= time | svdata.mt25_t0 >= time + mt10.iltc_v1) & ...
             ~isnan(svdata.mt25_t0);
@@ -139,10 +139,10 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
         idx = idx(1:svdata.mt1_ngeo);
         eps_ltc_deg(k(idx)) = svdata.geo_deg(idx);
     end    
-    
+
     %find the time since the most recent MT 28 covariance matrix
     dt28 = time - svdata.mt28_time;
-    
+
     %only require MT 28 if there is an active one on any satellite
     if any(dt28 <= MOPS_MT28_PATIMEOUT)
         mt28_iodp = svdata.mt28_iodp;
@@ -150,7 +150,7 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
         dt28 = dt28*0;
         mt28_iodp = ones(size(svdata.mt28_iodp))*svdata.mt1_iodp;
     end
-    
+
     %find the degradation term
     if mt10.rss_udre
         svdata.degradation = eps_fc_deg.^2 + eps_rrc_deg.^2 + eps_ltc_deg.^2;
@@ -166,11 +166,11 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
              svdata.mt25_iodp ~= svdata.mt1_iodp | ...
              mt28_iodp ~= svdata.mt1_iodp) & ...
              (svdata.prns < MOPS_MIN_GEOPRN | svdata.prns > MOPS_MAX_GEOPRN);
-     if any(idx)
-         svdata.udrei(idx) = MOPS_UDREI_NM;
-         svdata.degradation(idx) = NaN;
-         svdata.dxyzb(idx,:) = NaN;
-     end
+    if any(idx)
+        svdata.udrei(idx) = MOPS_UDREI_NM;
+        svdata.degradation(idx) = NaN;
+        svdata.dxyzb(idx,:) = NaN;
+    end
     %set the UDREs to NM for any SV with a timed out correction component
     % or whose iodps do not match and are GEOs
     idx = (tudrei > MOPS_MT2_PATIMEOUT  | dtfc > MOPS_MT2_PATIMEOUT  | ...
@@ -178,11 +178,17 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
              svdata.mt2_fc_iodp ~= svdata.mt1_iodp | ...
              mt28_iodp ~= svdata.mt1_iodp | isnan(svdata.degradation)) & ...
              (svdata.prns >= MOPS_MIN_GEOPRN & svdata.prns <= MOPS_MAX_GEOPRN);
-     if any(idx)
-         svdata.udrei(idx)  = MOPS_UDREI_NM;
-         svdata.degradation(idx)  = NaN;
-         svdata.dxyzb(idx,:) = NaN;         
-     end     
+    if any(idx)
+        svdata.udrei(idx)  = MOPS_UDREI_NM;
+        svdata.degradation(idx)  = NaN;
+        svdata.dxyzb(idx,:) = NaN;         
+    end 
+    % if the active UDRE was DNU, then set the UDRE to DNU
+    idx = tudrei <= MOPS_MT2_PATIMEOUT & (svdata.mt2_udrei == MOPS_UDREI_DNU ...
+                      | svdata.mt6_udrei == MOPS_UDREI_DNU);
+    if any(idx)
+       svdata.udrei(idx)  = MOPS_UDREI_DNU;
+    end
 end
 
 %remove MT 27 messages that have timed out

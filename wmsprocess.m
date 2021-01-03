@@ -5,7 +5,7 @@ function [satdata,igpdata,wrs2satdata] = wmsprocess(alm_param, satdata,...
                             trise, inv_igp_mask, truth_data, dual_freq)
                             
 %*************************************************************************
-%*     Copyright c 2013 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2021 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -18,7 +18,7 @@ function [satdata,igpdata,wrs2satdata] = wmsprocess(alm_param, satdata,...
 %                            wrsdata, igpdata, wrs2satdata, gpsudrefun,...
 %                            geoudrefun, givefun, wrstrpfun, wrsgpscnmpfun,...
 %                            wrsgeocnmpfun, outputs, time, tstart, tstep,...
-%                            trise)
+%                            trise, inv_igp_mask, truth_data, dual_freq)
 % WMS Processing
 
 global MOPS_SIN_WRSMASK CONST_H_IONO
@@ -87,7 +87,7 @@ else
      wrsdata(:,COL_USR_EHAT),wrsdata(:,COL_USR_NHAT),wrsdata(:,COL_USR_UHAT));
   abv_mask = find(-wrs2satdata(:,COL_U2S_GENUB(3)) >= MOPS_SIN_WRSMASK);
 
-  if(~isempty(abv_mask)),
+  if(~isempty(abv_mask))
     [wrs2satdata(abv_mask,COL_U2S_EL),wrs2satdata(abv_mask,COL_U2S_AZ)] = ...
           find_elaz(wrs2satdata(abv_mask,COL_U2S_LOSENU));
     wrs2satdata(abv_mask,COL_U2S_IPPLL) = find_ll_ipp(wrsdata(:,COL_USR_LL),...
@@ -144,7 +144,7 @@ end
 
 % udre
 satdata(sgnss,:) = feval(gpsudrefun, satdata(sgnss,:), wrsdata, ...
-                        wrs2satdata(wgnss,:), 1);
+                        wrs2satdata(wgnss,:), 1, dual_freq);
 
 % give
 if(~dual_freq)
