@@ -1,6 +1,6 @@
 function svdata = L5_decodeMT35(time, msg, svdata)
 %*************************************************************************
-%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2021 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -16,10 +16,13 @@ function svdata = L5_decodeMT35(time, msg, svdata)
 
 %created 28 December, 2020 by Todd Walter
 
+% copy older messages over
+svdata.mt35(2:end) = svdata.mt35(1:(end-1));
+
 %read in DFREIs
 idx = 11;
 for jdx = 1:53
-    svdata.mt35_dfrei(jdx) = bin2dec(msg(idx:(idx+3))) + 1; %convert from MOPS 0-15 to matlab 1-16
+    svdata.mt35(1).dfrei(jdx) = bin2dec(msg(idx:(idx+3))) + 1; %convert from MOPS 0-15 to matlab 1-16
     idx = idx + 4;
 end
 
@@ -27,6 +30,6 @@ end
 idx = idx + 2;
 
 %read in IODM
-svdata.mt35_iodm = bin2dec(msg(idx:(idx+3)));
+svdata.mt35(1).iodm = bin2dec(msg(idx:(idx+3)));
 
-svdata.mt35_time = time;
+svdata.mt35(1).time = time;

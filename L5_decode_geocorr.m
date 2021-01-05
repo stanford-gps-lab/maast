@@ -43,7 +43,7 @@ for mdx = 1:ngeos
     svdata(mdx).geo_xyzb = NaN(size(svdata(mdx).geo_xyzb)); 
 
     %Must have valid MT 37 message in order to have valid position
-    if svdata(mdx).mt37_time >= (time - L5MOPS_MT37_PATIMEOUT)
+    if svdata(mdx).mt37(1).time >= (time - L5MOPS_MT37_PATIMEOUT)
 
 
         %loop over all possible IODG values
@@ -52,8 +52,8 @@ for mdx = 1:ngeos
             svdata(mdx).mt3940(idx).xyzb = NaN(size(svdata(mdx).mt3940(idx).xyzb));
             
             %Must have valid and matching MT 39 & 40 messages
-            if svdata(mdx).mt39(idx).time >= (time - svdata(mdx).mt37_Ivalid3940) && ...
-                svdata(mdx).mt40(idx).time >= (time - svdata(mdx).mt37_Ivalid3940) && ...
+            if svdata(mdx).mt39(idx).time >= (time - svdata(mdx).mt37(1).Ivalid3940) && ...
+                svdata(mdx).mt40(idx).time >= (time - svdata(mdx).mt37(1).Ivalid3940) && ...
                  svdata(mdx).mt39(idx).iodg == svdata(mdx).mt40(idx).iodg
 
                 %set the prn and SPID values
