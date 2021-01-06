@@ -73,6 +73,7 @@ if (svdata.mt31(1).time >= (time - L5MOPS_MT31_PATIMEOUT)) && ...
     %convert from prn # to slot number
     idxprn = ~isnan(svdata.mt31(1).prn2slot);
     idxslt = ~isnan(svdata.mt31(1).slot2prn);
+    nslt = sum(idxslt);
     dt32           = NaN(max_sats, 1);
     mt32_dfrei     = NaN(max_sats, 1);
     tmt0           = NaN(max_sats, 1);
@@ -83,25 +84,25 @@ if (svdata.mt31(1).time >= (time - L5MOPS_MT31_PATIMEOUT)) && ...
     mt32_iodn      = NaN(max_sats, 1);
     
     % see if any MT32s have more recent DFREIs
-    dt32(idxslt) = time - svdata.mt32(1).time(idxprn); 
-    mt32_dfrei(idxslt) = svdata.mt32(1).dfrei(idxprn); 
+    dt32(idxslt) = time - [svdata.mt32(idxprn,1).time]'; 
+    mt32_dfrei(idxslt) = [svdata.mt32(idxprn,1).dfrei]'; 
     idx = dt32 < dtdfrei;
     svdata.dfrei(idx) = mt32_dfrei(idx);
     dtdfrei(idx) = dt32(idx);  
     
     %find the corrections
-    tmt0(idxslt) = time - svdata.mt32(1).t0(idxprn);
-    mt32_dxyzb(idxslt,:) = svdata.mt32(1).dxyzb(idxprn,:);
-    mt32_dxyzb_dot(idxslt,:) = svdata.mt32(1).dxyzb_dot(idxprn,:);
+    tmt0(idxslt) = time - [svdata.mt32(idxprn,1).t0]';
+    mt32_dxyzb(idxslt,:) = reshape([svdata.mt32(idxprn,1).dxyzb], 4, nslt)';
+    mt32_dxyzb_dot(idxslt,:) = reshape([svdata.mt32(idxprn,1).dxyzb_dot], 4, nslt)';
     idx = ~isnan(mt32_dxyzb(:,1)) & (dt32 <= svdata.mt37(1).Ivalid32);
     svdata.dxyzb(idx,:) = mt32_dxyzb(idx,:) + mt32_dxyzb_dot(idx,:).*tmt0(idx);
-    mt32_dRcorr(idxslt) = svdata.mt32(1).dRcorr(idxprn);
+    mt32_dRcorr(idxslt) = [svdata.mt32(idxprn,1).dRcorr]';
     dRcorr(idx) = mt32_dRcorr(idx);
-    mt32_iodn(idxslt) = svdata.mt32(1).iodn(idxprn);
+    mt32_iodn(idxslt) = [svdata.mt32(idxprn,1).iodn]';
     
     %find the MT28 parameters
-    mt32_dCov(idxslt,:) = svdata.mt32(1).dCov(idxprn,:);
-    mt32_sc_exp(idxslt) = svdata.mt32(1).sc_exp(idxprn);
+    mt32_dCov(idxslt,:) = reshape([svdata.mt32(idxprn,1).dCov], 16, nslt)';
+    mt32_sc_exp(idxslt) = [svdata.mt32(idxprn,1).sc_exp]';
     svdata.dCov(idx,:) = mt32_dCov(idx,:);
     svdata.dCov_sf(idx,:) = 2.^(mt32_sc_exp(idx,:) - 5);
 

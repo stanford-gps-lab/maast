@@ -30,18 +30,20 @@ mt31.slot2prn = NaN(max_sats,1);
 svdata.mt31(2) = mt31;
 svdata.mt31(1) = mt31;
 %MT32
-mt32.iodn   = NaN(max_prn,1);
-mt32.dxyzb  = NaN(max_prn,4);
-mt32.dxyzb_dot = zeros(max_prn,4);
-mt32.t0     = NaN(max_prn,1);
-mt32.sc_exp = NaN(max_prn,1); %scale exponent
-mt32.E      = NaN(max_prn,10); %[E11 E12 E13 E14  E22 E23 E24 E33 E34 E44
-mt32.dCov   = repmat([1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0], max_prn,1); %covariance matrix
-mt32.dfrei  = NaN(max_prn,1);
-mt32.dRcorr = NaN(max_prn,1);
-mt32.time   = NaN(max_prn,1);
-svdata.mt32(2) = mt32;
-svdata.mt32(1) = mt32;
+mt32.iodn   = NaN;
+mt32.dxyzb  = NaN(1,4);
+mt32.dxyzb_dot = zeros(1,4);
+mt32.t0     = NaN;
+mt32.sc_exp = NaN; %scale exponent
+mt32.E      = NaN(1,10); %[E11 E12 E13 E14  E22 E23 E24 E33 E34 E44
+mt32.dCov   = [1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0]; %covariance matrix
+mt32.dfrei  = NaN;
+mt32.dRcorr = NaN;
+mt32.time   = NaN;
+for pdx = max_prn:-1:1
+    svdata.mt32(pdx,2) = mt32;
+    svdata.mt32(pdx,1) = mt32;
+end
 %MT35
 mt35.iodm = NaN;
 mt35.dfrei = repmat(L5MOPS_DFREI_DNUSBAS,max_sats,1);
