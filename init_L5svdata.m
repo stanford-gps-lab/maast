@@ -27,6 +27,7 @@ mt31.ngeo = NaN;
 mt31.nbds = NaN;
 mt31.prn2slot = NaN(max_prn,1);
 mt31.slot2prn = NaN(max_sats,1);
+svdata.mt31(3) = mt31;
 svdata.mt31(2) = mt31;
 svdata.mt31(1) = mt31;
 %MT32
@@ -41,6 +42,7 @@ mt32.dfrei  = NaN;
 mt32.dRcorr = NaN;
 mt32.time   = NaN;
 for pdx = max_prn:-1:1
+    svdata.mt32(pdx,3) = mt32;
     svdata.mt32(pdx,2) = mt32;
     svdata.mt32(pdx,1) = mt32;
 end
@@ -48,6 +50,7 @@ end
 mt35.iodm = NaN;
 mt35.dfrei = repmat(L5MOPS_DFREI_DNUSBAS,max_sats,1);
 mt35.time = NaN;
+svdata.mt35(3) = mt35;
 svdata.mt35(2) = mt35;
 svdata.mt35(1) = mt35;
 %MT37
@@ -62,6 +65,7 @@ mt37.sig_dfre = [1.0625 2.125 2.25 2.375 2.5 4.5 4.75 5 5.25 5.5 9.5 10 18 49 10
 mt37.trefid = NaN;
 mt37.obadidx = NaN;
 mt37.time = NaN;
+svdata.mt37(3) = mt37;
 svdata.mt37(2) = mt37;
 svdata.mt37(1) = mt37;
 %MT39/40
@@ -89,9 +93,16 @@ mt40.dfrei  = NaN;
 mt40.dRcorr = NaN;
 mt40.time   = NaN;
 for iodg = 4:-1:1
-    svdata.mt39(iodg) = mt39;
-    svdata.mt40(iodg) = mt40;
-    svdata.mt3940(iodg).xyzb = NaN(1,4);
+    svdata.mt39(3,iodg) = mt39;
+    svdata.mt39(2,iodg) = mt39;
+    svdata.mt39(1,iodg) = mt39;
+    svdata.mt40(3,iodg) = mt40;
+    svdata.mt40(2,iodg) = mt40;
+    svdata.mt40(1,iodg) = mt40;
+    for j = 5:-1:1 %Geo data (max 5 channels)
+        svdata.mt3940(j,iodg).xyzb = NaN(1,4);
+        svdata.mt3940(j,iodg).time = NaN;
+    end
 end
 %MT47
 mt47alm.prn = NaN;
