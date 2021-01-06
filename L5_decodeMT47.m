@@ -1,6 +1,6 @@
 function svdata = L5_decodeMT47(time, msg, svdata)
 %*************************************************************************
-%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2021 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -26,7 +26,7 @@ for jdx = 1:2
         idx = idx+5;   
         svdata.mt47alm(gdx).brid = bin2dec(msg(idx:idx)); % Broadcast indicator
         idx = idx+1;  
-        svdata.mt47alm(gdx).a = twos2dec(msg(idx:idx+15))*650.0 + 6370000.0; % Semi-major axis
+        svdata.mt47alm(gdx).a = bin2dec(msg(idx:idx+15))*650.0 + 6370000.0; % Semi-major axis
         idx = idx+16;   
         svdata.mt47alm(gdx).e = bin2dec(msg(idx:idx+7))*(2^-8); % Eccentricity
         idx = idx+8;  
