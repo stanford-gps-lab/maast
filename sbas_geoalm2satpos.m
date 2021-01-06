@@ -21,8 +21,8 @@ function sv_xyz = sbas_geoalm2satpos(time, mt47alm)
 
 global CONST_MU_E CONST_OMEGA_E;
 
-if nargin < 3
-  error('you must specify a time and the MT 39/40 parameters')
+if nargin < 2
+  error('you must specify a time and the MT 47 parameters')
 end
 
 n0=sqrt(CONST_MU_E/mt47alm.a^3);
@@ -48,7 +48,7 @@ vk = atan2(c2*sin_Ek, cos_Ek - mt47alm.e);
 
 phik = vk + mt47alm.omega;
 
-uk = phik + mt47alm.cus*sin(2*phik) + mt47alm.cuc*cos(2*phik);
+uk = phik;
 
 rk = mt47alm.a*(1 - mt47alm.e*cos_Ek);
 
