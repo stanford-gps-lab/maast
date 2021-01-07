@@ -30,6 +30,6 @@ end
 idx = idx + 2;
 
 %read in IODM
-svdata.mt35(1).iodm = bin2dec(msg(idx:(idx+3)));
+svdata.mt35(1).iodm = bin2dec(msg(idx:(idx+1)));
 
 svdata.mt35(1).time = time;
