@@ -49,32 +49,32 @@ for gdx = 1:ngeos
         %loop over all possible IODG values
         for idx = 1:4
             %Initialize satellite correction data
-            svdata(gdx).mt3940(gdx, idx).xyzb = NaN(size(svdata(gdx).mt3940(idx).xyzb));
+            svdata(gdx).mt3940(gdx, idx).xyzb = NaN(size(svdata(gdx).mt3940(gdx, idx).xyzb));
             
             %Must have valid and matching MT 39 & 40 messages
-            if svdata(gdx).mt39(idx).time >= (time - svdata(gdx).mt37(1).Ivalid3940) && ...
-                svdata(gdx).mt40(idx).time >= (time - svdata(gdx).mt37(1).Ivalid3940) && ...
-                 svdata(gdx).mt39(idx).iodg == svdata(gdx).mt40(idx).iodg
+            if svdata(gdx).mt39(1,idx).time >= (time - svdata(gdx).mt37(1).Ivalid3940) && ...
+                svdata(gdx).mt40(1,idx).time >= (time - svdata(gdx).mt37(1).Ivalid3940) && ...
+                 svdata(gdx).mt39(1,idx).iodg == svdata(gdx).mt40(1,idx).iodg
 
                 %set the prn and SPID values
                 if isnan(svdata(gdx).geo_prn_time) || ...
-                         svdata(gdx).mt39(idx).time > svdata(gdx).geo_prn_time
-                    svdata(gdx).geo_prn = svdata(gdx).mt39(idx).prn;
-                    svdata(gdx).geo_spid = svdata(gdx).mt39(idx).spid;
-                    svdata(gdx).geo_prn_time = svdata(gdx).mt39(idx).time;
+                         svdata(gdx).mt39(1,idx).time > svdata(gdx).geo_prn_time
+                    svdata(gdx).geo_prn = svdata(gdx).mt39(1,idx).prn;
+                    svdata(gdx).geo_spid = svdata(gdx).mt39(1,idx).spid;
+                    svdata(gdx).geo_prn_time = svdata(gdx).mt39(1,idx).time;
                 end
 
                 %find the geo position
-                tmt0 = time - svdata(gdx).mt40(idx).te;
-                tmt0 = tmt0 - svdata(gdx).mt39(idx).agf0 - svdata(gdx).mt39(idx).agf1*tmt0;
+                tmt0 = time - svdata(gdx).mt40(1,idx).te;
+                tmt0 = tmt0 - svdata(gdx).mt39(1,idx).agf0 - svdata(gdx).mt39(1,idx).agf1*tmt0;
                 svdata(gdx).mt3940(gdx, idx).xyzb(1:3) = sbas_geoeph2satpos(time, ...
-                                    svdata(gdx).mt39(idx), svdata(gdx).mt40(idx));
+                                    svdata(gdx).mt39(1,idx), svdata(gdx).mt40(1,idx));
 
                 %put in the GEO clock  !!!!!NOT REALLY SURE THIS IS CORRECT!!!!
-                svdata(gdx).mt3940(gdx, idx).xyzb(4) = svdata(gdx).mt39(idx).agf0 + ...
-                                         svdata(gdx).mt39(idx).agf1*tmt0;
-                svdata(gdx).mt3940(gdx, idx).time = max([svdata(gdx).mt39(idx).time ...
-                                              svdata(gdx).mt40(idx).time]);
+                svdata(gdx).mt3940(gdx, idx).xyzb(4) = svdata(gdx).mt39(1,idx).agf0 + ...
+                                         svdata(gdx).mt39(1,idx).agf1*tmt0;
+                svdata(gdx).mt3940(gdx, idx).time = max([svdata(gdx).mt39(1,idx).time ...
+                                              svdata(gdx).mt40(1,idx).time]);
             end
         end
     end

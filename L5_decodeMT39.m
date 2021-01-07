@@ -1,6 +1,6 @@
 function svdata = L5_decodeMT39(time, msg, svdata)
 %*************************************************************************
-%*     Copyright c 2020 The board of trustees of the Leland Stanford     *
+%*     Copyright c 2021 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
 %*     This script file may be distributed and used freely, provided     *
 %*     this copyright notice is always kept with it.                     *
@@ -19,19 +19,22 @@ function svdata = L5_decodeMT39(time, msg, svdata)
 iodg  = bin2dec(msg(17:18)); % IODG
 idx = iodg + 1;
 
-svdata.mt39(idx).prn   = bin2dec(msg(11:16)) + 119; % PRN
-svdata.mt39(idx).iodg  = iodg; % IODG
-svdata.mt39(idx).spid  = bin2dec(msg(19:23)); % SPID
+% copy older messages over
+svdata.mt39(2:end, idx) = svdata.mt39(1:(end-1), idx);
+
+svdata.mt39(1, idx).prn   = bin2dec(msg(11:16)) + 119; % PRN
+svdata.mt39(1, idx).iodg  = iodg; % IODG
+svdata.mt39(1, idx).spid  = bin2dec(msg(19:23)); % SPID
 
 %Keplerian parameters part I
-svdata.mt39(idx).cuc   = twos2dec(msg(24:42))*pi*(2^-19)*(1e-4); %C_UC
-svdata.mt39(idx).cus   = twos2dec(msg(43:61))*pi*(2^-19)*(1e-4); %C_US
-svdata.mt39(idx).idot  = twos2dec(msg(62:83))*7*pi*(2^-21)*(1e-6); %Rate of inclination angle
-svdata.mt39(idx).omega = twos2dec(msg(84:117))*pi*(2^-33); %Argument of perigee
-svdata.mt39(idx).lan   = twos2dec(msg(118:151))*pi*(2^-33); %Longitude of ascending node of orbital plane
-svdata.mt39(idx).M0    = twos2dec(msg(152:185))*pi*(2^-33); %Mean anomaly at te
+svdata.mt39(1, idx).cuc   = twos2dec(msg(24:42))*pi*(2^-19)*(1e-4); %C_UC
+svdata.mt39(1, idx).cus   = twos2dec(msg(43:61))*pi*(2^-19)*(1e-4); %C_US
+svdata.mt39(1, idx).idot  = twos2dec(msg(62:83))*7*pi*(2^-21)*(1e-6); %Rate of inclination angle
+svdata.mt39(1, idx).omega = twos2dec(msg(84:117))*pi*(2^-33); %Argument of perigee
+svdata.mt39(1, idx).lan   = twos2dec(msg(118:151))*pi*(2^-33); %Longitude of ascending node of orbital plane
+svdata.mt39(1, idx).M0    = twos2dec(msg(152:185))*pi*(2^-33); %Mean anomaly at te
 
 %Clock parameters
-svdata.mt39(idx).agf0  = twos2dec(msg(186:210))*0.02; %Clock offset
-svdata.mt39(idx).agf1  = twos2dec(msg(211:226))*4e-5; %Clock rate
-svdata.mt39(idx).time  = time;
+svdata.mt39(1, idx).agf0  = twos2dec(msg(186:210))*0.02; %Clock offset
+svdata.mt39(1, idx).agf1  = twos2dec(msg(211:226))*4e-5; %Clock rate
+svdata.mt39(1, idx).time  = time;

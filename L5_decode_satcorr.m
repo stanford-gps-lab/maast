@@ -134,16 +134,16 @@ if (svdata.mt31(1).time >= (time - L5MOPS_MT31_PATIMEOUT)) && ...
                         max_time = svdata.mt3940(gdx, idx).time;
                         iodg = idx - 1;
                         dt_corr = time - svdata.mt3940(gdx, idx).time;
-                        dt40 = time - svdata.mt40(gdx, idx).time;
+                        dt40 = time - svdata.mt40(1, idx).time;
                     end
                 end
             end
             if ~isnan(iodg)
                 svdata.dxyzb(geo_idx(gdx),:) = [0 0 0 0];
                 svdata.geo_xyzb(gdx,:) = svdata.mt3940(gdx, iodg+1).xyzb;
-                svdata.dCov(geo_idx(gdx),:) = svdata.mt40(gdx, iodg+1).dCov;
-                svdata.dCov_sf(geo_idx(gdx)) = 2^(svdata.mt40(gdx, iodg+1).sc_exp - 5);
-                dRcorr(geo_idx(gdx)) = svdata.mt40(gdx, iodg+1).dRcorr;
+                svdata.dCov(geo_idx(gdx),:) = svdata.mt40(1, iodg+1).dCov;
+                svdata.dCov_sf(geo_idx(gdx)) = 2^(svdata.mt40(1, iodg+1).sc_exp - 5);
+                dRcorr(geo_idx(gdx)) = svdata.mt40(1, iodg+1).dRcorr;
                 if dt40 > svdata.mt37(1).Icorr(5)
                     dRcorr(geo_idx(gdx)) = 1;
                 end
@@ -152,7 +152,7 @@ if (svdata.mt31(1).time >= (time - L5MOPS_MT31_PATIMEOUT)) && ...
                         dt_corr*svdata.mt37(1).Rcorr(5)*dRcorr(geo_idx(gdx));
                 % if the MT 40 is more recent than other sources of DFREI, use it
                 if dt40 < dtdfrei(geo_idx(gdx)) 
-                    svdata.dfrei(geo_idx(gdx)) = svdata.mt40(gdx, iodg+1).dfrei;
+                    svdata.dfrei(geo_idx(gdx)) = svdata.mt40(1, iodg+1).dfrei;
                     dtdfrei(geo_idx(gdx)) = dt40;
                 end
             end     
