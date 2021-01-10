@@ -217,11 +217,11 @@ if ~isempty(mdx37)
                 mdx31 = mdx31(1); %use the most recent one
    
                 % find which DFREI need to be updated
-                dt35 = time - svdata.mt35(mdx35).time;
+                dt35 = time - svdata.mt35(mdx35(idx)).time;
 %                 idxdfrei = find(dtdfrei > dt35);
                 idxdfrei = dtdfrei > dt35;
                 idxmt35 = svdata.mt31(mdx31).prn2slot(idxdfrei);
-                svdata.dfrei(idxdfrei) = svdata.mt35(mdx35).dfrei(idxmt35);
+                svdata.dfrei(idxdfrei) = svdata.mt35(mdx35(idx)).dfrei(idxmt35);
                 dtdfrei(idxdfrei) = dt35;
             end
             idx = idx + 1;
