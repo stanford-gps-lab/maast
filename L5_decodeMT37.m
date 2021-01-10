@@ -24,7 +24,7 @@ svdata.mt37(1).Ivalid3940 = bin2dec(msg(17:22))*6.0 + 30.0;
 svdata.mt37(1).Cer = bin2dec(msg(23:28))*0.5;
 svdata.mt37(1).Ccovariance = bin2dec(msg(29:35))*0.1;
 
-idx = 35;
+idx = 36;
 for cdx = 1:6
     svdata.mt37(1).Icorr(cdx) = bin2dec(msg(idx:(idx+4)))*6.0 + 30.0;
     idx = idx + 5;
@@ -55,3 +55,5 @@ svdata.mt37(1).trefid = bin2dec(msg(222:224));
 svdata.mt37(1).obadidx = bin2dec(msg(225));
 
 svdata.mt37(1).time = time;
+
+svdata.mt37(1).msg_idx = mod(round(time), 700) + 1;

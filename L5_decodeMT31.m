@@ -48,3 +48,5 @@ for prn = 1:214
         slot = slot + 1;
     end
 end
+
+svdata.mt31(1).msg_idx = mod(round(time), 700) + 1;

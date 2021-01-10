@@ -47,11 +47,11 @@ svdata(gprime)  = L5_decode_satcorr(time, svdata(gprime));
 
 %transfer data to MAAST matrices
 sdx = 1:nsat;
-satdata(sdx, COL_SAT_DXYZB) = svdata(gprime).dxyzb(sdx,:);
-satdata(sdx, COL_SAT_UDREI) = svdata(gprime).dfrei(sdx);
-satdata(sdx, COL_SAT_DEGRAD) = svdata(gprime).degradation(sdx);
-satdata(sdx, COL_SAT_COV) = svdata(gprime).dCov(sdx,:);
-satdata(sdx, COL_SAT_SCALEF) = svdata(gprime).dCov_sf(sdx,:);
+satdata(sdx, COL_SAT_DXYZB) = svdata(gprime).dxyzb(satdata(sdx, COL_SAT_PRN),:);
+satdata(sdx, COL_SAT_UDREI) = svdata(gprime).dfrei(satdata(sdx, COL_SAT_PRN));
+satdata(sdx, COL_SAT_DEGRAD) = svdata(gprime).degradation(satdata(sdx, COL_SAT_PRN));
+satdata(sdx, COL_SAT_COV) = svdata(gprime).dCov(satdata(sdx, COL_SAT_PRN),:);
+satdata(sdx, COL_SAT_SCALEF) = svdata(gprime).dCov_sf(satdata(sdx, COL_SAT_PRN),:);
 
 idx = ~isnan(svdata(gprime).geo_xyzb(1:ngeo,1));
 gdx = ngps + (1:ngeo);

@@ -91,3 +91,5 @@ idx = idx + 4;
 svdata.mt32(pdx, 1).dRcorr  = (bin2dec(msg(idx:(idx+2))) + 1)/8;
 
 svdata.mt32(pdx, 1).time = time;
+
+svdata.mt32(pdx, 1).msg_idx = mod(round(time), 700) + 1;

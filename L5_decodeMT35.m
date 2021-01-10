@@ -33,3 +33,5 @@ idx = idx + 2;
 svdata.mt35(1).iodm = bin2dec(msg(idx:(idx+1)));
 
 svdata.mt35(1).time = time;
+
+svdata.mt35(1).msg_idx = mod(round(time), 700) + 1;

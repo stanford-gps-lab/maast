@@ -49,6 +49,7 @@ for jdx = 1:2
         end        
         svdata.mt47alm(gdx).ta = t0;    
         svdata.mt47alm(gdx).time = time;
+        svdata.mt47alm(gdx).msg_idx = mod(round(time), 700) + 1;
     else
         idx = idx+106;
     end

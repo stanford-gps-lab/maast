@@ -41,157 +41,201 @@ global L5MOPS_MIN_GALPRN L5MOPS_MAX_GALPRN L5MOPS_MIN_GEOPRN L5MOPS_MAX_GEOPRN
 global L5MOPS_MIN_BDSPRN L5MOPS_MAX_BDSPRN
 global L5MOPS_MT31_PATIMEOUT L5MOPS_DFRE_PATIMEOUT L5MOPS_MT37_PATIMEOUT 
 
-max_sats = size(svdata.mt35(1).dfrei,1);
+max_prns = L5MOPS_MAX_BDSPRN;
+
+% identify which satellite belong to which constellations
+gps_i = L5MOPS_MIN_GPSPRN:L5MOPS_MAX_GPSPRN;
+glo_i = L5MOPS_MIN_GLOPRN:L5MOPS_MAX_GLOPRN;
+gal_i = L5MOPS_MIN_GALPRN:L5MOPS_MAX_GALPRN;
+geo_i = L5MOPS_MIN_GEOPRN:L5MOPS_MAX_GEOPRN;
+bds_i = L5MOPS_MIN_BDSPRN:L5MOPS_MAX_BDSPRN;
 
 %Initialize satellite correction data
-svdata.dxyzb   = zeros(max_sats, 4);
-svdata.dCov    = NaN(max_sats, 16);
-svdata.dCov_sf = NaN(max_sats, 1);
-svdata.dfrei   = repmat(L5MOPS_DFREI_DNUSBAS, max_sats, 1);
-svdata.degradation  = NaN(max_sats, 1);
+svdata.dxyzb   = zeros(max_prns, 4);
+svdata.dCov    = NaN(max_prns, 16);
+svdata.dCov_sf = NaN(max_prns, 1);
+svdata.dfrei   = repmat(L5MOPS_DFREI_DNUSBAS, max_prns, 1);
+svdata.degradation  = NaN(max_prns, 1);
+      
+%Must have valid MT 37 message in order to have valid position
+mdx37 = find(([svdata.mt37.time] >= (time - L5MOPS_MT37_PATIMEOUT)) & ...
+          svdata.auth_pass([svdata.mt37.msg_idx])');
+if ~isempty(mdx37)
+    mdx37 = mdx37(1); %use the most recent one
 
-%%%TODO  fix this to handle multiple possible MT31's and MT37's !!!!!!!!!!!
-%Must have valid MT 31 & 37 messages in order to have valid corrections
-if (svdata.mt31(1).time >= (time - L5MOPS_MT31_PATIMEOUT)) && ...
-        (svdata.mt37(1).time >= (time - L5MOPS_MT37_PATIMEOUT))
+    eps_corr  = zeros(max_prns, 1);
+    dRcorr  = ones(max_prns, 1);
+    dtdfrei = NaN(max_prns, 1);
+    dtcorr = NaN(max_prns, 1);
     
-    % find which satellite belong to which constellations
-    gps_i = svdata.prns >= L5MOPS_MIN_GPSPRN & svdata.prns <= L5MOPS_MAX_GPSPRN;
-    glo_i = svdata.prns >= L5MOPS_MIN_GLOPRN & svdata.prns <= L5MOPS_MAX_GLOPRN;
-    gal_i = svdata.prns >= L5MOPS_MIN_GALPRN & svdata.prns <= L5MOPS_MAX_GALPRN;
-    geo_idx = find(svdata.prns >= L5MOPS_MIN_GEOPRN & svdata.prns <= L5MOPS_MAX_GEOPRN);
-    bds_i = svdata.prns >= L5MOPS_MIN_BDSPRN & svdata.prns <= L5MOPS_MAX_BDSPRN;
+    % find the most recent authenticated MT 32 for each satellite
+    mdx32 = (reshape([svdata.mt32.time], size(svdata.mt32)) ...
+                             >= (time - svdata.mt37(mdx37).Ivalid32)) & ...
+              svdata.auth_pass(reshape([svdata.mt32.msg_idx], size(svdata.mt32)));
+    if any(mdx32(:))
+        % use only the most recent and ignore duplicate older versions 
+        mdx32(mdx32(:,1),2:3) = false;
+        mdx32(mdx32(:,2),3) = false;
+        idx32 = find(any(mdx32,2));
+        [a, b] = ind2sub(size(mdx32'), find(mdx32')); %convert to indices
+        mdx32 = sub2ind(size(mdx32),b,a);
+        
+        svdata.dfrei(idx32) = [svdata.mt32(mdx32).dfrei]';
+        dtcorr(idx32) = time - [svdata.mt32(mdx32).time]';
+        dtdfrei(idx32) = dtcorr(idx32);
+        
+        %remove the SBAS satellite values as they will be filled in  later
+        svdata.dfrei(geo_i) = L5MOPS_DFREI_DNUSBAS;
+        dtcorr(geo_i) = NaN;
+        dtdfrei(geo_i) = NaN;
+        
+        %find the corrections
+        tmt0 = time - [svdata.mt32(mdx32).t0]';
+        mt32_dxyzb = reshape([svdata.mt32(mdx32).dxyzb], 4, length(idx32))';
+        mt32_dxyzb_dot = reshape([svdata.mt32(mdx32).dxyzb_dot], 4, length(idx32))';
+        svdata.dxyzb(idx32,:) = mt32_dxyzb + mt32_dxyzb_dot.*tmt0;
+        dRcorr(idx32) = [svdata.mt32(mdx32).dRcorr]';
+        mt32_iodn = [svdata.mt32(mdx32).iodn]';
 
-    eps_corr  = zeros(max_sats, 1);
-    dRcorr  = ones(max_sats, 1);
-
-    %find the most recent DFREI from MT 35
-    dt35 = time - svdata.mt35(1).time; 
-    svdata.dfrei = svdata.mt35(1).dfrei;
-    dtdfrei = dt35*ones(size(svdata.dfrei));
-    
-    %convert from prn # to slot number
-    idxprn = ~isnan(svdata.mt31(1).prn2slot);
-    idxslt = ~isnan(svdata.mt31(1).slot2prn);
-    nslt = sum(idxslt);
-    dt32           = NaN(max_sats, 1);
-    mt32_dfrei     = NaN(max_sats, 1);
-    tmt0           = NaN(max_sats, 1);
-    mt32_dxyzb     = NaN(max_sats, 4);
-    mt32_dxyzb_dot = NaN(max_sats, 4);
-    mt32_dCov      = NaN(max_sats, 16);
-    mt32_sc_exp    = NaN(max_sats, 1);
-    mt32_iodn      = NaN(max_sats, 1);
-    
-    % see if any MT32s have more recent DFREIs
-    dt32(idxslt) = time - [svdata.mt32(idxprn,1).time]'; 
-    mt32_dfrei(idxslt) = [svdata.mt32(idxprn,1).dfrei]'; 
-    idx = dt32 < dtdfrei;
-    svdata.dfrei(idx) = mt32_dfrei(idx);
-    dtdfrei(idx) = dt32(idx);  
-    
-    %find the corrections
-    tmt0(idxslt) = time - [svdata.mt32(idxprn,1).t0]';
-    mt32_dxyzb(idxslt,:) = reshape([svdata.mt32(idxprn,1).dxyzb], 4, nslt)';
-    mt32_dxyzb_dot(idxslt,:) = reshape([svdata.mt32(idxprn,1).dxyzb_dot], 4, nslt)';
-    idx = ~isnan(mt32_dxyzb(:,1)) & (dt32 <= svdata.mt37(1).Ivalid32);
-    svdata.dxyzb(idx,:) = mt32_dxyzb(idx,:) + mt32_dxyzb_dot(idx,:).*tmt0(idx);
-    mt32_dRcorr(idxslt) = [svdata.mt32(idxprn,1).dRcorr]';
-    dRcorr(idx) = mt32_dRcorr(idx);
-    mt32_iodn(idxslt) = [svdata.mt32(idxprn,1).iodn]';
-    
-    %find the MT28 parameters
-    mt32_dCov(idxslt,:) = reshape([svdata.mt32(idxprn,1).dCov], 16, nslt)';
-    mt32_sc_exp(idxslt) = [svdata.mt32(idxprn,1).sc_exp]';
-    svdata.dCov(idx,:) = mt32_dCov(idx,:);
-    svdata.dCov_sf(idx,:) = 2.^(mt32_sc_exp(idx,:) - 5);
-
-    %find the degradation term
-    dRcorr(gps_i(dt32(gps_i) > svdata.mt37(1).Icorr(1))) = 1;
-    eps_corr(gps_i) = floor(dt32(gps_i)/svdata.mt37(1).Icorr(1))*svdata.mt37(1).Ccorr(1) + ...
-                            dt32(gps_i)*svdata.mt37(1).Rcorr(1).*dRcorr(gps_i);
-    dRcorr(glo_i(dt32(glo_i) > svdata.mt37(1).Icorr(2))) = 1;
-    eps_corr(glo_i) = floor(dt32(glo_i)/svdata.mt37(1).Icorr(2))*svdata.mt37(1).Ccorr(2) + ...
-                            dt32(glo_i)*svdata.mt37(1).Rcorr(2).*dRcorr(glo_i);
-    dRcorr(gal_i(dt32(gal_i) > svdata.mt37(1).Icorr(3))) = 1;
-    eps_corr(gal_i) = floor(dt32(gal_i)/svdata.mt37(1).Icorr(3))*svdata.mt37(1).Ccorr(3) + ...
-                            dt32(gal_i)*svdata.mt37(1).Rcorr(3).*dRcorr(gal_i);
-    dRcorr(bds_i(dt32(bds_i) > svdata.mt37(1).Icorr(4))) = 1;
-    eps_corr(bds_i) = floor(dt32(bds_i)/svdata.mt37(1).Icorr(4))*svdata.mt37(1).Ccorr(4) + ...
-                            dt32(bds_i)*svdata.mt37(1).Rcorr(4).*dRcorr(bds_i);          
-    svdata.degradation = eps_corr;
+        %find the MT28 parameters
+        svdata.dCov(idx32,:) = reshape([svdata.mt32(mdx32).dCov], 16, length(idx32))';
+        svdata.dCov_sf(idx32,:) = 2.^([svdata.mt32(mdx32).sc_exp]' - 5);      
+        
+        %find the degradation term
+        dRcorr(gps_i(dtcorr(gps_i) > svdata.mt37(mdx37).Icorr(1))) = 1;
+        eps_corr(gps_i) = floor(dtcorr(gps_i)/svdata.mt37(mdx37).Icorr(1))*svdata.mt37(mdx37).Ccorr(1) + ...
+                                dtcorr(gps_i)*svdata.mt37(mdx37).Rcorr(1).*dRcorr(gps_i);
+        dRcorr(glo_i(dtcorr(glo_i) > svdata.mt37(mdx37).Icorr(2))) = 1;
+        eps_corr(glo_i) = floor(dtcorr(glo_i)/svdata.mt37(mdx37).Icorr(2))*svdata.mt37(mdx37).Ccorr(2) + ...
+                                dtcorr(glo_i)*svdata.mt37(mdx37).Rcorr(2).*dRcorr(glo_i);
+        dRcorr(gal_i(dtcorr(gal_i) > svdata.mt37(mdx37).Icorr(3))) = 1;
+        eps_corr(gal_i) = floor(dtcorr(gal_i)/svdata.mt37(mdx37).Icorr(3))*svdata.mt37(mdx37).Ccorr(3) + ...
+                                dtcorr(gal_i)*svdata.mt37(mdx37).Rcorr(3).*dRcorr(gal_i);
+        dRcorr(bds_i(dtcorr(bds_i) > svdata.mt37(mdx37).Icorr(4))) = 1;
+        eps_corr(bds_i) = floor(dtcorr(bds_i)/svdata.mt37(mdx37).Icorr(4))*svdata.mt37(mdx37).Ccorr(4) + ...
+                                dtcorr(bds_i)*svdata.mt37(mdx37).Rcorr(4).*dRcorr(bds_i);         
+    end
     
     % find the geo positions and corrections
-    for gdx = 1:length(geo_idx)
+    for gdx = 1:size(svdata.mt3940, 2)
         %is this the broadcasting geo? (if so, does not need a correction)
-        if svdata.prns(geo_idx(gdx)) == svdata.geo_prn
+        if svdata.geo_channel == gdx
             % find most recent matching active MTs 39 & 40
             iodg = NaN;
             max_time = -Inf;
             for idx = 1:4
-                if svdata.mt3940(gdx, idx).time > time - svdata.mt37(1).Ivalid3940 
-                    if svdata.mt3940(gdx, idx).time > max_time
-                        max_time = svdata.mt3940(gdx, idx).time;
+                if svdata.mt3940(idx, gdx).time > time - svdata.mt37(mdx37).Ivalid3940 
+                    if svdata.mt3940(idx, gdx).time > max_time
+                        max_time = svdata.mt3940(idx, gdx).time;
                         iodg = idx - 1;
-                        dt_corr = time - svdata.mt3940(gdx, idx).time;
-                        dt40 = time - svdata.mt40(1, idx).time;
+                        dt_corr = time - svdata.mt3940(idx, gdx).time;
+                        kdx40 = svdata.mt3940(idx, gdx).kdx40;
+                        dt40 = time - svdata.mt40(kdx40, idx).time;
                     end
                 end
             end
             if ~isnan(iodg)
-                svdata.dxyzb(geo_idx(gdx),:) = [0 0 0 0];
-                svdata.geo_xyzb(gdx,:) = svdata.mt3940(gdx, iodg+1).xyzb;
-                svdata.dCov(geo_idx(gdx),:) = svdata.mt40(1, iodg+1).dCov;
-                svdata.dCov_sf(geo_idx(gdx)) = 2^(svdata.mt40(1, iodg+1).sc_exp - 5);
-                dRcorr(geo_idx(gdx)) = svdata.mt40(1, iodg+1).dRcorr;
-                if dt40 > svdata.mt37(1).Icorr(5)
-                    dRcorr(geo_idx(gdx)) = 1;
+                svdata.dxyzb(svdata.geo_prn,:) = [0 0 0 0];
+                svdata.geo_xyzb(gdx,:) = svdata.mt3940(iodg+1, gdx).xyzb;
+                svdata.dCov(svdata.geo_prn,:) = svdata.mt40(iodg+1, kdx40).dCov;
+                svdata.dCov_sf(svdata.geo_prn) = 2^(svdata.mt40(iodg+1, kdx40).sc_exp - 5);
+                dRcorr(svdata.geo_prn) = svdata.mt40(iodg+1, kdx40).dRcorr;
+                if dt40 > svdata.mt37(mdx37).Icorr(5)
+                    dRcorr(svdata.geo_prn) = 1;
                 end
-                svdata.degradation(geo_idx(gdx)) = floor(dt_corr/...
-                        svdata.mt37(1).Icorr(5))*svdata.mt37(1).Ccorr(5) + ...
-                        dt_corr*svdata.mt37(1).Rcorr(5)*dRcorr(geo_idx(gdx));
+                dtcorr(svdata.geo_prn) = dt_corr;
+                eps_corr(svdata.geo_prn) = floor(dt_corr/...
+                        svdata.mt37(mdx37).Icorr(5))*svdata.mt37(mdx37).Ccorr(5) + ...
+                        dt_corr*svdata.mt37(mdx37).Rcorr(5)*dRcorr(svdata.geo_prn);
                 % if the MT 40 is more recent than other sources of DFREI, use it
-                if dt40 < dtdfrei(geo_idx(gdx)) 
-                    svdata.dfrei(geo_idx(gdx)) = svdata.mt40(1, iodg+1).dfrei;
-                    dtdfrei(geo_idx(gdx)) = dt40;
+                if dt40 < dtdfrei(svdata.geo_prn)|| isnan(dtdfrei(svdata.geo_prn))
+                    svdata.dfrei(svdata.geo_prn) = svdata.mt40(iodg+1, kdx40).dfrei;
+                    dtdfrei(svdata.geo_prn) = dt40;
                 end
             end     
-        %if not, it does need a correction            
-        else
+        %if not the broadacast satellite, it does need a correction            
+        elseif any(~isnan([svdata.mt3940(:, gdx).prn]))
             % find most recent matching active MTs 39 & 40 and MT 32
             iodg = NaN;
             max_time = -Inf;
             for idx = 1:4
-                if svdata.mt3940(gdx, idx).time > time - svdata.mt37(1).Ivalid3940
-                    jdx = 1;
-                    while jdx <= 1 % size(svdata.mt32(1),2) %%%TODO  fix this to handle multiple possible MT32's
-                        if dt32(geo_idx(gdx),jdx) <= svdata.mt37(1).Ivalid32 && ...
-                                      mt32_iodn(geo_idx(gdx),jdx) == (idx -1)
-                            corr_time = time - dt32(geo_idx(gdx),jdx);
-                            if corr_time > max_time
-                                max_time = corr_time;
-                                iodg = idx - 1;
-                                dt_corr = time - corr_time;
-                                jdx = Inf;
-                            end
+                if svdata.mt3940(idx, gdx).time > time - svdata.mt37(mdx37).Ivalid3940
+                    geo_prn = svdata.mt3940(idx, gdx).prn;
+                    % find the most recent authenticated MT 32 for this satellite that matches IODG
+                    mdx32 = find(([svdata.mt32(geo_prn,:).time]' ...
+                               >= (time - svdata.mt37(mdx37).Ivalid32)) & ...
+                              svdata.auth_pass([svdata.mt32(geo_prn,:).msg_idx]) & ...
+                              ([svdata.mt32(geo_prn,:).iodn]' == (idx - 1)));                
+                    if ~isempty(mdx32)
+                        mdx32 = mdx32(1);
+                        corr_time = svdata.mt32(geo_prn,mdx32).time;
+                        if corr_time > max_time
+                            max_time = corr_time;
+                            iodg = idx - 1;
+                            dt_corr = time - corr_time;
+                            kdx32 = mdx32;
                         end
-                        jdx = jdx + 1;
                     end
                 end
             end
             %if a set was found use the most recent one
             if ~isnan(iodg)
-                svdata.geo_xyzb(gdx,:) = svdata.mt3940(gdx, iodg+1).xyzb;
-                if dt32(geo_idx(gdx)) > svdata.mt37(1).Icorr(5)
-                    dRcorr(geo_idx(gdx)) = 1;
+                svdata.geo_xyzb(gdx,:) = svdata.mt3940(iodg+1, gdx).xyzb;
+                tmt0 = time - svdata.mt32(geo_prn, kdx32).t0;
+                svdata.dxyzb(geo_prn,:) = svdata.mt32(geo_prn, kdx32).dxyzb + ...
+                                svdata.mt32(geo_prn, kdx32).dxyzb_dot*tmt0;
+                dRcorr(idx32) = [svdata.mt32(kdx32).dRcorr]';
+                mt32_iodn(geo_prn) = svdata.mt32(geo_prn, kdx32).iodn;
+                svdata.dxyzb(geo_prn,:) = [0 0 0 0];
+                svdata.dCov(geo_prn,:) = svdata.mt40(iodg+1, kdx40).dCov;
+                svdata.dCov_sf(geo_prn) = 2^(svdata.mt40(iodg+1, kdx40).sc_exp - 5);
+                svdata.dfrei(geo_prn) = svdata.mt32(geo_prn, kdx32).dfrei;
+                dtdfrei(geo_prn) = dt_corr;
+                dRcorr(geo_prn) = svdata.mt40(iodg+1, kdx40).dRcorr;
+                if dt_corr > svdata.mt37(mdx37).Icorr(5)
+                    dRcorr(geo_prn) = 1;
                 end    
-                svdata.degradation(geo_idx(gdx),:) = floor(dt_corr/...
-                        svdata.mt37(1).Icorr(5))*svdata.mt37(1).Ccorr(5) + ...
-                        dt_corr*svdata.mt37(1).Rcorr(5)*dRcorr(geo_idx(gdx));
+                dtcorr(geo_prn) = dt_corr;
+                eps_corr(geo_prn,:) = floor(dt_corr/...
+                        svdata.mt37(mdx37).Icorr(5))*svdata.mt37(mdx37).Ccorr(5) + ...
+                        dt_corr*svdata.mt37(mdx37).Rcorr(5)*dRcorr(geo_prn);
             end
         end
     end
+        %find the most recent authenticated MT 35 with matching MT 31
+    mdx35 = find(([svdata.mt35.time] >= (time - L5MOPS_DFRE_PATIMEOUT)) & ...
+              svdata.auth_pass([svdata.mt35.msg_idx])');
+    if ~isempty(mdx35)
+        dt35 = NaN;
+        idx = 1;
+        while isnan(dt35) && idx <= length(mdx35)
+            %Must have valid MT 31 message with matching IODM in order to use MT35
+            mdx31 = find(([svdata.mt31.time] >= (time - L5MOPS_MT31_PATIMEOUT)) & ...
+                      svdata.auth_pass([svdata.mt31.msg_idx])' &  ...
+                      ([svdata.mt31.iodm] == svdata.mt35(mdx35(idx)).iodm));
+            if ~isempty(mdx31)
+                mdx31 = mdx31(1); %use the most recent one
+   
+                % find which DFREI need to be updated
+                dt35 = time - svdata.mt35(mdx35).time;
+%                 idxdfrei = find(dtdfrei > dt35);
+                idxdfrei = dtdfrei > dt35;
+                idxmt35 = svdata.mt31(mdx31).prn2slot(idxdfrei);
+                svdata.dfrei(idxdfrei) = svdata.mt35(mdx35).dfrei(idxmt35);
+                dtdfrei(idxdfrei) = dt35;
+            end
+            idx = idx + 1;
+        end
+    end
+    
+    %load in the degradation terms
+    svdata.degradation = eps_corr;
     
     %set the DFREs to NM for any SV with a timed out DFREI
     svdata.dfrei(dtdfrei > L5MOPS_DFRE_PATIMEOUT) = L5MOPS_DFREI_DNUSBAS;
+    
+    corr_t_out = svdata.mt37(mdx37).Ivalid32*ones(size(dtcorr));
+    corr_t_out(svdata.geo_prn) = svdata.mt37(mdx37).Ivalid3940;
+    %set the DFREs to NM for any SV with a timed out correction
+    svdata.dfrei(dtcorr > corr_t_out) = L5MOPS_DFREI_DNUSBAS;    
 end
