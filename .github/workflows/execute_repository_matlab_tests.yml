@@ -1,0 +1,25 @@
+# This is a basic workflow that executes all the matlab unit tests of the repo
+
+name: Test Matlab
+
+on: [push, workflow_dispatch]
+
+jobs:
+  matlab-runtests:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: execute matlab runtests
+        run: |
+          matlab -batch "addpath(genpath('.')); addpath('.github/workflows'); execute_matlab_tests_into_xml(pwd, 'matlab_test_results.xml')"
+
+      - name: publish unit test results
+        uses: mikepenz/action-junit-report@v1
+        with:
+          report_paths: 'matlab_test_results.xml'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
