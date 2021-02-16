@@ -8,6 +8,30 @@ classdef TestHashingWrappers < matlab.unittest.TestCase
             test_output = HashingWrappers.sha_256(input);
             testCase.assertEqual(correct_output, test_output);
         end
+        
+        function test_HMAC(testCase)
+            input = matlab.net.base64decode(matlab.net.base64encode("Hello World"));
+            key = matlab.net.base64decode(matlab.net.base64encode("ls"));
+            correct_output = uint8(sscanf('9e2b27474665d773b5009acab27a27a9167248cd71b9a783fc00660b487cbe6c', '%2x'));
+            test_output = HashingWrappers.hmac_sha_256(input, key);
+            testCase.assertEqual(correct_output, test_output);
+        end
+        
+        function test_authenticator_ECDSA(testCase)
+            message = matlab.net.base64decode(matlab.net.base64encode("Hello World"));
+            obj = AuthenticatorECDSA();
+            sig = sign(obj, message);
+            
+            testCase.assertTrue(verify(obj, message,sig));
+        end
+        
+        function test_authenticator_ECDSA2(testCase)
+            message = matlab.net.base64decode(matlab.net.base64encode("Hello World"));
+            obj = AuthenticatorECDSA();
+            sig = sign(obj, message);
+            
+            testCase.assertTrue(~verify(obj, message - 1,sig));
+        end
     end
 end
 
