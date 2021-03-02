@@ -32,6 +32,23 @@ classdef TestHashingWrappers < matlab.unittest.TestCase
             
             testCase.assertTrue(~verify(obj, message - 1,sig));
         end
+        
+        
+        function test_authenticator_ECDSA3(testCase)
+            import java.security.*;
+            keyGen = KeyPairGenerator.getInstance("EC");
+            keyGen.initialize(256, SecureRandom());
+            
+            pair = keyGen.generateKeyPair();
+            private_key = pair.getPrivate().getEncoded();
+            public_key_correct = pair.getPublic();
+            
+            ae = AuthenticatorECDSA(private_key, 1);
+            testCase.verifyEqual(ae.public_key, public_key_correct);
+          
+        end
+        
+       
     end
 end
 

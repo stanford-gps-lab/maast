@@ -10,8 +10,8 @@ classdef HashingWrappers
             output = typecast(mDigest.digest(input), 'uint8');
         end
         function output = hmac_sha_256(input, key)
-            import javax.crypto.Mac;
-            import javax.crypto.spec.SecretKeySpec;
+             import javax.crypto.Mac;
+             import javax.crypto.spec.SecretKeySpec;
              m_a_c = Mac.getInstance("HmacSHA256");
              secretKeySpec = SecretKeySpec(key, "HmacSHA256");
              m_a_c.init(secretKeySpec);
