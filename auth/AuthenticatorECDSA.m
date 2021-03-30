@@ -67,19 +67,21 @@ classdef AuthenticatorECDSA < Authenticator
     methods(Access = protected)
         function public_key = derive_public_key(obj, key)
             import java.security.spec.PKCS8EncodedKeySpec;
-            import java.security.KeyFactory;
+            import java.security.*;
+            import ECMath.*;
             
             spec = PKCS8EncodedKeySpec(key);
             kf = KeyFactory.getInstance("EC");
             private_key = kf.generatePrivate(spec);
             
-            privateKeyNative = kecFactory.generatePrivate(PKCS8EncodedKeySpec(privateKeyFullByte));
-            ecPrivateKeyNative = cast(privateKeyNative, ECPrivateKey);
-            ecPublicKeyNative = getPublicKey(ecPrivateKeyNative);            
-            ecPublicKeyNativeByte = ecPublicKeyNative.getEncoded();
+            params = private_key.getParams();
+            G = params.getGenerator();
+            s = private_key.getS();
+            curve = params.getCurve();
+                
+            javaaddpath(fileparts(mfilename('fullpath')));
             
-            public_key = kf.generatePublic(RSAPublicKeySpec(private_key.getModulus() ...
-                , private_key.getPublicExponent()));
+            public_key = scalarMultiply(G, s, curve);
         end
         
         function [private_key, public_key] = derive_random_key(obj)
