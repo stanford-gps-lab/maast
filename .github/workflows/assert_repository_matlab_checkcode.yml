@@ -1,4 +1,4 @@
-# This is a basic workflow that executes all the matlab unit tests of the repo
+# This is a basic workflow that executes matlab checkcode on all files and asserts no errors
 
 name: Lint Matlab
 
@@ -17,9 +17,3 @@ jobs:
       - name: execute matlab checkcode
         run: |
           matlab -batch "addpath(genpath('.')); addpath('.github/workflows'); assert_matlab_checkcode('auth')"
-
-      - name: publish unit test results
-        uses: mikepenz/action-junit-report@v1
-        with:
-          report_paths: 'matlab_test_results.xml'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
