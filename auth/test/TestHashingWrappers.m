@@ -1,14 +1,15 @@
 classdef TestHashingWrappers < matlab.unittest.TestCase
-    %TESTHASHINGWRAPPERS Tests for HashingWrappers
-    
-    methods(Test)       
+    % TESTHASHINGWRAPPERS Tests for HashingWrappers
+
+    methods (Test)
+
         function test_sha256(testCase)
             input = matlab.net.base64decode(matlab.net.base64encode("Hello World"));
-            correct_output = uint8(sscanf('a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e','%2x'));
+            correct_output = uint8(sscanf('a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e', '%2x'));
             test_output = HashingWrappers.sha_256(input);
             testCase.assertEqual(correct_output, test_output);
         end
-        
+
         function test_HMAC(testCase)
             input = matlab.net.base64decode(matlab.net.base64encode("Hello World"));
             key = matlab.net.base64decode(matlab.net.base64encode("ls"));
@@ -16,5 +17,6 @@ classdef TestHashingWrappers < matlab.unittest.TestCase
             test_output = HashingWrappers.hmac_sha_256(input, key);
             testCase.assertEqual(correct_output, test_output);
         end
+
     end
 end
