@@ -81,7 +81,7 @@ classdef TestAuthenticatorECDSA < matlab.unittest.TestCase
                                  'AuthenticatorECDSA:NotImplementedError');
         end
 
-        function test_constructing_public_key_from_der(testCase)
+        function test_construcing_public_key_from_der(testCase)
             ae1 = AuthenticatorECDSA();
             ae2 = AuthenticatorECDSA(ae1.get_public_key_der());
             testCase.verifyEqual(ae1.get_public_key_der(), ae2.get_public_key_der());
