@@ -55,17 +55,19 @@ classdef DERMethods
                             error('DERMethods:DER2SIG:BadSignature', 'Input signature not valid.');
                         end
 
-                        switch der_signature(2)
-                            case uint8(32)
-                                start_index = 3;
-                                end_index = 34;
-                            case uint8(33)
-                                start_index = 4;
-                                end_index = 35;
-                            otherwise
-                                error('DERMethods:DER2SIG:BadSignature', 'Input signature not valid.');
+                        start_index = 3;
+                        end_index = 3 + der_signature(2) - 1;
+                        if end_index > length(der_signature)
+                            error('DERMethods:DER2SIG:BadSignature', 'Input signature not valid.');
                         end
-                        integer = der_signature(start_index:end_index);
+                        integer_data =  der_signature(start_index:end_index);
+
+                        integer = zeros(32, 1, 'uint8');
+                        if length(integer_data) > 32
+                            integer = integer_data(2:end);
+                        else
+                            integer(end - length(integer_data) + 1:end) = integer_data;
+                        end
                         public_signature = [public_signature; integer]; %#ok two loops ok
                         der_signature = der_signature(end_index + 1:end);
                     end
@@ -88,8 +90,14 @@ classdef DERMethods
                     for i = 1:2
                         integer = signature(1:32);
                         if integer(1) < 128
-                            der_signature = [der_signature; uint8(2); uint8(32); integer]; %#ok two loops ok
-                            total_size = total_size + uint8(32);
+                            first_non_zero_index = find(integer > 0, 1);
+                            byte_size = uint8(33 - first_non_zero_index);
+                            der_signature = [ ...
+                                             der_signature; ...
+                                             uint8(2); ...
+                                             byte_size; ...
+                                             integer(first_non_zero_index:end)]; %#ok two loops ok
+                            total_size = total_size + byte_size;
                         else
                             der_signature = [der_signature; uint8(2); uint8(33); uint8(0); integer]; %#ok two loops ok
                             total_size = total_size + uint8(33);
@@ -103,4 +111,5 @@ classdef DERMethods
         end
 
     end
+
 end
