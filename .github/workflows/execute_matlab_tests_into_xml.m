@@ -22,7 +22,7 @@ try
         source_directory,'Producing',coverageReportFormat,'IncludingSubfolders',true);
     runner.addPlugin(coverageReportPlugin);
     
-    results = runner.run(suite);
+    results = runner.runInParallel(suite);
     display(results);
 catch e
     disp(getReport(e,'extended'));
