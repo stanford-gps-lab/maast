@@ -20,5 +20,15 @@ classdef HashingWrappers
             output = typecast(m_a_c.doFinal(input), 'uint8');
         end
 
+        function output = truncated_sha_256(input, length)
+            input = HashingWrappers.sha_256(input);
+            output = input(1:length);
+        end
+
+        function output = truncated_hmac_sha_256(input, key, length)
+            input = HashingWrappers.hmac_sha_256(input, key);
+            output = input(1:length);
+        end
+
     end
 end
