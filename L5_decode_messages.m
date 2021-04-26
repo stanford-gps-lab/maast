@@ -10,7 +10,7 @@ function [svdata, flag] = L5_decode_messages(time, msg, svdata)
 %*************************************************************************
 %
 
-global L5MOPS_PREAMBLE
+global L5MOPS_PREAMBLE AUTHENTICATION_ENABLED
 
 flag  = 0;
 
@@ -37,8 +37,13 @@ end
 
 %mark message as received
 svdata.received(idx) = true;
-svdata.auth_pass(idx) = true; %%%%%TEMPORARILY SET AUTHENTICATION AS PASSING
-%%%%%%REMOVE THIS LINE LATER WHEN AUTHENTICATING
+% if authentication is not enabled, mark all messages as authenticated
+if isempty(AUTHENTICATION_ENABLED) || ~AUTHENTICATION_ENABLED
+    svdata.auth_pass(idx) = true;    
+else
+    % otherwise mark them as not authenticated
+    svdata.auth_pass(idx) = false;
+end
 
 flag = 1;
 mt = bin2dec(msg(5:10));
@@ -62,4 +67,6 @@ switch mt
         svdata = L5_decodeMT47(time, msg, svdata); 
     case 50
         svdata = L5_decodeMT50(time, msg, svdata);   
+    case 51
+        L5_decodeMT51(time, msg);
 end
