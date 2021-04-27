@@ -37,7 +37,8 @@ svdata.mt31(1).nglo = sum(prns >= L5MOPS_MIN_GLOPRN & prns <= L5MOPS_MAX_GLOPRN)
 svdata.mt31(1).ngal = sum(prns >= L5MOPS_MIN_GALPRN & prns <= L5MOPS_MAX_GALPRN);
 svdata.mt31(1).ngeo = sum(prns >= L5MOPS_MIN_GEOPRN & prns <= L5MOPS_MAX_GEOPRN);
 svdata.mt31(1).nbds = sum(prns >= L5MOPS_MIN_BDSPRN & prns <= L5MOPS_MAX_BDSPRN);
-
+svdata.mt31(1).nmeo = svdata.mt31(1).ngps + svdata.mt31(1).nglo + ...
+                      svdata.mt31(1).ngal + svdata.mt31(1).nbds;
 slot = 1;
 svdata.mt31(1).prn2slot = NaN(size(svdata.mt31(1).prn2slot));
 svdata.mt31(1).slot2prn = NaN(size(svdata.mt31(1).slot2prn));

@@ -15,17 +15,20 @@ global COL_SAT_PRN COL_SAT_XYZB COL_SAT_DXYZB COL_SAT_UDREI COL_SAT_DEGRAD
 global COL_SAT_COV COL_SAT_SCALEF
 
 global L5MOPS_MIN_GPSPRN L5MOPS_MAX_GPSPRN
+global L5MOPS_MIN_GALPRN L5MOPS_MAX_GALPRN
 
 ngps = sum(satdata(:, COL_SAT_PRN) >= L5MOPS_MIN_GPSPRN & satdata(:, COL_SAT_PRN) <= L5MOPS_MAX_GPSPRN);
+ngal = sum(satdata(:, COL_SAT_PRN) >= L5MOPS_MIN_GALPRN & satdata(:, COL_SAT_PRN) <= L5MOPS_MAX_GALPRN);
+nmeo = ngps + ngal;
 nsat = sum(satdata(:, COL_SAT_PRN) > 0);
-ngeo = nsat - ngps;
+ngeo = nsat - nmeo;
 n_channels = size(svdata,2);
-geoprns = satdata(ngps+(1:ngeo), COL_SAT_PRN);
+geoprns = satdata(nmeo+(1:ngeo), COL_SAT_PRN);
 
 % loop over the geo channels and read in the previously unread 
  %  messages up to the current time
 for gdx = 1:n_channels
-    while sbas_msg_time{gdx}(smtidx(gdx)) <= time
+    while smtidx(gdx) <= length(sbas_msg_time{gdx}) && sbas_msg_time{gdx}(smtidx(gdx)) <= time
         msg = reshape(dec2bin(sbas_msgs{gdx}(smtidx(gdx),:),8)', 1,256);
         svdata(gdx) = L5_decode_messages(sbas_msg_time{gdx}(smtidx(gdx)), ...
                       msg, svdata(gdx));
@@ -54,5 +57,5 @@ satdata(sdx, COL_SAT_COV) = svdata(gprime).dCov(satdata(sdx, COL_SAT_PRN),:);
 satdata(sdx, COL_SAT_SCALEF) = svdata(gprime).dCov_sf(satdata(sdx, COL_SAT_PRN),:);
 
 idx = ~isnan(svdata(gprime).geo_xyzb(1:ngeo,1));
-gdx = ngps + (1:ngeo);
+gdx = nmeo + (1:ngeo);
 satdata(gdx(idx), COL_SAT_XYZB) = svdata(gprime).geo_xyzb(idx,:);

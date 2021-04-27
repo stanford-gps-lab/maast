@@ -26,6 +26,7 @@ mt31.nglo = NaN;
 mt31.ngal = NaN;
 mt31.ngeo = NaN;
 mt31.nbds = NaN;
+mt31.nmeo = NaN;
 mt31.prn2slot = NaN(max_prn,1);
 mt31.slot2prn = NaN(max_sats,1);
 mt31.msg_idx = 1;
