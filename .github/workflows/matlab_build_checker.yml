@@ -1,0 +1,90 @@
+name: Matlab Code Build Checker
+
+on:
+  push:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+
+  miss_hit_linter:
+    name: MISS_HIT Linter
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Branch
+      uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools
+        pip3 install miss_hit
+
+    - name: MISS_HIT Style Checker
+      run: |
+        mh_style --process-slx
+
+    - name: MISS_HIT Metrics
+      run: |
+        mh_metric --ci
+
+    - name: MISS_HIT Bug finder
+      run: |
+        mh_lint
+
+  matlab_linter:
+    name: Matlab Checkcode Linter
+    runs-on: self-hosted
+    steps:
+
+    - name: Checkout Branch
+      uses: actions/checkout@v2
+    
+    - name: Execute Matlab Checkcode
+      run: matlab -batch "addpath(genpath('.')); addpath('.github/workflows'); exit(matlab_checkcode_on_directory('test'))"
+
+  matlab_runtests:
+    name: Matlab Runtests
+    runs-on: self-hosted
+    steps:
+
+    - name: Checkout Branch
+      uses: actions/checkout@v2
+
+    - name: Execute Matlab Runtests
+      run: matlab -batch "addpath(genpath('.')); addpath('.github/workflows'); matlab_runtests_on_directory('.','matlab_test_results.xml','matlab_test_coverage_report.xml')"
+
+    - name: Retreive Pull Request Number
+      uses: jwalton/gh-find-current-pr@v1
+      id: findPr
+
+    - name: Publish Cobertura Coverage Report
+      if: github.event_name == 'pull_request' || success() && steps.findPr.outputs.number # only happens if pull request exists
+      uses: 5monkeys/cobertura-action@v8
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }} # The GITHUB_TOKEN for this repo
+        path: matlab_test_coverage_report.xml # Path to the cobertura file.
+        skip_covered: false # If files with 100% should be skipped from report.
+        minimum_coverage: 100 # Minimum allowed coverage percentage as an integer.
+        show_line: true # Show line rate as specific column.
+        show_branch: true # Show branch rate as specific column.
+        show_class_names: true # Show class names instead of file names.
+        show_missing: true # Show line numbers of statements, per module, that was not executed.
+        pull_request_number: ${{ steps.findPr.outputs.number }}
+        only_changed_files: true # Only show coverage for changed files.
+        report_name: Matlab Unit Test Coverage Report # Use a unique name for the report and comment.
+
+    - name: Publish Matlab Runtests Results
+      uses: mikepenz/action-junit-report@v2
+      with:
+        check_name: 'Matlab Runtests Results'
+        report_paths: 'matlab_test_results.xml'
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        fail_on_failure: true
+        require_tests: true
