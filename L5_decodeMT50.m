@@ -16,6 +16,7 @@ function svdata = L5_decodeMT50(time, msg, svdata)
 
 %created 06 January, 2021 by Todd Walter
 
+
 % copy older messages over
 svdata.mt50(2:end) = svdata.mt50(1:(end-1));
 
@@ -34,15 +35,25 @@ if mac_msg_ids(1) < 1
 end
 svdata.mt50(1).mac_msg_ids = mac_msg_ids;
 
-%Authenticate all of the messages associated with previously received MACs
-for i = 2:length(svdata.mt50)
-    % check that message was received and key number is earlier
-    if ~isnan(svdata.mt50(i).msg_idx) && svdata.received(svdata.mt50(i).msg_idx) && ...
-                     svdata.mt50(i).key_num < svdata.mt50(1).key_num
-        % authenticate those that were received         
-        svdata.auth_pass(svdata.mt50(i).mac_msg_ids) = ...
-                  svdata.received(svdata.mt50(i).mac_msg_ids);
-        %authenticate the MT 50 message
-        svdata.auth_pass(svdata.mt50(i).msg_idx) = true;
-    end
+% compute svdata indexes of incoming messages to authenticate
+mt50_time = uint32(time);
+mt50_idx = time_to_msg_idx(mt50_time);
+
+mt_times = mt50_time - uint32(6) - uint32(5:-1:1);
+mt_idx = time_to_msg_idx(mt_times);
+
+global mt50Receiver;
+svdata.auth_pass(mt50_idx) = mt50Receiver.check_if_message_verified(mt50_time);
+
+for i = 1:5
+    t = mt_times(i);
+    idx = mt_idx(i);
+    svdata.auth_pass(idx) = mt50Receiver.check_if_message_verified(t);
 end
+
+function idx = time_to_msg_idx(time)
+    idx = mod(round(time), 700) + 1;
+end
+
+end
+
