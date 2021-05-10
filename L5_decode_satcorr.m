@@ -235,7 +235,9 @@ if ~isempty(mdx37)
     svdata.dfrei(dtdfrei > L5MOPS_DFRE_PATIMEOUT) = L5MOPS_DFREI_DNUSBAS;
     
     corr_t_out = svdata.mt37(mdx37).Ivalid32*ones(size(dtcorr));
-    corr_t_out(svdata.geo_prn) = svdata.mt37(mdx37).Ivalid3940;
+    if ~isnan(svdata.geo_prn)
+        corr_t_out(svdata.geo_prn) = svdata.mt37(mdx37).Ivalid3940;
+    end
     %set the DFREs to NM for any SV with a timed out correction
     svdata.dfrei(dtcorr > corr_t_out) = L5MOPS_DFREI_DNUSBAS;    
 end
