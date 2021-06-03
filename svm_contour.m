@@ -14,13 +14,14 @@ function svm_contour(lons, lats, data, cnt_int, tick_text, colors, ...
 %
 global GRAPH_LL_WORLD GRAPH_LL_STATE
 
-if nargin < 8, loc = 'horiz'; end;
-
+if nargin < 8
+    loc = 'horiz'; 
+end
 
 c=contourf(lons,lats,data,cnt_int, 'LineColor', 'none');
 
 %get the existing colormap
-m=colormap;
+m=ones(256,3);
 
 %find the max and min interval
 max_int=max(cnt_int);
