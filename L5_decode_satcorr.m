@@ -131,7 +131,7 @@ if ~isempty(mdx37)
                         iodg = idx - 1;
                         dt_corr = time - svdata.mt3940(idx, gdx).time;
                         kdx40 = svdata.mt3940(idx, gdx).kdx40;
-                        dt40 = time - svdata.mt40(kdx40, idx).time;
+                        dt40 = time - svdata.mt40(idx, kdx40).time;
                     end
                 end
             end
