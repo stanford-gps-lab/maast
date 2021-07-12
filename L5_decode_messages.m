@@ -48,6 +48,30 @@ end
 flag = 1;
 mt = bin2dec(msg(5:10));
 
+global mt50Receiver;
+global keyStateMachine;
+msg_logical = msg == '1';
+msg_logical = msg_logical(1:250)';
+
+key = keyStateMachine.get_current_key(3, time);
+
+if ~isempty(key) && keyStateMachine.full_stack_authenticated(time, key.key) 
+    % pass to reciver if different
+    if isempty(mt50Receiver.reciever_hash_path_end) || ~all(key.key == mt50Receiver.reciever_hash_path_end)
+        mt50Receiver.set_hash_path_end(key.key);
+    end
+    
+    % pass next key if it is received
+    next_key = keyStateMachine.get_next_key(3);
+    if ~isempty(next_key) && (isempty(mt50Receiver.next_hash_path_end) || ...
+            ~all(next_key.key == mt50Receiver.next_hash_path_end))
+        mt50Receiver.set_next_hash_path_end(next_key.key);
+    end
+end
+
+message = sprintf('%i', msg_logical);
+mt50Receiver.add_message(message, uint32(time));
+
 switch mt
     case 0
         svdata = L5_decodeMT0(time, msg, svdata, 1);
