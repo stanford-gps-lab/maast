@@ -1,4 +1,4 @@
-function cov_avail (usrdata, vpl, hpl, vhal, pa_mode)
+function [percent_ax, coverage_set] = cov_avail (usrdata, vpl, hpl, vhal, pa_mode)
 %*************************************************************************
 %*     Copyright c 2007 The board of trustees of the Leland Stanford     *
 %*                      Junior University. All rights reserved.          *
@@ -27,11 +27,11 @@ coverage_set = [];
 
 %calculate availability
 if(pa_mode)
-    avail1=sum(((vpl <= vhal(1)) & (hpl <= vhal(2)))')'/n_times;
+    avail1 = sum(((vpl <= vhal(1)) & (hpl <= vhal(2)))')'/n_times;
     title_text = ['Coverage vs Availability (VAL = ' num2str(vhal(1)) ...
                   ', HAL = ' num2str(vhal(2)) ')'];
 else
-    avail1=sum(((hpl <= vhal(2)))')'/n_times;
+    avail1 = sum(((hpl <= vhal(2)))')'/n_times;
     title_text = ['Coverage vs Availability (HAL = ' num2str(vhal(2)) ')'];   
 end
 
@@ -45,7 +45,7 @@ for percent = .95:.001:1
         coverage=fix(coverage*10000)/100;
     else
         coverage = 0;
-    end;
+    end
     
     coverage_set = [coverage_set coverage];
    
