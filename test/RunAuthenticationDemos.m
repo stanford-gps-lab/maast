@@ -3,7 +3,7 @@ classdef RunAuthenticationDemos < matlab.unittest.TestCase
 
     methods (Test)
 
-        function testAddition(~)
+        function test_read_in_demo(~)
             demo_authentication_read_public;
         end
 
