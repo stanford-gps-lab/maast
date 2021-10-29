@@ -43,7 +43,6 @@ IPP_SPREAD_FLAG = 0;
 
 % choose Release 8/9 ADD version
 gpsudrefun = 'af_udreadd2';
-init_udre2_osp;
 
 MT27 = []; % MT 27 is not in use - Otherwise specify both MT27{:,1} & {:,2}
 
@@ -57,7 +56,6 @@ dual_freq = 1;
 igpfile = 'igpjoint_R51CY18.txt';
 
 wrsgpscnmpfun = 'af_cnmpadd';
-init_cnmp;
 
 wrsgeocnmpfun = [];
 
@@ -158,7 +156,7 @@ tic;
 svmrun(gpsudrefun, geoudrefun, givefun, usrcnmpfun, ...
        wrsgpscnmpfun, wrsgeocnmpfun, wrsfile, usrpolyfile, ...
        igpfile, svfile, geodata, TStart, TEnd, TStep, usrlatstep, ...
-       usrlonstep, outputs, percent, vhal, pa_mode, dual_freq, encode_msg);
+       usrlonstep, outputs, percent, vhal, pa_mode, dual_freq);
 fprintf('Simulation time: %fs\n', toc);
 
 diary 'demo_authentication_read_key_info.log';
