@@ -23,7 +23,7 @@ svdata.mt1_nglo = NaN;
 svdata.mt1_ngeo = NaN;
 %MT2 - 5
 svdata.mt2_fc = NaN(max_sats,6);
-svdata.mt2_fc_time = NaN(max_sats,6);
+svdata.mt2_fc_time = repmat(-inf,max_sats,6);
 svdata.mt2_fc_iodf = NaN(max_sats,6);
 svdata.mt2_udrei = repmat(MOPS_UDREI_NM,max_sats,1);
 svdata.mt2_fc_iodp = NaN(max_sats,1);
