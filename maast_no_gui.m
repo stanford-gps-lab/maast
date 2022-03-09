@@ -207,7 +207,6 @@ GUI_OUT_COVAVAIL = 7;
 
       %activate GPS constellation
       svfile = 'almmops.txt'; 
-%       svfile = 'almyuma_19mar2020_no_prn18.txt'; 
       %Use Yuma file instead
 %      svfile = ['almyuma#.txt'];
 %      svfile = ['SV24Week7031.alm'];
@@ -241,7 +240,7 @@ GUI_OUT_COVAVAIL = 7;
 
       TStart = 0;                         % time of day
 %       TStart = 0 + 4*86400;               % time of week (day of week * 86400
-%       TStart = 0 + 4*86400 + 2097*604800; % absolute time (since 1980) (tow + week number * 604800)
+%       TStart = 0 + 3*86400 + 2086*604800; % absolute time (since 1980) (tow + week number * 604800)
       
       %End time for simulation
       TEnd = TStart + 86400;
@@ -300,9 +299,15 @@ GUI_OUT_COVAVAIL = 7;
       % make sure that the start time is synchronized to the data file
       % including week number
       % Comment out next two lines to run in simulation mode
-%       SBAS_MESSAGE_FILE = 'sbas_messages_2020_079';
+%       SBAS_MESSAGE_FILE = 'sbas_messages_2020_001';
 %       SBAS_PRIMARY_SOURCE = 131;
-             
+%            
+%       %%%  These need to be changed to work with above message file
+%       svfile = 'almyuma_01jan2020.txt'; 
+%       TStart = 0 + 3*86400 + 2086*604800; % absolute time (since 1980) (tow + week number * 604800)
+%       TEnd = TStart + 86400;
+%       TStep = 1;
+
 %% Mode / Alert limit
 
       %choose PA mode vs NPA  
