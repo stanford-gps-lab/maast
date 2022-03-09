@@ -65,10 +65,14 @@ global MOPS_SIN_USRMASK MOPS_SIN_WRSMASK MOPS_NOT_MONITORED
 global MOPS_SIG_UDRE MOPS_UDREI_NM MOPS_UDREI_DNU MOPS_GIVEI_NM 
 global L5MOPS_SIG_DFRE L5MOPS_DFREI_DNUSBAS
 global CNMP_TL3
+global MOPS_MIN_GPSPRN MOPS_MAX_GPSPRN 
+global MOPS_MIN_GALPRN MOPS_MAX_GALPRN 
+global MOPS_MIN_GEOPRN MOPS_MAX_GEOPRN 
+global L5MOPS_MIN_GPSPRN L5MOPS_MAX_GPSPRN 
+global L5MOPS_MIN_GALPRN L5MOPS_MAX_GALPRN 
+global L5MOPS_MIN_GEOPRN L5MOPS_MAX_GEOPRN 
 
 global SBAS_MESSAGE_FILE
-
-global TRUTH_FLAG 
 
 global TRIP_COUNT
 TRIP_COUNT = 0;
@@ -80,6 +84,12 @@ if dual_freq
     init_L5mops();
     sat_dnu_sbas = L5MOPS_DFREI_DNUSBAS;
     mops_sig_udre = L5MOPS_SIG_DFRE;
+    min_gps_prn = L5MOPS_MIN_GPSPRN;
+    max_gps_prn = L5MOPS_MAX_GPSPRN;
+    min_gal_prn = L5MOPS_MIN_GALPRN;
+    max_gal_prn = L5MOPS_MAX_GALPRN;
+    min_geo_prn = L5MOPS_MIN_GEOPRN;
+    max_geo_prn = L5MOPS_MAX_GEOPRN;
 else
     sat_dnu_sbas = MOPS_UDREI_NM;
     if (pa_mode)
@@ -89,16 +99,17 @@ else
         mops_sig_udre = MOPS_SIG_UDRE;
         mops_sig_udre([MOPS_UDREI_NM MOPS_UDREI_DNU]) = NaN;
     end
+    min_gps_prn = MOPS_MIN_GPSPRN;
+    max_gps_prn = MOPS_MAX_GPSPRN;
+    min_gal_prn = MOPS_MIN_GALPRN;
+    max_gal_prn = MOPS_MAX_GALPRN;
+    min_geo_prn = MOPS_MIN_GEOPRN;
+    max_geo_prn = MOPS_MAX_GEOPRN;    
 end
 
 %is time provided in time of week or absolute time (since 1980)?
 if tstart > 604800
     alm_param(:,3) = alm_param(:,3) + 604800*alm_param(:,12); % abs time
-    start_week = floor(tstart/604800.0);
-    start_sow = mod(tstart, 604800);
-    jd = gps2jd(start_week, start_sow);
-    [start_year, start_month, start_day] = jd2cal(jd);
-    start_doy = floor(jd2doy(jd));
 end
 
 if tstep>0
@@ -112,9 +123,14 @@ end
 % see documentation for format of SATDATA & WRSDATA
 satdata=[];
 satdata = init_satdata(geodata, alm_param, satdata, tstart, sat_dnu_sbas);
-ngps = size(alm_param,1);
-ngeo = size(geodata,1);
-nsat = ngps + ngeo;
+ngps = sum(satdata(:,COL_SAT_PRN) >= min_gps_prn & ...
+           satdata(:,COL_SAT_PRN) <= max_gps_prn);
+ngal = sum(satdata(:,COL_SAT_PRN) >= min_gal_prn & ...
+           satdata(:,COL_SAT_PRN) <= max_gal_prn);
+ngeo = sum(satdata(:,COL_SAT_PRN) >= min_geo_prn & ...
+           satdata(:,COL_SAT_PRN) <= max_geo_prn);
+nmeo = ngps + ngal;
+nsat = nmeo + ngeo;
 wrsdata = init_wrsdata(wrsfile);
 nwrs=size(wrsdata,1);
   
@@ -138,8 +154,8 @@ if isempty(SBAS_MESSAGE_FILE)
                 wrsdata(:,COL_USR_NHAT),wrsdata(:,COL_USR_UHAT));
     %add blank rows for geos
     nrise=size(wrs2sat_trise,2);
-    wrs2sat_trise = reshape(wrs2sat_trise, ngps, nwrs, nrise);
-    wrs2sat_trise(ngps+1:ngps+ngeo,:,:)=zeros(ngeo, nwrs, nrise) - 4*86400;
+    wrs2sat_trise = reshape(wrs2sat_trise, nmeo, nwrs, nrise);
+    wrs2sat_trise(nmeo+1:nmeo+ngeo,:,:)=zeros(ngeo, nwrs, nrise) - 4*86400;
     wrs2sat_trise = reshape(wrs2sat_trise, nsat*nwrs, nrise);
     
     %check to see if iono grid is needed
@@ -185,22 +201,16 @@ hpl = vpl;
 los_in_bnd=ismember(usr2satdata(:,COL_U2S_UID), find(usrdata(:,COL_USR_INBND)));
 givei = NaN(size(igpdata,1),ntstep);
 udrei = NaN(nsat,ntstep);
-betai=  NaN(size(igpdata,1),ntstep);
-chi2ratioi=  NaN(size(igpdata,1),ntstep);
+degradation = NaN(nsat,ntstep);
 
 udre_hist=zeros(HIST_UDRE_NBINS+1,1);
 give_hist=zeros(HIST_GIVE_NBINS+1,1);
 udrei_hist=zeros(HIST_UDREI_NBINS,1);
 givei_hist=zeros(HIST_GIVEI_NBINS,1);
-nm_igp_hist=zeros(36,72);
-sat_xyz=[];
+sat_xyz=NaN(ntstep*nsat,3);
 
-if TRUTH_FLAG
-   truth_matrix=load_truth(wrsdata, satdata);
-   tcurr = tstart +truth_matrix(1,1);
-else
-    tcurr = tstart;
-end
+tcurr = tstart;
+
 %profile on;
 
 itstep = 1;
@@ -209,17 +219,6 @@ while tcurr<=tend
 
     % get current satellite positions
     satdata = init_satdata(geodata, alm_param, satdata, tcurr, sat_dnu_sbas);
-    
-    if TRUTH_FLAG
-        idx=find(truth_matrix(:,1) == tcurr - tstart);
-        truth_data=truth_matrix(idx,:);
-        if isempty(idx)
-            fprintf('Time: %d / %d done\n',itstep,ntstep);
-            tcurr = tcurr+tstep;
-            itstep = itstep+1;
-            continue
-        end
-    end
     
     % run in simulation mode if no recorded SBAS messages
     if isempty(SBAS_MESSAGE_FILE)
@@ -249,8 +248,8 @@ while tcurr<=tend
                     smtidx, gprime, svdata, ionodata, mt10, satdata, ...
                     igpdata, mt26_to_igpdata);
         if dual_freq
-            mops_sig_udre = svdata(gprime).mt37_sig_dfre';
-            rss_udre = svdata(gprime).mt37_obadidx;
+            mops_sig_udre = svdata(gprime).mt37(1).sig_dfre';
+            rss_udre = svdata(gprime).mt37(1).obadidx;
             rss_iono = NaN; 
         else
             rss_udre = mt10(gprime).rss_udre;
@@ -262,10 +261,11 @@ while tcurr<=tend
     if ~dual_freq
         givei(:,itstep) = igpdata(:,COL_IGP_GIVEI);
     end
-    %store the UDRE indices
+    %store the UDRE indices and degradation factors
     udrei(:,itstep) = satdata(sdx,COL_SAT_UDREI);
+    degradation(:,itstep) = satdata(sdx,COL_SAT_DEGRAD);
 
-    sat_xyz = [sat_xyz; satdata(sdx,COL_SAT_XYZ)];
+    sat_xyz(((1:nsat)+(itstep-1)*nsat),:) = satdata(sdx,COL_SAT_XYZ);
 
     % USER processing
     [vhpl, usr2satdata] = usrprocess(satdata(sdx,:), usrdata, igpdata, ...
@@ -309,23 +309,11 @@ end
 %remove padding rows
 satdata = satdata(sdx,:);
 
-%profile off;
-%figure;
-%profile plot;
-%profile viewer;
-%profile off;
-if (TRUTH_FLAG)
-    fprintf('%d Chi2 Trips\n', TRIP_COUNT);
-end
-
 save 'outputs' satdata usrdata wrsdata igpdata inv_igp_mask sat_xyz udrei ...
                givei vpl hpl usrlatgrid usrlongrid udre_hist give_hist ...
-		       udrei_hist givei_hist nm_igp_hist betai chi2ratioi;
+		       udrei_hist givei_hist degradation;
+           
 % OUTPUT processing
 outputprocess(satdata,usrdata,wrsdata,igpdata,inv_igp_mask,sat_xyz,udrei,...
               givei,vpl,hpl,usrlatgrid,usrlongrid,outputs,percent,vhal,pa_mode,...
 			  udre_hist,give_hist,udrei_hist,givei_hist);
-
-
-
-
