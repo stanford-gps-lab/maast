@@ -52,8 +52,12 @@ if mt10.time >= (time - MOPS_MT10_PATIMEOUT)
                     
     %set the GIVEs to NM for any IGP with a timed out correction component
     % or whose iodis do not match
-    idx = dt18 > MOPS_MT18_PATIMEOUT  | dt26 > MOPS_MT26_PATIMEOUT | ...
-            igpdata.mt26_iodi ~= igpdata.mt18_iodi;
+    idx = dt18 > MOPS_MT18_PATIMEOUT;
+     if any(idx)
+         igpdata.givei(idx,:)  = MOPS_GIVEI_NM;
+         igpdata.eps_iono(idx,:) = NaN;
+     end    
+    idx = dt26 > MOPS_MT26_PATIMEOUT | igpdata.mt26_iodi ~= igpdata.mt18_iodi;
      if any(idx)
          igpdata.givei(idx)  = MOPS_GIVEI_NM;
          igpdata.eps_iono(idx) = NaN;
