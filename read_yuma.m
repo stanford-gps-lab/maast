@@ -102,10 +102,13 @@ while i<=size(filename,2)
     str = fgets(fid); 
     alm_param(prn,12) = str2double(str(28:end));
     if isnan(rollover)
-        if alm_param(prn,12) < 900 % valid for ~December 2016 to ~2035
-            rollover = 2;
-        else
-            rollover = 1;
+            rollover = 0;
+        if alm_param(prn,12) < 1024 % Does not already include rollover
+            if alm_param(prn,12) < 900 % valid for ~December 2016 to ~2035
+                rollover = 2;
+            else
+                rollover = 1;
+            end
         end
     end
     alm_param(prn,12) = alm_param(prn,12) + rollover*1024;
