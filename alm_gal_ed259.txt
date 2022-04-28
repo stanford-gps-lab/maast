@@ -1,0 +1,360 @@
+******** Week 1930 almanac for SVID- 1 ********
+ID:                         75
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    3.7652686085e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             2.4898867109e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID- 2 ********
+ID:                         76
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    3.7652686085e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             3.2752848743e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID- 3 ********
+ID:                         77
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    3.7652686085e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             4.0606830377e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID- 4 ********
+ID:                         78
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    3.7652686085e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             4.8460812011e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID- 5 ********
+ID:                         79
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    3.7652686085e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             5.6314793645e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID- 6 ********
+ID:                         80
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    3.7652686085e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.3369222070e-01
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID- 7 ********
+ID:                         81
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    3.7652686085e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             9.1909038410e-01
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID- 8 ********
+ID:                         82
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    3.7652686085e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.7044885475e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID- 9 ********
+ID:                         83
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    5.8596637109e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             2.7516860987e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-10 ********
+ID:                         84
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    5.8596637109e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             3.5370842621e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-11 ********
+ID:                         85
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    5.8596637109e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             4.3224824255e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-12 ********
+ID:                         86
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    5.8596637109e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             5.1078805889e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-13 ********
+ID:                         87
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    5.8596637109e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             5.8932787523e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-14 ********
+ID:                         88
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    5.8596637109e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             3.9549160850e-01
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-15 ********
+ID:                         89
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    5.8596637109e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.1808897719e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-16 ********
+ID:                         90
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    5.8596637109e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.9662879353e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-17 ********
+ID:                         91
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    1.6708735061e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             3.0134854865e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-18 ********
+ID:                         92
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    1.6708735061e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             3.7988836499e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-19 ********
+ID:                         93
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    1.6708735061e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             4.5842818133e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-20 ********
+ID:                         94
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    1.6708735061e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             5.3696799767e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-21 ********
+ID:                         95
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    1.6708735061e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             6.1550781401e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-22 ********
+ID:                         96
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    1.6708735061e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             6.5729099630e-01
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-23 ********
+ID:                         97
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    1.6708735061e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.4426891597e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for SVID-24 ********
+ID:                         98
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.7738438112e-01
+Rate of Right Ascen(r/s):   -5.5841809418e-09
+SQRT(A)  (m 1/2):           5440.569915
+Right Ascen at TOA(rad):    1.6708735061e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             2.2280873231e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
