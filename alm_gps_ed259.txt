@@ -1,0 +1,360 @@
+******** Week 1930 almanac for PRN- 1 ********
+ID:                          1
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    3.2827025236e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             4.1807616902e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN- 2 ********
+ID:                          2
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    3.2827025236e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             2.3247785637e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN- 3 ********
+ID:                          3
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    3.2827025236e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             5.9880501307e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN- 4 ********
+ID:                          4
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    3.2827025236e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             2.3073252711e-01
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN- 5 ********
+ID:                          5
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    4.3299000748e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             9.1402892927e-01
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN- 6 ********
+ID:                          6
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    4.3299000748e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             2.5263640923e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN- 7 ********
+ID:                          7
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    4.3299000748e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             4.9111819822e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN- 8 ********
+ID:                          8
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    4.3299000748e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             3.0681142921e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN- 9 ********
+ID:                          9
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    5.3770976260e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.4536847340e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-10 ********
+ID:                         10
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    5.3770976260e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             5.9901445258e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-11 ********
+ID:                         11
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    5.3770976260e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             5.4293702371e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-12 ********
+ID:                         12
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    5.3770976260e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             3.7170277080e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-13 ********
+ID:                         13
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    1.4110987002e-01
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.8612191143e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-14 ********
+ID:                         14
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    1.4110987002e-01
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             4.1339868663e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-15 ********
+ID:                         15
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    1.4110987002e-01
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.1466813186e-01
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-16 ********
+ID:                         16
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    1.4110987002e-01
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             2.4219934030e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-17 ********
+ID:                         17
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    1.1883074212e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             2.9401816579e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-18 ********
+ID:                         18
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    1.1883074212e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             4.7823766834e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-19 ********
+ID:                         19
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    1.1883074212e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             6.5414940365e-01
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-20 ********
+ID:                         20
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    1.1883074212e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             5.3249995478e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-21 ********
+ID:                         21
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    2.2355049724e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             3.6704274169e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-22 ********
+ID:                         22
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    2.2355049724e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             5.5264105435e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-23 ********
+ID:                         23
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    2.2355049724e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.3372712729e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
+******** Week 1930 almanac for PRN-24 ********
+ID:                         24
+Health:                     000
+Eccentricity:               0.0000000000e+00
+Time of Applicability(s):   0.0
+Orbital Inclination(rad):   9.5993108860e-01
+Rate of Right Ascen(r/s):   -8.1206679437e-09
+SQRT(A)  (m 1/2):           5153.620087
+Right Ascen at TOA(rad):    2.2355049724e+00
+Argument of Perigee(rad):   0.0000000000e+00
+Mean Anom(rad):             1.8633135094e+00
+Af0(s):                     0.0000000000e+00
+Af1(s/s):                   0.0000000000e+00
+week:                       1930
+
