@@ -76,6 +76,7 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
 
     %find the range rate correction (rrc)
     dtrrc = svdata.mt2_fc_time(:,1) - svdata.mt2_fc_time(:,2); %TODO optimize to find best choice
+    dtrrc(isinf(dtrrc)) = NaN;
     rrc = (svdata.mt2_fc(:,1) - svdata.mt2_fc(:,2))./dtrrc;
 
     %find the fast correction degradation
@@ -93,8 +94,8 @@ if (svdata.mt1_time >= (time - MOPS_MT1_PATIMEOUT)) && ...
     end
 
     %look for IODFs equal to 3 and not at the expected interval
-    idx = (svdata.mt2_fc_iodf(:,1) == 3 | svdata.mt2_fc_iodf(:,2) == 3 | ...
-           dtrrc ~= fc_timeout/2) & ~isnan(dtrrc);
+    idx = (svdata.mt2_fc_iodf(:,1) == 3 | svdata.mt2_fc_iodf(:,2) == 3) & ...
+           dtrrc ~= fc_timeout/2 & ~isnan(dtrrc);
     if any(idx)
         eps_rrc_deg(idx) = (MOPS_MT7_AI(svdata.mt7_ai(idx)+1).*abs(dtrrc(idx) - fc_timeout(idx)/2)/2 + ...
                        (e(idx)*mt10.brrc)./dtrrc(idx)).*dtfc(idx);
