@@ -8,7 +8,7 @@ x_ecef = llh2xyz([0 geo_lon_deg CONST_H_GEO])';
 %calculate the Greenwich mean sidereal time and covert to radians
 jd = gps2jd(floor(gps_abs_time/(7*24*3600)),mod(gps_abs_time, 7*24*3600));
 ut1 = (jd - 2451545.0)/36525;
-theta_g = 67310.54841 + (876600*8640184.812866)*ut1+0.093104*ut1^2 - (6.2e-6)*ut1^3;
+theta_g = 67310.54841 + (876600*3600 + 8640184.812866)*ut1+0.093104*ut1^2 - (6.2e-6)*ut1^3;
 theta_g = mod(theta_g*pi/(240*180), 2*pi);
 
 % get the geo position and velocity in ECI at epoch time
