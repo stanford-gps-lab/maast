@@ -39,7 +39,7 @@ end
 svdata.received(idx) = true;
 % if authentication is not enabled, mark all messages as authenticated
 if isempty(AUTHENTICATION_ENABLED) || ~AUTHENTICATION_ENABLED
-    svdata.auth_pass(idx) = true;    
+    svdata.auth_pass = true(size(svdata.auth_pass));    
 else
     % otherwise mark them as not authenticated
     svdata.auth_pass(idx) = false;
@@ -83,8 +83,12 @@ switch mt
         svdata = L5_decodeMT31(time, msg, svdata);
     case 32
         svdata = L5_decodeMT32(time, msg, svdata);
+    case 34
+        svdata = L5_decodeMT34(time, msg, svdata);
     case 35
         svdata = L5_decodeMT35(time, msg, svdata);
+    case 36
+        svdata = L5_decodeMT36(time, msg, svdata);
     case 37
         svdata = L5_decodeMT37(time, msg, svdata);
     case 39
