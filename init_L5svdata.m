@@ -50,9 +50,21 @@ for pdx = max_prn:-1:1
     svdata.mt32(pdx,2) = mt32;
     svdata.mt32(pdx,1) = mt32;
 end
+%MT34
+mt34.iodm = NaN;
+mt34.dfreci = repmat(L5MOPS_DFREI_DNUSBAS,max_sats,1);
+mt34.dfrei = repmat(L5MOPS_DFREI_DNUSBAS,7,1);
+mt34.time = NaN;
+mt34.msg_idx = 1;
+svdata.mt34(6) = mt34;
+svdata.mt34(5) = mt34;
+svdata.mt34(4) = mt34;
+svdata.mt34(3) = mt34;
+svdata.mt34(2) = mt34;
+svdata.mt34(1) = mt34;
 %MT35
 mt35.iodm = NaN;
-mt35.dfrei = repmat(L5MOPS_DFREI_DNUSBAS,max_sats,1);
+mt35.dfrei = repmat(L5MOPS_DFREI_DNUSBAS,min([max_sats 53]),1);
 mt35.time = NaN;
 mt35.msg_idx = 1;
 svdata.mt35(6) = mt35;
@@ -61,6 +73,19 @@ svdata.mt35(4) = mt35;
 svdata.mt35(3) = mt35;
 svdata.mt35(2) = mt35;
 svdata.mt35(1) = mt35;
+if max_sats > 53
+    %MT36
+    mt36.iodm = NaN;
+    mt36.dfrei = repmat(L5MOPS_DFREI_DNUSBAS,max_sats - 53,1);
+    mt36.time = NaN;
+    mt36.msg_idx = 1;
+    svdata.mt36(6) = mt36;
+    svdata.mt36(5) = mt36;
+    svdata.mt36(4) = mt36;
+    svdata.mt36(3) = mt36;
+    svdata.mt36(2) = mt36;
+    svdata.mt36(1) = mt36;
+end
 %MT37
 mt37.Ivalid32 = NaN;
 mt37.Ivalid3940 = NaN;
