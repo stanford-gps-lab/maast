@@ -12,6 +12,10 @@ function [svdata, flag] = L5_decode_messages(time, msg, svdata)
 
 global L5MOPS_PREAMBLE AUTHENTICATION_ENABLED
 
+global mt50Receiver;
+global keyStateMachine;
+global AUTHENTICATION_ENABLED
+
 flag  = 0;
 
 %mark current and future messages as not received and not authenticated
@@ -26,7 +30,8 @@ else
     svdata.auth_pass(idx:(idx+60)) = false;
 end
 
-if crc24q(msg)
+mt = bin2dec(msg(5:10));
+if (mt ~= 50 || mt50Receiver.include_crc) && crc24q(msg)
     warning('CRC does not match')
     return
 end
@@ -46,11 +51,6 @@ else
 end
 
 flag = 1;
-mt = bin2dec(msg(5:10));
-
-global mt50Receiver;
-global keyStateMachine;
-global AUTHENTICATION_ENABLED
 
 if AUTHENTICATION_ENABLED
     msg_logical = msg == '1';
