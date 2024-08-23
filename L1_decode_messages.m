@@ -14,7 +14,27 @@ global MOPS_L1_PREAMBLE
 
 flag  = 0;
 
+%mark current and future messages as not received and not authenticated
+idx = mod(round(time), 700) + 1;
+if idx > 640
+    svdata.received(idx:end) = false;
+    svdata.auth_pass(idx:end) = false;
+    svdata.received(1:(idx-640)) = false;
+    svdata.auth_pass(1:(idx-640)) = false;   
+else
+    svdata.received(idx:(idx+60)) = false;
+    svdata.auth_pass(idx:(idx+60)) = false;
+end
+
 if crc24q(msg)
+    fid = fopen('lost_messages.txt','a');
+    mt = bin2dec(msg(5:10));
+    if mt == 32
+        fprintf(fid, 'missing message type %i, PRN %i at time %i\n',  mt, bin2dec(msg(11:19)), mod(time, 24*3600));
+    else
+        fprintf(fid, 'missing message type %i at time %i\n',  mt, mod(time, 24*3600));
+    end
+    fclose(fid);    
     warning('CRC does not match')
     return
 end
@@ -22,6 +42,9 @@ if ~strcmp(msg(1:8), MOPS_L1_PREAMBLE(mod(round(time), 3) + 1,:))
     warning('preamble does not match')
     return
 end
+
+%mark message as received
+svdata.received(idx) = true;
 
 flag = 1;
 mt = bin2dec(msg(9:14));

@@ -33,3 +33,4 @@ mt10.rss_udre = bin2dec(msg(137));
 mt10.rss_iono = bin2dec(msg(138));
 mt10.ccovariance = bin2dec(msg(139:145))*0.1;
 mt10.time = time;
+mt10.msg_idx = mod(round(time), 700) + 1;

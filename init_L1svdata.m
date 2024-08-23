@@ -13,68 +13,126 @@ global MOPS_UDREI_NM
 %decoded SV data
 max_sats = 51;
 max_geos = 39;
+max_prn = 210;
 svdata.prns = NaN(max_sats,1);
+
 %MT1
-svdata.mt1_mask = cast(zeros(210,1), 'uint8');
-svdata.mt1_iodp = NaN;
-svdata.mt1_time = NaN;
-svdata.mt1_ngps = NaN;
-svdata.mt1_nglo = NaN;
-svdata.mt1_ngeo = NaN;
+mt1.mask = cast(zeros(max_prn,1), 'uint8');
+mt1.iodp = NaN;
+mt1.time = NaN;
+mt1.ngps = NaN;
+mt1.nglo = NaN;
+mt1.ngeo = NaN;
+mt1.prn2slot = NaN(max_prn,1);
+mt1.slot2prn = NaN(max_sats,1);
+mt1.msg_idx = 1;
+svdata.mt1(3) = mt1;
+svdata.mt1(2) = mt1;
+svdata.mt1(1) = mt1;
 %MT2 - 5
-svdata.mt2_fc = NaN(max_sats,6);
-svdata.mt2_fc_time = repmat(-inf,max_sats,6);
-svdata.mt2_fc_iodf = NaN(max_sats,6);
-svdata.mt2_udrei = repmat(MOPS_UDREI_NM,max_sats,1);
-svdata.mt2_fc_iodp = NaN(max_sats,1);
+mt2345.fc = NaN;
+mt2345.time = NaN;
+mt2345.iodf = NaN;
+mt2345.udrei = MOPS_UDREI_NM;
+mt2345.iodp = NaN;
+mt2345.msg_idx = 1;
+for pdx = max_sats:-1:1
+    svdata.mt2345(pdx,6) = mt2345;
+    svdata.mt2345(pdx,5) = mt2345;
+    svdata.mt2345(pdx,4) = mt2345;
+    svdata.mt2345(pdx,3) = mt2345;
+    svdata.mt2345(pdx,2) = mt2345;
+    svdata.mt2345(pdx,1) = mt2345;
+end
 %MT6
-svdata.mt6_iodf = NaN;
-svdata.mt6_udrei = repmat(MOPS_UDREI_NM,max_sats,1);
-svdata.mt6_time = NaN;
+mt6.iodf = NaN;
+mt6.udrei = repmat(MOPS_UDREI_NM,max_sats,1);
+mt6.time = NaN;
+mt6.msg_idx = 1;
+svdata.mt6(3) = mt6;
+svdata.mt6(2) = mt6;
+svdata.mt6(1) = mt6;
 %MT7
-svdata.mt7_iodp = NaN;
-svdata.mt7_t_lat = NaN;
-svdata.mt7_ai = NaN(max_sats,1);
-svdata.mt7_time = NaN;
+mt7.iodp = NaN;
+mt7.t_lat = NaN;
+mt7.ai = NaN(max_sats,1);
+mt7.time = NaN;
+mt7.msg_idx = 1;
+svdata.mt7(3) = mt7;
+svdata.mt7(2) = mt7;
+svdata.mt7(1) = mt7;
 %MT9
-svdata.mt9_t0 = NaN;
-svdata.mt9_ura = NaN;
-svdata.mt9_xyz = NaN(1,3);
-svdata.mt9_xyz_dot = NaN(1,3);
-svdata.mt9_xyz_dot_dot = NaN(1,3);
-svdata.mt9_af0 = NaN;
-svdata.mt9_af1 = NaN;
-svdata.mt9_time = NaN;
+mt9.t0 = NaN;
+mt9.ura = NaN;
+mt9.xyz = NaN(1,3);
+mt9.xyz_dot = NaN(1,3);
+mt9.xyz_dot_dot = NaN(1,3);
+mt9.af0 = NaN;
+mt9.af1 = NaN;
+mt9.time = NaN;
+mt9.msg_idx = 1;
+svdata.mt9(3) = mt9;
+svdata.mt9(2) = mt9;
+svdata.mt9(1) = mt9;
 %MT17
-svdata.mt17_t0 = NaN(max_geos,1);
-svdata.mt17_prn = NaN(max_geos,1);
-svdata.mt17_health = NaN(max_geos,1);
-svdata.mt17_xyz = NaN(max_geos,3);
-svdata.mt17_xyz_dot = NaN(max_geos,3);
-svdata.mt17_time = NaN(max_geos,1);
+mt17.t0 = NaN(max_geos,1);
+mt17.prn = NaN(max_geos,1);
+mt17.health = NaN(max_geos,1);
+mt17.xyz = NaN(max_geos,3);
+mt17.xyz_dot = NaN(max_geos,3);
+mt17.time = NaN(max_geos,1);
+mt17.msg_idx = 1;
+for gdx = max_geos:-1:1
+    svdata.mt17(gdx,3) = mt17;
+    svdata.mt17(gdx,2) = mt17;
+    svdata.mt17(gdx,1) = mt17;
+end
 %MT25
-svdata.mt25_dxyzb = NaN(max_sats,4);
-svdata.mt25_dxyzb_dot = zeros(max_sats,4);
-svdata.mt25_t0 = NaN(max_sats,1);
-svdata.mt25_iode = NaN(max_sats,1);
-svdata.mt25_iodp = NaN(max_sats,1);
-svdata.mt25_time = NaN(max_sats,1);
+mt25.dxyzb = NaN(1,4);
+mt25.dxyzb_dot = zeros(1,4);
+mt25.t0 = NaN;
+mt25.iode = NaN;
+mt25.iodp = NaN;
+mt25.time = NaN;
+mt25.msg_idx = 1;
+svdata.mt25(3) = mt25;
+svdata.mt25(2) = mt25;
+svdata.mt25(1) = mt25;
+for pdx = max_sats:-1:1
+    svdata.mt25(pdx,3) = mt25;
+    svdata.mt25(pdx,2) = mt25;
+    svdata.mt25(pdx,1) = mt25;
+end
 %MT27
-svdata.mt27_msg_poly = [];
-svdata.mt27_time = NaN;
-svdata.mt27_polygon = [];
-svdata.mt27_polytime = NaN;
+mt27.msg_poly = [];
+mt27.time = NaN;
+mt27.polygon = [];
+mt27.polytime = NaN;
+mt27.msg_idx = 1;
+svdata.mt27(3) = mt27;
+svdata.mt27(2) = mt27;
+svdata.mt27(1) = mt27;
 %MT28
-svdata.mt28_iodp = NaN(max_sats,1);
-svdata.mt28_sc_exp = NaN(max_sats,1); %scale exponent
-svdata.mt28_E    = NaN(max_sats,10); %[E11 E12 E13 E14  E22 E23 E24 E33 E34 E44
-svdata.mt28_dCov = repmat([1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0], max_sats,1); %covariance matrix
-svdata.mt28_time = NaN(max_sats,1);
+mt28.iodp = NaN;
+mt28.sc_exp = NaN; %scale exponent
+mt28.E    = NaN(1,10); %[E11 E12 E13 E14  E22 E23 E24 E33 E34 E44
+mt28.dCov = [1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0]; %covariance matrix
+mt28.time = NaN;
+mt28.msg_idx = 1;
+for pdx = max_sats:-1:1
+    svdata.mt28(pdx,3) = mt28;
+    svdata.mt28(pdx,2) = mt28;
+    svdata.mt28(pdx,1) = mt28;
+end
 
 %Satellite correction data
 svdata.dxyzb  = NaN(max_sats,4); 
 svdata.udrei  = NaN(max_sats,1);
 svdata.degradation  = NaN(max_sats,1);
+svdata.mt27_polygon = [];
+svdata.mt28_dCov = NaN(max_sats,16);
+svdata.mt28_sc_exp = NaN(max_sats,1);
+svdata.mt28_time = -inf;
 
 %Geo data (max 5 channels)
 svdata.geo_prn      = NaN;
@@ -83,3 +141,7 @@ svdata.geo_flags    = NaN(4,1); % [ranging, precise corr, basic corr, reserved] 
 svdata.geo_prn_time = NaN;
 svdata.geo_xyzb     = NaN(5,4);
 svdata.geo_deg      = NaN(5,1);
+
+%Satellite authentication data
+svdata.received  = false(700, 1);
+svdata.auth_pass = false(700, 1);

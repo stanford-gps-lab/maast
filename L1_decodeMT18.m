@@ -18,8 +18,28 @@ function igpdata = L1_decodeMT18(time, msg, igpdata)
 
 bandid = bin2dec(msg(19:22)) + 1;
 
-igpdata.mt18_num_bands(bandid) = bin2dec(msg(15:18));
-igpdata.mt18_iodi(bandid) = bin2dec(msg(23:24));
-igpdata.mt18_mask(bandid,:) = cast(bin2dec(msg(25:225)'), 'uint8')';
+% copy older messages over
+igpdata.mt18(bandid,2:end) = igpdata.mt18(bandid,1:(end-1));
 
-igpdata.mt18_time(bandid) = time;
+igpdata.mt18(bandid,1).num_bands = bin2dec(msg(15:18));
+igpdata.mt18(bandid,1).iodi = bin2dec(msg(23:24));
+igpdata.mt18(bandid,1).mask = cast(bin2dec(msg(25:225)'), 'uint8')';
+
+igpdata.mt18(bandid,1).time = time;
+igpdata.mt18(bandid,1).msg_idx = mod(round(time), 700) + 1;
+
+
+% kdx = 1:201;
+% igps = kdx(svdata.mt31(1).mask>0)';
+% igpdata.igps(1:length(igps)) = igps;
+% 
+% slot = 1;
+% igpdata.t18(bandid,1).igp2slot = NaN(size(igpdata.t18(bandid,1).igp2slot));
+% igpdata.t18(bandid,1).slot2igp = NaN(size(igpdata.t18(bandid,1).slot2igp));
+% for igp = 1:201
+%     if igpdata.mt18(bandid,1).mask(igp)
+%         igpdata.mt18(bandid,1).igp2slot(igp) = slot;
+%         igpdata.mt18(bandid,1).slot2igp(slot) = igp;
+%         slot = slot + 1;
+%     end
+% end

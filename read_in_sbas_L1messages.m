@@ -52,7 +52,7 @@ satdata(sdx, COL_SAT_DXYZB) = svdata(gprime).dxyzb(sdx,:);
 satdata(sdx, COL_SAT_UDREI) = svdata(gprime).udrei(sdx);
 satdata(sdx, COL_SAT_DEGRAD) = svdata(gprime).degradation(sdx);
 if isempty(svdata(gprime).mt27_polygon)
-    sdx = ~isnan(svdata(gprime).mt28_time);
+    sdx = ~isnan(svdata(gprime).mt28_sc_exp);
     satdata(sdx, COL_SAT_COV) = svdata(gprime).mt28_dCov(sdx,:);
     satdata(sdx, COL_SAT_SCALEF) = 2.^(svdata(gprime).mt28_sc_exp(sdx) - 5);
 else
@@ -64,4 +64,4 @@ satdata(gdx(idx), COL_SAT_XYZB) = svdata(gprime).geo_xyzb(idx,:);
 
 igpdata(:, COL_IGP_GIVEI) = ionodata(gprime).givei(mt26_to_igpdata);
 igpdata(:, COL_IGP_DEGRAD) = ionodata(gprime).eps_iono(mt26_to_igpdata);
-igpdata(:, COL_IGP_DELAY) = ionodata(gprime).mt26_Iv(mt26_to_igpdata);
+igpdata(:, COL_IGP_DELAY) = ionodata(gprime).v_delay(mt26_to_igpdata);

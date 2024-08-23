@@ -16,15 +16,19 @@ function svdata = L1_decodeMT6(time, msg, svdata)
 
 %created 13 April, 2020 by Todd Walter
 
-svdata.mt6_iodf(1:13) = bin2dec(msg(15:16));  %IODF for MT2
-svdata.mt6_iodf(14:26) = bin2dec(msg(17:18));  %IODF for MT3
-svdata.mt6_iodf(27:39) = bin2dec(msg(19:20));  %IODF for MT4
-svdata.mt6_iodf(40:51) = bin2dec(msg(21:22));  %IODF for MT5
+% copy older messages over
+svdata.mt6(2:end) = svdata.mt6(1:(end-1));
+
+svdata.mt6(1).iodf(1:13) = bin2dec(msg(15:16));  %IODF for MT2
+svdata.mt6(1).iodf(14:26) = bin2dec(msg(17:18));  %IODF for MT3
+svdata.mt6(1).iodf(27:39) = bin2dec(msg(19:20));  %IODF for MT4
+svdata.mt6(1).iodf(40:51) = bin2dec(msg(21:22));  %IODF for MT5
 
 idx = 23;
 for jdx = 1:51
-    svdata.mt6_udrei(jdx) = bin2dec(msg(idx:(idx+3))) + 1; %convert from MOPS 0-15 to matlab 1-16
+    svdata.mt6(1).udrei(jdx) = bin2dec(msg(idx:(idx+3))) + 1; %convert from MOPS 0-15 to matlab 1-16
     idx = idx + 4;
 end
 
-svdata.mt6_time = time;
+svdata.mt6(1).time = time;
+svdata.mt6(1).msg_idx = mod(round(time), 700) + 1;
