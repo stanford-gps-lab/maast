@@ -38,9 +38,14 @@ global MOPS_GIVEI_NM
 global MOPS_MT10_PATIMEOUT MOPS_MT18_PATIMEOUT MOPS_MT26_PATIMEOUT
 
 num_bands = size(igpdata.givei,1);
+
+igpdata.givei    = repmat(MOPS_GIVEI_NM, size(igpdata.givei));
+igpdata.eps_iono = NaN(size(igpdata.eps_iono));
+
 %need to have MT10 degradation information
 if mt10.time >= (time - MOPS_MT10_PATIMEOUT)
     for bdx = 1:num_bands
+        igpdata.v_delay(bdx,:)  = igpdata.mt26(bdx,1).Iv;
         igpdata.givei(bdx,:)  = igpdata.mt26(bdx,1).givei;
         igpdata.eps_iono(bdx,:) = 0.0;
         
@@ -54,15 +59,14 @@ if mt10.time >= (time - MOPS_MT10_PATIMEOUT)
                         
         %set the GIVEs to NM for any IGP with a timed out correction component
         % or whose iodis do not match
-        idx = dt18 > MOPS_MT18_PATIMEOUT;
-         if any(idx)
-             igpdata.givei(idx,:)  = MOPS_GIVEI_NM;
-             igpdata.eps_iono(idx,:) = NaN;
-         end    
-        idx = dt26 > MOPS_MT26_PATIMEOUT | igpdata.mt26(1).iodi ~= igpdata.mt18(1).iodi;
+        if dt18 > MOPS_MT18_PATIMEOUT
+            igpdata.givei(bdx,:)  = MOPS_GIVEI_NM;
+            igpdata.eps_iono(bdx,:) = NaN;
+        end    
+        idx = dt26 > MOPS_MT26_PATIMEOUT | igpdata.mt26(bdx,1).iodi ~= igpdata.mt18(1).iodi;
         if any(idx)
-            igpdata.givei(idx)  = MOPS_GIVEI_NM;
-            igpdata.eps_iono(idx) = NaN;
+            igpdata.givei(bdx,idx)  = MOPS_GIVEI_NM;
+            igpdata.eps_iono(bdx,idx) = NaN;
         end
     end
 else    
