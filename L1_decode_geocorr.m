@@ -75,22 +75,22 @@ for mdx = 1:ngeos
         %Must have valid MT 17 messages in order to have valid PRN and service provider ID
         % compare position to the different almanacs
         adx = 1;
-        while adx <= length(svdata(mdx).mt17(1).prn) && isnan(svdata(mdx).geo_prn)
+        while adx <= size(svdata(mdx).mt17,1) && isnan(svdata(mdx).geo_prn)
             %make sure MT 17 data  has not timed out
-            if svdata(mdx).mt17(1).time(adx) >= (time - MOPS_MT17_PATIMEOUT)
+            if svdata(mdx).mt17(adx,1).time >= (time - MOPS_MT17_PATIMEOUT)
 
                 %find the almanac position
-                tmt0 = time - svdata(mdx).mt17(1).t0(adx);
-                alm_xyz = svdata(mdx).mt17(1).xyz(adx,:) + svdata(mdx).mt17(1).xyz_dot(adx,:)*tmt0; 
+                tmt0 = time - svdata(mdx).mt17(adx,1).t0;
+                alm_xyz = svdata(mdx).mt17(adx,1).xyz + svdata(mdx).mt17(adx,1).xyz_dot*tmt0; 
 
                 %check that positions match within 200 km
                 if sum((svdata(mdx).geo_xyzb(mdx,1:3) - alm_xyz).^2) <= 4e10
                     % if so, set PRN SPID and flags
-                    svdata(mdx).geo_prn = svdata(mdx).mt17(1).prn(adx);
-                    flags = dec2bin(svdata(mdx).mt17(1).health(adx),8);
+                    svdata(mdx).geo_prn = svdata(mdx).mt17(adx,1).prn;
+                    flags = dec2bin(svdata(mdx).mt17(adx,1).health,8);
                     svdata(mdx).geo_spid = bin2dec(flags(5:8)); 
                     svdata(mdx).geo_flags = flags(1:4) - 48; % convert from ascii '0' = 48
-                    svdata(mdx).geo_prn_time = svdata(mdx).mt17(1).time(adx);
+                    svdata(mdx).geo_prn_time = svdata(mdx).mt17(adx,1).time;
                     
                     %if geo is not for ranging then don't calculate the degradation
                     % flags are for information only and carry no requirements

@@ -59,10 +59,11 @@ if (svdata.mt1(1).time >= (time - MOPS_MT1_PATIMEOUT)) && ...
         (svdata.mt1(1).iodp == svdata.mt7(1).iodp) && ...
         (mt10.time >= (time - MOPS_MT10_PATIMEOUT))
 
-    eps_rrc_deg  = 0.0;
-    eps_ltc_deg  = 0.0;
-
     for sdx = 1:max_sats
+
+        eps_rrc_deg  = 0.0;
+        eps_ltc_deg  = 0.0;
+
         %find the most recent UDREI
         tudrei = time - svdata.mt2345(sdx,1).time; 
         svdata.udrei(sdx) = svdata.mt2345(sdx,1).udrei;
@@ -126,11 +127,10 @@ if (svdata.mt1(1).time >= (time - MOPS_MT1_PATIMEOUT)) && ...
         elseif isnan(svdata.mt25(sdx,1).t0)
             eps_ltc_deg = mt10.cltc_v0*floor(dt25/mt10.iltc_v0);
         end
-        gdx  = 1;
         % put in the ltc degradations for the GEOs
         if svdata.prns(sdx) >= MOPS_MIN_GEOPRN && ...
                 svdata.prns(sdx) <= MOPS_MAX_GEOPRN && ...
-                svdata.mt1(1).ngeo > 1 && svdata.geo_prn ~= svdata.prns(sdx) && ...
+                svdata.geo_prn == svdata.prns(sdx) && ...
                 svdata.mt1(1).mask(svdata.prns(sdx))
             gdx = sum(svdata.mt1(1).mask(MOPS_MIN_GEOPRN:svdata.prns(sdx)));
             if ~isnan(svdata.geo_deg(gdx))
