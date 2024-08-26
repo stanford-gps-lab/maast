@@ -25,23 +25,23 @@ else
     max_sdx = 12;
 end
 
-%move older data into corresponding slots
-svdata.mt2_fc(jdx:min([jdx+12 51]),2:6) = svdata.mt2_fc(jdx:min([jdx+12 51]),1:5);
-svdata.mt2_fc_time(jdx:min([jdx+12 51]),2:6) = svdata.mt2_fc_time(jdx:min([jdx+12 51]),1:5);
-svdata.mt2_fc_iodf(jdx:min([jdx+12 51]),2:6) = svdata.mt2_fc_iodf(jdx:min([jdx+12 51]),1:5);
+% copy older messages over
+svdata.mt2345(jdx:min([jdx+12 51]),2:end) = svdata.mt2345(jdx:min([jdx+12 51]),1:(end-1));
 
-svdata.mt2_fc_time(jdx:min([jdx+12 51]),1) = time;
-
-svdata.mt2_fc_iodf(jdx:min([jdx+12 51]),1) = bin2dec(msg(15:16));
-svdata.mt2_fc_iodp(jdx:min([jdx+12 51])) = bin2dec(msg(17:18));
+iodf = bin2dec(msg(15:16));
+iodp = bin2dec(msg(17:18));
 idx = 18;
 for sdx = 0:max_sdx
-    svdata.mt2_fc(jdx + sdx,1) = twos2dec(msg((idx + 1):(idx + 12)))*0.125;
+    svdata.mt2345(jdx + sdx,1).time = time;
+    svdata.mt2345(jdx + sdx,1).msg_idx = mod(round(time), 700) + 1;
+    svdata.mt2345(jdx + sdx,1).iodf = iodf;
+    svdata.mt2345(jdx + sdx,1).iodp = iodp;
+    svdata.mt2345(jdx + sdx,1).fc = twos2dec(msg((idx + 1):(idx + 12)))*0.125;
     idx = idx + 12;
 end
 idx = 174;
 for sdx = 0:max_sdx
-    svdata.mt2_udrei(jdx + sdx,1) = bin2dec(msg((idx + 1):(idx + 4))) + 1; %convert from MOPS 0-15 to matlab 1-16
+    svdata.mt2345(jdx + sdx,1).udrei = bin2dec(msg((idx + 1):(idx + 4))) + 1; %convert from MOPS 0-15 to matlab 1-16
     idx = idx + 4;
 end
 
