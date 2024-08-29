@@ -28,4 +28,4 @@ mt10.rss_udre = NaN;
 mt10.rss_iono = NaN;
 mt10.ccovariance = NaN;
 mt10.time = NaN;
-mt10.msg_idx = NaN;
+mt10.msg_idx = 1;

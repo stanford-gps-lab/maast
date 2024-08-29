@@ -1,4 +1,4 @@
-function [igpdata,inv_igp_mask] = init_igpdata(igpfile)
+function [igpdata,inv_igp_mask] = init_igpdata(igpfile,igpraw)
 
 %*************************************************************************
 %*     Copyright c 2020 The board of trustees of the Leland Stanford     *
@@ -21,9 +21,15 @@ global CONST_H_IONO;
 global COL_IGP_BAND COL_IGP_ID COL_IGP_LL COL_IGP_XYZ COL_IGP_WORKSET ...
         COL_IGP_EHAT COL_IGP_NHAT COL_IGP_MAGLAT COL_IGP_CORNERDEN ...
         COL_IGP_FLOORI COL_IGP_MAX
-igpraw = sortrows(load(igpfile),[1,2]);
-igp_mask = igpraw(:,3:4);
 
+if nargin < 2
+    igpraw = sortrows(load(igpfile),[1,2]);
+    igp_mask = igpraw(:,3:4);
+else
+    igpraw(:,3:4) = mt18bandnum2ll(igpraw);
+    igpraw(:,5) = 1;
+    igp_mask = igpraw(:,3:4);
+end
 
 %convert to radians
 igp_mask_rad=igp_mask*pi/180;

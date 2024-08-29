@@ -44,7 +44,7 @@ end
 
 % only check other data on the prime channel used for corrections
 svdata(gprime)  = L1_decode_satcorr(time, svdata(gprime), mt10(gprime));
-ionodata(gprime) = L1_decode_ionocorr(time, ionodata(gprime), mt10(gprime));
+ionodata(gprime) = L1_decode_ionocorr(time, ionodata(gprime), mt10(gprime),svdata(gprime).auth_pass);
 
 %transfer data to MAAST matrices
 sdx = 1:nsat;

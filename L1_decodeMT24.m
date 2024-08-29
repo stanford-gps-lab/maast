@@ -18,31 +18,36 @@ function svdata = L1_decodeMT24(time, msg, svdata)
 
 C = 299792458.0; % speed of light,  m/sec
 
+iodp = bin2dec(msg(111:112)); %IODP
 blockID = bin2dec(msg(113:114));
+iodf = bin2dec(msg(115:116)); %IODP
+
 jdx = blockID*13 + 1;
 
 % copy older messages over
 svdata.mt2345(jdx:(jdx+6), 2:end) = svdata.mt2345(jdx:(jdx+6), 1:(end-1));
 
-%record time for this data
-svdata.mt2345(jdx:(jdx+6),1).time = time;
-svdata.mt2345(jdx:(jdx+6),1).msg_idx = mod(round(time), 700) + 1;
 
 idx = 15;
 for sdx = 0:5
+    %record time for this satellite
+    svdata.mt2345(jdx + sdx,1).time = time;
+    svdata.mt2345(jdx + sdx,1).msg_idx = mod(round(time), 700) + 1;
+
+    %record iodp and iodf for this satellite
+    svdata.mt2345(jdx + sdx,1).iodp = iodp;
+    svdata.mt2345(jdx + sdx,1).iodf = iodf;
+
+    %record the Fast Correction
     svdata.mt2345(jdx + sdx,1).fc = twos2dec(msg(idx:(idx + 11)))*0.125;
     idx = idx + 12;
 end
 for sdx = 0:5
-    svdata.mt22345(jdx + sdx,1).udrei = bin2dec(msg(idx:(idx + 3))) + 1; %convert from MOPS 0-15 to matlab 1-16
+    %record the UDREI
+    svdata.mt2345(jdx + sdx,1).udrei = bin2dec(msg(idx:(idx + 3))) + 1; %convert from MOPS 0-15 to matlab 1-16
     idx = idx + 4;
 end
-
-svdata.mt2345(jdx:(jdx+6),1).iodp = bin2dec(msg(idx:(idx+1))); %IODP
-idx = idx + 2 + 2;  %extra 2 bits for Block ID (read in earlier)
-
-svdata.mt2345(jdx:(jdx+6)).iodf = bin2dec(msg(idx:(idx+1))); %IODF
-idx = idx + 2 + 4; %extra 4 bits for spare bits
+idx = idx + 10;  %2 bits each for IODP, Block ID, & IODF (read in earlier) + 4 bits for spare bits
 
 %half MT25
 vcode = bin2dec(msg(idx));
