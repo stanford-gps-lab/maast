@@ -10,7 +10,7 @@ function [svdata, igpdata, mt10, flag] = L1_decode_messages(time, msg, svdata, i
 %*************************************************************************
 %
 
-global MOPS_L1_PREAMBLE
+global MOPS_L1_PREAMBLE AUTHENTICATION_ENABLED
 
 flag  = 0;
 
@@ -26,15 +26,7 @@ else
     svdata.auth_pass(idx:(idx+60)) = false;
 end
 
-if crc24q(msg)
-    fid = fopen('lost_messages.txt','a');
-    mt = bin2dec(msg(5:10));
-    if mt == 32
-        fprintf(fid, 'missing message type %i, PRN %i at time %i\n',  mt, bin2dec(msg(11:19)), mod(time, 24*3600));
-    else
-        fprintf(fid, 'missing message type %i at time %i\n',  mt, mod(time, 24*3600));
-    end
-    fclose(fid);    
+if crc24q(msg) 
     warning('CRC does not match')
     return
 end
@@ -45,6 +37,13 @@ end
 
 %mark message as received
 svdata.received(idx) = true;
+% if authentication is not enabled, mark all messages as authenticated
+if isempty(AUTHENTICATION_ENABLED) || ~AUTHENTICATION_ENABLED
+    svdata.auth_pass = true(size(svdata.auth_pass));    
+else
+    % otherwise mark them as not authenticated
+    svdata.auth_pass(idx) = false;
+end
 
 flag = 1;
 mt = bin2dec(msg(9:14));

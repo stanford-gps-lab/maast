@@ -45,7 +45,7 @@ for pdx = max_sats:-1:1
     svdata.mt2345(pdx,1) = mt2345;
 end
 %MT6
-mt6.iodf = NaN;
+mt6.iodf = NaN(max_sats,1);
 mt6.udrei = repmat(MOPS_UDREI_NM,max_sats,1);
 mt6.time = NaN;
 mt6.msg_idx = 1;
@@ -109,6 +109,8 @@ mt27.time = NaN;
 mt27.polygon = [];
 mt27.polytime = NaN;
 mt27.msg_idx = 1;
+svdata.mt27(5) = mt27;
+svdata.mt27(4) = mt27;
 svdata.mt27(3) = mt27;
 svdata.mt27(2) = mt27;
 svdata.mt27(1) = mt27;
