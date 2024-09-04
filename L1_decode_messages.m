@@ -66,7 +66,11 @@ switch mt
     case 17
         svdata = L1_decodeMT17(time, msg, svdata); 
     case 18
-        igpdata = L1_decodeMT18(time, msg, igpdata); 
+        igpdata = L1_decodeMT18(time, msg, igpdata);
+    case 20
+        svdata = L5_decodeMT50(time, msg, svdata); 
+    case 21
+        L5_decodeMT51(time, msg);
     case 24
         svdata = L1_decodeMT24(time, msg, svdata);
     case 25
