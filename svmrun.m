@@ -72,10 +72,12 @@ global L5MOPS_MIN_GPSPRN L5MOPS_MAX_GPSPRN
 global L5MOPS_MIN_GALPRN L5MOPS_MAX_GALPRN 
 global L5MOPS_MIN_GEOPRN L5MOPS_MAX_GEOPRN 
 
-global SBAS_MESSAGE_FILE
+global SBAS_MESSAGE_FILE AUTHENTICATION_ENABLED
 
 global TRIP_COUNT
 TRIP_COUNT = 0;
+
+global receiverTESLA_constructor;
 
 fprintf('initializing run\n');
 alm_param = read_yuma(svfile);
@@ -110,6 +112,12 @@ end
 %is time provided in time of week or absolute time (since 1980)?
 if tstart > 604800
     alm_param(:,3) = alm_param(:,3) + 604800*alm_param(:,12); % abs time
+    start_week = floor(tstart/604800.0);
+    start_sow = mod(tstart, 604800);
+    jd = gps2jd(start_week, start_sow);
+    [start_year, start_month, start_day] = jd2cal(jd);
+    start_doy = floor(jd2doy(jd));
+    end_jd = jd + (tend - 1 - tstart)/86400;
 end
 
 if tstep>0
@@ -171,7 +179,22 @@ if isempty(SBAS_MESSAGE_FILE)
     satdata(:, COL_SAT_DEGRAD) = 0;
     rss_udre = 1;    
 else
-    % REPLAY RECORDED DATA INITIALIZATION:
+
+        
+    if AUTHENTICATION_ENABLED &&  dual_freq
+        global sbas_authentication_parameters
+        if isempty(sbas_authentication_parameters)
+            sbas_authentication_parameters = SBASAuthenticationParameters();
+        end
+
+        % receiver side
+        global mt50Receiver
+        mt50Receiver = receiverTESLA_constructor([], [], sbas_authentication_parameters.hash_path_length);
+        global keyStateMachine
+        keyStateMachine = ReceiverKeyStateMachine();        
+    end
+
+            % REPLAY RECORDED DATA INITIALIZATION:
     % read in the MOPS messages that correspond to the almanac day
     % file that can be generated with get_sbas_broadcast_from_rinex.m
     % make sure that the times correspond and include data from 
@@ -187,6 +210,7 @@ else
                            init_read_sbas_L1msgs(tstart, satdata, alm_param);
     end
 end
+
 % initialize usr matrices
 % see documentation for format of USRDATA,IGPDATA & USR2SATDATA
 sdx = 1:nsat;
@@ -239,7 +263,7 @@ while tcurr<=tend
         hist_idx = find(satdata(sdx,COL_SAT_MINMON));
         udrei_hist = udrei_hist+svm_hist(satdata(sdx(hist_idx),COL_SAT_UDREI),HIST_UDREI_EDGES);
         udrei_hist(sat_dnu_sbas) = udrei_hist(sat_dnu_sbas) + ...
-                                sum(isnan(satdata(sdx(hist_idx),COL_SAT_UDREI)));
+                                sum(isnan(satdata(sdx(hist_idx),COL_SAT_UDREI)));                      
     else
         % loop over the geo channels and read in the previously unread 
         %  messages up to the current time
