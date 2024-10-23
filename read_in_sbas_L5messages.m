@@ -16,6 +16,7 @@ global COL_SAT_COV COL_SAT_SCALEF
 
 global L5MOPS_MIN_GPSPRN L5MOPS_MAX_GPSPRN
 global L5MOPS_MIN_GALPRN L5MOPS_MAX_GALPRN
+global TEST_TESLA_AUTH
 
 ngps = sum(satdata(:, COL_SAT_PRN) >= L5MOPS_MIN_GPSPRN & satdata(:, COL_SAT_PRN) <= L5MOPS_MAX_GPSPRN);
 ngal = sum(satdata(:, COL_SAT_PRN) >= L5MOPS_MIN_GALPRN & satdata(:, COL_SAT_PRN) <= L5MOPS_MAX_GALPRN);
@@ -30,6 +31,9 @@ geoprns = satdata(nmeo+(1:ngeo), COL_SAT_PRN);
 for gdx = 1:n_channels
     while smtidx(gdx) <= length(sbas_msg_time{gdx}) && sbas_msg_time{gdx}(smtidx(gdx)) <= time
         msg = reshape(dec2bin(sbas_msgs{gdx}(smtidx(gdx),:),8)', 1,256);
+        if ~isempty(TEST_TESLA_AUTH) && TEST_TESLA_AUTH && gdx == gprime
+            msg = msg_auth_test(time, msg, svdata);
+        end
         svdata(gdx) = L5_decode_messages(sbas_msg_time{gdx}(smtidx(gdx)), ...
                       msg, svdata(gdx));
         smtidx(gdx) = smtidx(gdx) + 1;
