@@ -161,7 +161,7 @@ classdef ReceiverTESLA < handle
 
                 if i == obj.max_hash_path_length
                     warning('ReceiverTESLA:InvalidHashPoint', ...
-                          'Input Hash Point did not Hash down to verified Hash Point');
+                            'Input Hash Point did not Hash down to verified Hash Point');
                 end
 
                 receipt_time = receipt_time - uint32(6);
