@@ -138,7 +138,7 @@ classdef ReceiverTESLA < handle
             % Given an MT50 checks to see if it hashes down to hash path end
             %
             %   MT50 - an MT50 object
-            %   returns - true if MT50 is authenticated and throws error
+            %   returns - true if MT50 is authenticated and throws warning
             %   otherwise
             hashpoint = MT50.hash_point;
             temp = hashpoint;
@@ -160,7 +160,7 @@ classdef ReceiverTESLA < handle
                 end
 
                 if i == obj.max_hash_path_length
-                    error('ReceiverTESLA:InvalidHashPoint', ...
+                    warning('ReceiverTESLA:InvalidHashPoint', ...
                           'Input Hash Point did not Hash down to verified Hash Point');
                 end
 
