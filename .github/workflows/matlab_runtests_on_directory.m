@@ -30,7 +30,7 @@ function exit_code = matlab_runtests_on_directory(directory, xml_report_path, co
         runner.addPlugin(coverageReportPlugin);
     end
 
-    results = runner.runInParallel(suite); % run the tests
+    results = runner.run(suite); % run the tests
 
     exit_code = any([results.Failed, results.Incomplete]);
 
