@@ -7,8 +7,8 @@ classdef MAASTExecutionTests < matlab.unittest.TestCase %#ok<*GVMIS,*UNRCH>
             clearvars -global;
             close all;
 
-            init_const_pub;      % global physical and gps constants
-            init_col_labels; % column indices
+            init_const;      % global physical and gps constants
+            init_col_labels_pub; % column indices
             init_mops;       % MOPS constants
 
             global COL_USR_INBND
