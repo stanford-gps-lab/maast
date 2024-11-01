@@ -18,7 +18,7 @@ close all;
 
 
 init_const;      % global physical and gps constants
-init_col_labels; % column indices 
+init_col_labels_pub; % column indices 
 init_mops;       % MOPS constants
 
 global MOPS_UDRE MOPS_SIG_UDRE MOPS_SIG2_UDRE MT27
@@ -334,7 +334,7 @@ GUI_OUT_COVAVAIL = 7;
         
 %% RUN Simulation
 
-      svmrun(gpsudrefun, geoudrefun, givefun, usrcnmpfun, ...
+      svmrunpub(gpsudrefun, geoudrefun, givefun, usrcnmpfun, ...
              wrsgpscnmpfun, wrsgeocnmpfun, wrsfile,usrpolyfile, ...
              igpfile, svfile, geodata, TStart, TEnd, TStep, usrlatstep, ...
              usrlonstep, outputs, percent, vhal, pa_mode, dual_freq);

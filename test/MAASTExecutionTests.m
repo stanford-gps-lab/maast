@@ -7,7 +7,7 @@ classdef MAASTExecutionTests < matlab.unittest.TestCase %#ok<*GVMIS,*UNRCH>
             clearvars -global;
             close all;
 
-            init_const;      % global physical and gps constants
+            init_const_pub;      % global physical and gps constants
             init_col_labels; % column indices
             init_mops;       % MOPS constants
 
@@ -160,7 +160,7 @@ GUI_OUT_COVAVAIL = 7;
 
             %% RUN Simulation
 
-            svmrun(gpsudrefun, geoudrefun, givefun, usrcnmpfun, ...
+            svmrunpub(gpsudrefun, geoudrefun, givefun, usrcnmpfun, ...
                    wrsgpscnmpfun, wrsgeocnmpfun, wrsfile, usrpolyfile, ...
                    igpfile, svfile, geodata, TStart, TEnd, TStep, usrlatstep, ...
                    usrlonstep, outputs, percent, vhal, pa_mode, dual_freq);
