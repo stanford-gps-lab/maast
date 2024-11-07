@@ -26,37 +26,23 @@ classdef CreateAMAC
 
             % Create aMAC key
             time_bits_128 = CreateAMAC.time_conversion(time);
-            time_bits_4_8 = dec2bin(time_bits_128(end - 3:end), 8);
-            time_bits = time_bits_4_8(:)';
-            prn = dec2bin(prn, 9);
+            prn = uint8(prn);
 
             global dual_freq %#ok
             if dual_freq
-                L = dec2bin(1176450, 23);
+                L = uint8([17, 243, 130]); % 1176450 in bytes big endian
                 mt50_str = "MT50Key";
             else
-                L = dec2bin(1575420, 23);
+                L = uint8([24, 09, 252]); % 1575420 in bytes big endian
                 mt50_str = "MT20Key";
             end
 
-            mt50_str = char(mt50_str);
-            mt_bits = dec2bin(mt50_str, 8);
-            mt_bits = mt_bits';
+            mt50_str = uint8(char(mt50_str));
 
-            hashpoint_bits = dec2bin(hashpoint, 8);
-            hashpoint_bits = hashpoint_bits';
-
-            key_prior = [mt_bits, hashpoint_bits];
-            key_prior = bin2dec(reshape(key_prior, 8, [])');
-
-            key = HashingWrappers.hmac_sha_256(key_prior, [time_bits, prn, L] - '0');
+            key = HashingWrappers.hmac_sha_256(hashpoint, [mt50_str, time_bits_128', prn, L]);
 
             % Create concatinated hmacs
-            concatenated_hmacs = zeros(20, 1);
-
-            for i = 1:length(hmacs)
-                concatenated_hmacs(i:i + bytes - 1, 1) = hmacs(:, i);
-            end
+            concatenated_hmacs = hmacs(:);
 
             % Make the first four bits zero - for consistency
             switch amac_size
