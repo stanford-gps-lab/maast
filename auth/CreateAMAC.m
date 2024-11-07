@@ -42,11 +42,7 @@ classdef CreateAMAC
             key = HashingWrappers.hmac_sha_256(hashpoint, [mt50_str, time_bits_128', prn, L]);
 
             % Create concatinated hmacs
-            concatenated_hmacs = zeros(20, 1);
-
-            for i = 1:length(hmacs)
-                concatenated_hmacs(i:i + bytes - 1, 1) = hmacs(:, i);
-            end
+            concatenated_hmacs = hmacs(:);
 
             % Make the first four bits zero - for consistency
             switch amac_size
