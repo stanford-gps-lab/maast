@@ -47,9 +47,9 @@ classdef CreateAMAC
             hashpoint_bits = hashpoint_bits';
 
             key_prior = [mt_bits, hashpoint_bits];
-            key_prior = bin2dec(reshape(key_prior, 8, [])');
+            key_prior = uint8(bin2dec(reshape(key_prior, 8, [])'));
 
-            key = HashingWrappers.hmac_sha_256(key_prior, [time_bits, prn, L] - '0');
+            key = HashingWrappers.hmac_sha_256(key_prior, DataConversions.logicalToUint8([time_bits, prn, L] - '0'));
 
             % Create concatinated hmacs
             concatenated_hmacs = zeros(20, 1);

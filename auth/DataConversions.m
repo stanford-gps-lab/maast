@@ -46,5 +46,30 @@ classdef DataConversions
 
         end
 
+        function uint8Array = logicalToUint8(logicalArray)
+            % Ensure the input is a row vector
+            logicalArray = logicalArray(:)';
+
+            % Pad the logical array to a multiple of 8 bits if necessary
+            if mod(length(logicalArray), 8) ~= 0
+                padding = false(1, 8 - mod(length(logicalArray), 8));
+                logicalArray = [padding logicalArray];
+            end
+
+            % Reshape the logical array into 8-bit chunks
+            logicalChunks = reshape(logicalArray, 8, []).';
+
+            % Convert each 8-bit chunk to a decimal value (uint8)
+            uint8Array = uint8(bin2dec(num2str(logicalChunks)));
+        end
+
+        function hexStr = uint8ToHexStr(uint8Array)
+            % Convert each uint8 element to a two-character hexadecimal string
+            hexCells = dec2hex(uint8Array, 2);  % 2 specifies zero-padded 2-character hex
+
+            % Concatenate all rows of hex strings into a single string
+            hexStr = reshape(hexCells', 1, []);  % Transpose and reshape to a row vector
+        end
+
     end
 end

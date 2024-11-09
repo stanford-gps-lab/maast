@@ -34,7 +34,7 @@ classdef ReceiverTESLA_5HMAC < ReceiverTESLA
                 else
                     L = dec2bin(1575420, 23);
                 end
-                key = HashingWrappers.hmac_sha_256(hashpoint, [time_bits, prn, L] - '0');
+                key = HashingWrappers.hmac_sha_256(hashpoint, DataConversions.logicalToUint8([time_bits, prn, L] - '0'));
                 hm = obj.mac_signing_function(key, message.message);
 
                 if all(MT50.get_hmac(i - start + 1) == hm)

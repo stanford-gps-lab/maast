@@ -38,7 +38,7 @@ classdef ReceiverTESLA_AMAC32 < ReceiverTESLA
                 else
                     L = dec2bin(1575420, 23);
                 end
-                key = HashingWrappers.hmac_sha_256(hashpoint, [time_bits, prn, L] - '0');
+                key = HashingWrappers.hmac_sha_256(hashpoint, DataConversions.logicalToUint8([time_bits, prn, L] - '0'));
                 hmac = obj.mac_signing_function(key, message.message);
                 hmac_count = hmac_count + 1;
 
