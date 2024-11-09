@@ -12,7 +12,7 @@ classdef MT50_5HMAC < MT50
 
     methods
 
-        function obj = MT50_5HMAC(HMAC_1, HMAC_2, HMAC_3, HMAC_4, HMAC_5, hash_point, prn) %#ok<INUSD>
+        function obj = MT50_5HMAC(HMAC_1, HMAC_2, HMAC_3, HMAC_4, HMAC_5, hash_point, time, prn) %#ok<INUSD>
             % Construct MT50 Instance.
 
             obj.HMAC_1 = HMAC_1;
@@ -60,7 +60,7 @@ classdef MT50_5HMAC < MT50
 
     methods (Static)
 
-        function mt50 = decode(message, prn)
+        function mt50 = decode(message, time, prn)
             % construct an mt50 class instance from input logical array of bits
             %
             %   message - a logical array of bits
@@ -76,7 +76,7 @@ classdef MT50_5HMAC < MT50
             HMAC_5 = uint8(DataConversions.bi2de(reshape(message(75:90), 8, 2)'));
             hp = uint8(DataConversions.bi2de(reshape(message(91:218), 8, 16)'));
 
-            mt50 = MT50_5HMAC(HMAC_1, HMAC_2, HMAC_3, HMAC_4, HMAC_5, hp, prn);
+            mt50 = MT50_5HMAC(HMAC_1, HMAC_2, HMAC_3, HMAC_4, HMAC_5, hp, time, prn);
         end
 
     end

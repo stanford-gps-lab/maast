@@ -39,9 +39,9 @@ classdef HashingWrappers
             output = input(1:length);
         end
 
-        function output = truncated_hmac_sha_256(input, key, length)
-            input = HashingWrappers.hmac_sha_256(input, key);
-            output = input(1:length);
+        function output = truncated_hmac_sha_256(key, input, length)
+            output = HashingWrappers.hmac_sha_256(key, input);
+            output = output(1:length);
         end
 
         function output = padded_hmac_sha_256(input, key, length)

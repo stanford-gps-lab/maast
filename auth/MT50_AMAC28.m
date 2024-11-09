@@ -10,11 +10,11 @@ classdef MT50_AMAC28 < MT50
 
     methods
 
-        function obj = MT50_AMAC28(HMAC1, HMAC2, HMAC3, HMAC4, HMAC5, hashpoint, prn)
+        function obj = MT50_AMAC28(HMAC1, HMAC2, HMAC3, HMAC4, HMAC5, hashpoint, time, prn)
             hmacs = [HMAC1, HMAC2, HMAC3, HMAC4, HMAC5];
             datarec = DataRecovery.generate_data_recovery_fields_28(hmacs);
 
-            obj.aMAC = CreateAMAC.aggregate(28, 0, hashpoint, prn, hmacs);
+            obj.aMAC = CreateAMAC.aggregate(28, time, hashpoint, prn, hmacs);
             obj.datarec_1 = datarec(:, 1);
             obj.datarec_2 = datarec(:, 2);
             obj.hash_point = hashpoint;
@@ -67,7 +67,7 @@ classdef MT50_AMAC28 < MT50
 
     methods (Static)
 
-        function mt50 = decode(message, prn)
+        function mt50 = decode(message, time, prn)
             % construct an mt50 class instance from input logical array of bits
             %
             %   message - a logical array of bits
@@ -81,7 +81,7 @@ classdef MT50_AMAC28 < MT50
             datarec_2 = uint8(DataConversions.bi2de(reshape([zeros(1, 4), message(67:94)], 8, 4)'));
             hash_point = uint8(DataConversions.bi2de(reshape(message(95:222), 8, 16)'));
 
-            mt50 = MT50_AMAC28(aMAC, aMAC, aMAC, aMAC, aMAC, hash_point, prn);
+            mt50 = MT50_AMAC28(aMAC, aMAC, aMAC, aMAC, aMAC, hash_point, time, prn);
             mt50.aMAC = aMAC;
             mt50.datarec_1 = datarec_1;
             mt50.datarec_2 = datarec_2;

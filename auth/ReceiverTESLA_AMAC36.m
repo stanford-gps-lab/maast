@@ -4,7 +4,7 @@ classdef ReceiverTESLA_AMAC36 < ReceiverTESLA
         function obj = ReceiverTESLA_AMAC36(varargin)
             obj@ReceiverTESLA(varargin{:});
             obj.mac_signing_function = @(x, y)HashingWrappers.padded_hmac_sha_256(x, y, 5);
-            obj.mt50_decode = @(x, y)MT50_AMAC36.decode(x, y);
+            obj.mt50_decode = @(message, time, prn)MT50_AMAC36.decode(message, time, prn);
             obj.hmac_size = 5;
             obj.include_crc = false;
         end
@@ -38,7 +38,8 @@ classdef ReceiverTESLA_AMAC36 < ReceiverTESLA
                 else
                     L = dec2bin(1575420, 23);
                 end
-                key = HashingWrappers.hmac_sha_256(hashpoint, DataConversions.logicalToUint8([time_bits, prn, L] - '0'));
+                key = HashingWrappers.hmac_sha_256(hashpoint, ...
+                                                   DataConversions.logicalToUint8([time_bits, prn, L] - '0'));
                 hmac = obj.mac_signing_function(key, message.message);
                 hmac_count = hmac_count + 1;
 
@@ -53,7 +54,7 @@ classdef ReceiverTESLA_AMAC36 < ReceiverTESLA
             end
 
             % Aggregate HMACs
-            amac = CreateAMAC.aggregate(36, 0, MT50.hash_point, obj.prn, hmacs);
+            amac = CreateAMAC.aggregate(36, time, MT50.hash_point, obj.prn, hmacs);
 
             if all(MT50.get_amac() == amac)
                 % Verify all of the messages
@@ -76,6 +77,7 @@ classdef ReceiverTESLA_AMAC36 < ReceiverTESLA
                                      uint8(zeros(obj.hmac_size, 1)), ...
                                      uint8(zeros(obj.hmac_size, 1)), ...
                                      uint8(zeros(16, 1)), ...
+                                     0, ...
                                      0);
 
             if all(message.datarec_1 == dummy_mt50.datarec_1) && ...
