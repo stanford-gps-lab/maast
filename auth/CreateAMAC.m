@@ -42,21 +42,13 @@ classdef CreateAMAC
             mt50_str = char(mt50_str);
             mt_bits = dec2bin(mt50_str, 8);
             mt_bits = mt_bits';
+            mt_bits = mt_bits(:)';
 
-            hashpoint_bits = dec2bin(hashpoint, 8);
-            hashpoint_bits = hashpoint_bits';
-
-            key_prior = [mt_bits, hashpoint_bits];
-            key_prior = bin2dec(reshape(key_prior, 8, [])');
-
-            key = HashingWrappers.hmac_sha_256(key_prior, [time_bits, prn, L] - '0');
+            key = HashingWrappers.hmac_sha_256(hashpoint, ...
+                                               DataConversions.logicalToUint8([mt_bits, time_bits, prn, L] - '0'));
 
             % Create concatinated hmacs
-            concatenated_hmacs = zeros(20, 1);
-
-            for i = 1:length(hmacs)
-                concatenated_hmacs(i:i + bytes - 1, 1) = hmacs(:, i);
-            end
+            concatenated_hmacs = hmacs(:);
 
             % Make the first four bits zero - for consistency
             switch amac_size

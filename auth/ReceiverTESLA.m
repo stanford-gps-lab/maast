@@ -128,7 +128,7 @@ classdef ReceiverTESLA < handle
             obj.message_table(time) = MessageTableValue(message_uint8);
 
             if DataConversions.bi2de(message_logical(5:10)) == 50
-                mt50 = obj.mt50_decode(message_logical, obj.prn);
+                mt50 = obj.mt50_decode(message_logical, time, obj.prn);
                 obj.add_message_mt50(mt50, time);
             end
 
@@ -227,9 +227,11 @@ classdef ReceiverTESLA < handle
     methods (Static, Access = private)
 
         function hash_point_out = hash_path_func(hash_point_in, time)
-            counter = idivide(time, 6);
-            counter_array = DataConversions.int_to_uint8_16_array(counter);
-            hash_point_out = HashingWrappers.truncated_sha_256(bitxor(hash_point_in, counter_array), 16);
+            WN = dec2bin(floor(double(time) / 604800), 13);
+            af = dec2bin(ceil(mod(time, 604800) / 6), 17);
+
+            input = [hash_point_in; DataConversions.logicalToUint8([WN, af, '00'] - '0')];
+            hash_point_out = HashingWrappers.truncated_sha_256(input, 16);
         end
 
     end
