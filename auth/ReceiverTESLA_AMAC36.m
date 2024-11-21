@@ -58,12 +58,18 @@ classdef ReceiverTESLA_AMAC36 < ReceiverTESLA
 
             if all(MT50.get_amac() == amac)
                 % Verify all of the messages
+                hi = 0;
                 for i = time - 5:time - 1
+                    hi = hi + 1;
                     m = obj.message_table(i);
-                    m.verified = true;
+                    m.verified = (flag(hi)==1);
                 end
             else
-                error('Receiver:invalidHmac', 'Unable to recover aMAC');
+                warning('Receiver:invalidHmac', 'Unable to recover aMAC');
+                for i = time - 5:time - 1
+                    m = obj.message_table(i);
+                    m.verified = false;
+                end   
             end
 
         end

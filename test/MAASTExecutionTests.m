@@ -27,8 +27,8 @@ classdef MAASTExecutionTests < matlab.unittest.TestCase %#ok<*GVMIS,*UNRCH>
             global TEST_TESLA_AUTH
 
             AUTHENTICATION_ENABLED = true;
-            senderTESLA_constructor = @SenderTESLA_AMAC32;
-            receiverTESLA_constructor = @ReceiverTESLA_AMAC32;
+            senderTESLA_constructor = @SenderTESLA_AMAC36;
+            receiverTESLA_constructor = @ReceiverTESLA_AMAC36;
             TEST_TESLA_AUTH = true;
 
             %% Outputs
