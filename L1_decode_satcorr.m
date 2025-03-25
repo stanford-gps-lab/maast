@@ -71,8 +71,8 @@ mdx1 = find(([svdata.mt1.time] >= (time - MOPS_MT1_PATIMEOUT)) & ...
 mdx7 = find(([svdata.mt7.time] >= (time - MOPS_MT7_PATIMEOUT))  & ...
           ([svdata.mt7.iodp] == iodp)  & ...
           svdata.auth_pass([svdata.mt7.msg_idx])');
-mdx10 = find(([mt10.time] >= (time - MOPS_MT10_PATIMEOUT)) & ...
-          svdata.auth_pass([mt10.msg_idx])');
+mdx10 = find(([mt10.msg.time] >= (time - MOPS_MT10_PATIMEOUT)) & ...
+          svdata.auth_pass([mt10.msg.msg_idx])');
 if ~isempty(mdx1)  && ~isempty(mdx7)  && ~isempty(mdx10)
     mdx1 = mdx1(1); %use the most recent one
     mdx7 = mdx7(1); %use the most recent one
@@ -163,14 +163,14 @@ if ~isempty(mdx1)  && ~isempty(mdx7)  && ~isempty(mdx10)
             if mod(svdata.mt2345(sdx,mdx2345(1)).iodf - svdata.mt2345(sdx,mdx2345(2)).iodf,3) ~= 1 && ...
                    ~isnan(dtrrc)
                 eps_rrc_deg = (MOPS_MT7_AI(svdata.mt7(mdx7).ai(sdx)+1).*fc_timeout/4 + ...
-                               mt10(mdx10).brrc/dtrrc).*dtfc;
+                               mt10.msg(mdx10).brrc/dtrrc).*dtfc;
             end
         
             %look for IODFs equal to 3 and not at the expected interval
             if (svdata.mt2345(sdx,1).iodf == 3 || svdata.mt2345(sdx,2).iodf == 3) && ...
                    dtrrc ~= fc_timeout/2 && ~isnan(dtrrc)
                 eps_rrc_deg = (MOPS_MT7_AI(svdata.mt7_ai(sdx)+1).*abs(dtrrc(sdx) - fc_timeout/2)/2 + ...
-                               (e(sdx)*mt10(mdx10).brrc)./dtrrc(sdx)).*dtfc(sdx);
+                               (e(sdx)*mt10.msg(mdx10).brrc)./dtrrc(sdx)).*dtfc(sdx);
             end
         
             %if ai from MT 7 is 0, the the rrc is 0
@@ -192,14 +192,14 @@ if ~isempty(mdx1)  && ~isempty(mdx7)  && ~isempty(mdx10)
             svdata.dxyzb(sdx,4) = svdata.dxyzb(sdx,4) + svdata.mt2345(sdx,mdx2345(1)).fc + rrc.*dtfc;
         
             %find the long-term correction degradation factor for velocity code = 1
-            if (svdata.mt25(sdx,mdx25).t0 <= time || svdata.mt25(sdx,mdx25).t0 >= time + mt10(mdx10).iltc_v1) && ...
+            if (svdata.mt25(sdx,mdx25).t0 <= time || svdata.mt25(sdx,mdx25).t0 >= time + mt10.msg(mdx10).iltc_v1) && ...
                     ~isnan(svdata.mt25(sdx,mdx25).t0)
-                eps_ltc_deg = mt10(mdx10).cltc_lsb + mt10(mdx10).cltc_v1*max([0 ...
+                eps_ltc_deg = mt10.msg(mdx10).cltc_lsb + mt10.msg(mdx10).cltc_v1*max([0 ...
                                 (svdata.mt25(sdx,mdx25).t0 - time) ...
-                                (time - svdata.mt25(sdx,mdx25).t0 - mt10(mdx10).iltc_v1)]);
+                                (time - svdata.mt25(sdx,mdx25).t0 - mt10.msg(mdx10).iltc_v1)]);
             %find the long-term correction degradation factor for velocity code = 0
             elseif isnan(svdata.mt25(sdx,mdx25).t0)
-                eps_ltc_deg = mt10(mdx10).cltc_v0*floor(dt25/mt10(mdx10).iltc_v0);
+                eps_ltc_deg = mt10.msg(mdx10).cltc_v0*floor(dt25/mt10.msg(mdx10).iltc_v0);
             end
             % put in the ltc degradations for the GEOs
             if svdata.prns(sdx) >= MOPS_MIN_GEOPRN && ...
@@ -227,7 +227,7 @@ if ~isempty(mdx1)  && ~isempty(mdx7)  && ~isempty(mdx10)
             end
         
             %find the degradation term
-            if mt10(mdx10).rss_udre
+            if mt10.msg(mdx10).rss_udre
                 svdata.degradation(sdx) = eps_fc_deg.^2 + eps_rrc_deg.^2 + eps_ltc_deg.^2;
             else
                 svdata.degradation(sdx) = eps_fc_deg + eps_rrc_deg + eps_ltc_deg;

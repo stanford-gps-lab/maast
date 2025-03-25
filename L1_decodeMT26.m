@@ -25,8 +25,8 @@ kdx = bin2dec(msg(19:22))*15 + 1;  %convert from MOPS 0-13 to matlab 1-14
 iodi = bin2dec(msg(218:219));
 
 % copy older messages over
-igpdata.mt26(bandid*max_igps + kdx + 0:14, 2:end) = ...
-    igpdata.mt26(bandid*max_igps + kdx + 0:14, 1:(end-1));
+igpdata.mt26(bandid*max_igps + kdx + (0:14), 2:end) = ...
+    igpdata.mt26(bandid*max_igps + kdx + (0:14), 1:(end-1));
 
 idx = 23;
 for sdx = 0:14

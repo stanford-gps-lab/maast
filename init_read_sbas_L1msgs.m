@@ -108,14 +108,14 @@ for gdx = n_channels:-1:1
     % Only need to match satdata and get iono mask from primary source
     if gdx == gprime
         % check PRN mask and initialize  svdata
-        if svdata(gdx).mt1_time >= tstart - MOPS_MT1_PATIMEOUT
+        if svdata(gdx).mt1(1).time >= tstart - MOPS_MT1_PATIMEOUT
             
             prns = svdata(gdx).prns;
             %check that the gps mask matches the gps almanac
-            while svdata(gdx).mt1_ngps ~= ngps || ...
+            while svdata(gdx).mt1(1).ngps ~= ngps || ...
                     ~isequal(prns(1:ngps), satdata(1:ngps,COL_SAT_PRN))
-                if svdata(gdx).mt1_ngps > ngps 
-                    [missing_prns, idx] = setdiff(prns(1:svdata(gdx).mt1_ngps), ...
+                if svdata(gdx).mt1(1).ngps > ngps 
+                    [missing_prns, idx] = setdiff(prns(1:svdata(gdx).mt1(1).ngps), ...
                                              satdata(1:ngps,COL_SAT_PRN));
                     while ~isempty(missing_prns)
                         %creates a repeated row that is always set to NM
@@ -127,13 +127,13 @@ for gdx = n_channels:-1:1
                         alm_param(idx(1),2:end) = NaN; 
                         ngps = ngps + 1;
                         nsat = nsat + 1;
-                        [missing_prns, idx] = setdiff(prns(1:svdata(gdx).mt1_ngps), ...
+                        [missing_prns, idx] = setdiff(prns(1:svdata(gdx).mt1(1).ngps), ...
                                              satdata(1:ngps,COL_SAT_PRN));
                     end
                 else
                     % delete uneeded row(s) in satdata and almparam
                     [~, idx] = setdiff(satdata(1:ngps,COL_SAT_PRN), ...
-                                             prns(1:svdata(gdx).mt1_ngps));
+                                             prns(1:svdata(gdx).mt1(1).ngps));
                     satdata(idx,:) = [];
                     alm_param(idx,:) = []; 
                     ngps = ngps - length(idx);
@@ -146,20 +146,20 @@ for gdx = n_channels:-1:1
         end
 
         %check IGP mask and initalize igpdata
-        if sum(ionodata(gdx).mt18_num_bands)
-            idx = find(ionodata(gdx).mt18_num_bands > 0);
-            IODI = ionodata(gdx).mt18_iodi(idx (1));
-            num_bands = ionodata(gdx).mt18_num_bands(idx (1));
+        if sum([ionodata(gdx).mt18.num_bands])
+            idx = find([ionodata(gdx).mt18.num_bands]);
+            IODI = ionodata(gdx).mt18(idx(1)).iodi;
+            num_bands = ionodata(gdx).mt18(idx(1)).num_bands;
             % make sure all MT18s have the same IODI, the same number of
             % messages and have not timed out
-            if all(ionodata(gdx).mt18_iodi(idx) == IODI) && ...
-                 all(ionodata(gdx).mt18_num_bands(idx) == num_bands) && ...
-                 length(idx) == num_bands && all(ionodata(gdx).mt18_time(idx) >= ...
+            if all([ionodata(gdx).mt18(idx).iodi] == IODI) && ...
+                 all([ionodata(gdx).mt18(idx).num_bands] == num_bands) && ...
+                 length(idx) == num_bands && all([ionodata(gdx).mt18(idx).time] >= ...
                  tstart - MOPS_MT18_PATIMEOUT)
                bandnum = [];
                 for i = 1:length(idx)
                     kdx = 1:201; 
-                    igps = kdx(ionodata(gdx).mt18_mask(idx(i),:)>0)';
+                    igps = kdx(ionodata(gdx).mt18(idx(i)).mask>0)';
                     bandnum = [bandnum; [(idx(i)-1)*ones(size(igps)) igps ...
                                          (1:length(igps))']];
                 end
@@ -171,7 +171,7 @@ for gdx = n_channels:-1:1
                 igpdata(:,COL_IGP_GIVEI) = MOPS_GIVEI_NM;
                 igpdata(:,COL_IGP_DELAY) = 0;
                 %find mapping between decoded MT26 data and igpdata matrix
-                mt26_to_igpdata = sub2ind(size(ionodata(gdx).mt26_givei), ...
+                mt26_to_igpdata = sub2ind(size(ionodata(gdx).givei), ...
                                      bandnum(:,1) + 1, bandnum(:,3));
             else
                 warning('MT18 iono mask is not complete')

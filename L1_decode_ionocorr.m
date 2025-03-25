@@ -102,8 +102,8 @@ if any(mdx18)
 end
 
 %need to have MT10 degradation information
-mdx10 = find(([mt10.time] >= (time - MOPS_MT10_PATIMEOUT)) & ...
-          auth_pass([mt10.msg_idx])');
+mdx10 = find(([mt10.msg.time] >= (time - MOPS_MT10_PATIMEOUT)) & ...
+          auth_pass([mt10.msg.msg_idx])');
 
 %find the most recent valid MT26 messages
 mdx26 = ([igpdata.mt26.time] >= (time - MOPS_MT26_PATIMEOUT)) & ...
@@ -117,6 +117,7 @@ if any(mdx26) && valid_mask && ~isempty(mdx10)
     end
     mdx26 = reshape(idx,max_igps*max_bands*n_msgs,1);
     idx = any(idx,2);
+    mdx10 = mdx10(1); %use the most recent one
 
     % Transfer message contents for each Band
     for bdx = 1:max_bands
@@ -126,7 +127,10 @@ if any(mdx26) && valid_mask && ~isempty(mdx10)
             m26_idx(max_igps*(bdx-1) + (i-1)*max_igps*max_bands + (1:(max_igps))) = true;
         end
         m26_idx = m26_idx & mdx26;
-
+        m26_idx = find(m26_idx);
+        tmp = sortrows([mod(m26_idx, max_igps*max_bands) m26_idx]);
+        m26_idx = tmp(:,2);
+        
         if any(idx(igp_idx))
 
             igpdata.v_delay(bdx,idx(igp_idx))  = [igpdata.mt26(m26_idx).Iv];
@@ -136,8 +140,8 @@ if any(mdx26) && valid_mask && ~isempty(mdx10)
             dt26 = time - [igpdata.mt26(m26_idx).time];    
             
             %find the iono degradation
-            igpdata.eps_iono(bdx,idx(igp_idx)) = mt10(mdx10).ciono_step*floor(dt26/mt10(mdx10).iiono) + ...
-                                        mt10(mdx10).ciono_ramp*dt26;
+            igpdata.eps_iono(bdx,idx(igp_idx)) = mt10.msg(mdx10).ciono_step*floor(dt26/mt10.msg(mdx10).iiono) + ...
+                                        mt10.msg(mdx10).ciono_ramp*dt26;
         end
     end
 else    

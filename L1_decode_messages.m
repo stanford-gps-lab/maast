@@ -10,7 +10,11 @@ function [svdata, igpdata, mt10, flag] = L1_decode_messages(time, msg, svdata, i
 %*************************************************************************
 %
 
-global MOPS_L1_PREAMBLE AUTHENTICATION_ENABLED
+global MOPS_L1_PREAMBLE 
+
+global mt20Receiver;
+global keyStateMachine;
+global AUTHENTICATION_ENABLED
 
 flag  = 0;
 
@@ -26,6 +30,7 @@ else
     svdata.auth_pass(idx:(idx+60)) = false;
 end
 
+mt = bin2dec(msg(9:14));
 if crc24q(msg) 
     warning('CRC does not match')
     return
@@ -46,7 +51,40 @@ else
 end
 
 flag = 1;
-mt = bin2dec(msg(9:14));
+
+if AUTHENTICATION_ENABLED
+    if mt == 20
+        shift_msg = msg;
+        shift_msg(5:222) = shift_msg(9:226); % shift message back to match L5 formatting
+        shift_msg(223:226) = '0000';
+        shift_msg(5:10) = dec2bin(50,6);
+
+        msg_logical = shift_msg == '1';   
+    else
+        msg_logical = msg == '1';
+    end
+
+    msg_logical = msg_logical(1:250)';
+    
+    key = keyStateMachine.get_current_key(3, time);
+    
+    if ~isempty(key) && keyStateMachine.full_stack_authenticated(time, key.key) 
+        % pass to reciver if different
+        if isempty(mt20Receiver.reciever_hash_path_end) || ~all(key.key == mt20Receiver.reciever_hash_path_end)
+            mt20Receiver.set_hash_path_end(key.key);
+        end
+        
+        % pass next key if it is received
+        next_key = keyStateMachine.get_next_key(3);
+        if ~isempty(next_key) && (isempty(mt20Receiver.next_hash_path_end) || ...
+                ~all(next_key.key == mt20Receiver.next_hash_path_end))
+            mt20Receiver.set_next_hash_path_end(next_key.key);
+        end
+    end
+    
+    message = sprintf('%i', msg_logical);
+    mt20Receiver.add_message(message, uint32(time));
+end
 
 switch mt
     case 0
@@ -62,11 +100,15 @@ switch mt
     case 9
         svdata = L1_decodeMT9(time, msg, svdata);
     case 10
-        mt10 = L1_decodeMT10(time, msg);
+        mt10 = L1_decodeMT10(time, msg, mt10);
     case 17
         svdata = L1_decodeMT17(time, msg, svdata); 
     case 18
         igpdata = L1_decodeMT18(time, msg, igpdata); 
+    case 20
+        svdata = L1_decodeMT20(time, msg, svdata); 
+    case 21
+        L1_decodeMT21(time, msg); 
     case 24
         svdata = L1_decodeMT24(time, msg, svdata);
     case 25

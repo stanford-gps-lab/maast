@@ -87,6 +87,15 @@ for gdx = max_geos:-1:1
     svdata.mt17(gdx,2) = mt17;
     svdata.mt17(gdx,1) = mt17;
 end
+%MT20
+mt20.key_num = NaN;
+mt20.mac_msg_ids = NaN(5,1);
+mt20.time = NaN;
+mt20.msg_idx = 1;
+svdata.mt20(4) = mt20;
+svdata.mt20(3) = mt20;
+svdata.mt20(2) = mt20;
+svdata.mt20(1) = mt20;
 %MT25
 mt25.dxyzb = NaN(1,4);
 mt25.dxyzb_dot = zeros(1,4);

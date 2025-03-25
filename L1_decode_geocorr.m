@@ -60,15 +60,19 @@ for mdx = 1:ngeos
         svdata(mdx).geo_xyzb(mdx, 4) = C*(svdata(mdx).mt9(1).af0 + ...
                                      svdata(mdx).mt9(1).af1*tmt0);
                                  
-        %Must also have valid MT 10 messages in order to have valid correction degradations
-        if mt10(mdx).time >= (time - MOPS_MT10_PATIMEOUT)
+        %need to have MT10 degradation information
+        mdx10 = find(([mt10(mdx).msg.time] >= (time - MOPS_MT10_PATIMEOUT)) & ...
+              svdata.auth_pass([mt10(mdx).msg.msg_idx])');        
+        if any(~isempty(mdx10))
+            mdx10 = mdx10(1); %use the most recent one
+            
             %find the geo long-term correction degradation factor
-            if tmt0 > 0 && tmt0 < mt10(mdx).igeo
+            if tmt0 > 0 && tmt0 < mt10(mdx).msg(mdx10).igeo
                 svdata(mdx).geo_deg(mdx) = 0;
             else
-                svdata(mdx).geo_deg(mdx) = mt10(mdx).cgeo_lsb + ...
-                           mt10(mdx).cgeo_v*max([0 -tmt0 tmt0 ...
-                                                 (tmt0 - mt10(mdx).iltc_v1)]);
+                svdata(mdx).geo_deg(mdx) = mt10(mdx).msg(mdx10).cgeo_lsb + ...
+                           mt10(mdx).msg(mdx10).cgeo_v*max([0 -tmt0 tmt0 ...
+                                                 (tmt0 - mt10(mdx).msg(mdx10).iltc_v1)]);
             end
         end
         
