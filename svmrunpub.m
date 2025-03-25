@@ -178,20 +178,24 @@ if isempty(SBAS_MESSAGE_FILE)
     end
     satdata(:, COL_SAT_DEGRAD) = 0;
     rss_udre = 1;    
-else
+else        
+    if AUTHENTICATION_ENABLED
+            global sbas_authentication_parameters SBAS_PRIMARY_SOURCE
+            if isempty(sbas_authentication_parameters)
+                sbas_authentication_parameters = SBASAuthenticationParameters();
+            end
+            if dual_freq
+                % receiver side
+                global mt50Receiver
+                mt50Receiver = receiverTESLA_constructor([], [], sbas_authentication_parameters.hash_path_length, SBAS_PRIMARY_SOURCE);
 
-        
-    if AUTHENTICATION_ENABLED &&  dual_freq
-        global sbas_authentication_parameters
-        if isempty(sbas_authentication_parameters)
-            sbas_authentication_parameters = SBASAuthenticationParameters();
-        end
-
-        % receiver side
-        global mt50Receiver
-        mt50Receiver = receiverTESLA_constructor([], [], sbas_authentication_parameters.hash_path_length);
-        global keyStateMachine
-        keyStateMachine = ReceiverKeyStateMachine();        
+            else
+                % receiver side
+                global mt20Receiver
+                mt20Receiver = receiverTESLA_constructor([], [], sbas_authentication_parameters.hash_path_length, SBAS_PRIMARY_SOURCE); 
+            end
+            global keyStateMachine
+            keyStateMachine = ReceiverKeyStateMachine();  
     end
 
             % REPLAY RECORDED DATA INITIALIZATION:
@@ -276,8 +280,8 @@ while tcurr<=tend
             rss_udre = svdata(gprime).mt37(1).obadidx;
             rss_iono = NaN; 
         else
-            rss_udre = mt10(gprime).rss_udre;
-            rss_iono = mt10(gprime).rss_iono; 
+            rss_udre = mt10(gprime).msg(1).rss_udre;
+            rss_iono = mt10(gprime).msg(1).rss_iono; 
         end
     end
     
