@@ -249,10 +249,10 @@ GUI_OUT_COVAVAIL = 7;
 
 %        TStart = 0;                         % time of day
 %       TStart = 0 + 4*86400;               % time of week (day of week * 86400
-     TStart = 0 + -300+3*86400 + 2086*604800; % absolute time (since 1980) (tow + week number * 604800)
+     % TStart = 0 + -300+3*86400 + 2086*604800; % absolute time (since 1980) (tow + week number * 604800)
       
       %End time for simulation
-      TEnd = TStart + 300+1*3600.0 + 300.0; %86400;
+      % TEnd = TStart + 300+1*3600.0 + 300.0; %86400;
 %       TEnd = 86164.1;
       
       % Size of time step
@@ -315,7 +315,7 @@ GUI_OUT_COVAVAIL = 7;
 %       %%%  These need to be changed to work with above message file
       svfile = 'almyuma_01jan2020.txt'; 
       TStart = 0 + 3*86400 + 2086*604800; % absolute time (since 1980) (tow + week number * 604800)
-      TEnd = TStart + 3600;
+      TEnd = TStart + 86400;
 
 
 %% Mode / Alert limit
