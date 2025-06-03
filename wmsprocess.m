@@ -2,7 +2,8 @@ function [satdata,igpdata,wrs2satdata] = wmsprocess(alm_param, satdata,...
                             wrsdata, igpdata, wrs2satdata, gpsudrefun,...
                             geoudrefun, givefun, wrstrpfun, wrsgpscnmpfun,...
                             wrsgeocnmpfun, outputs, time, tstart, tstep,...
-                            trise, inv_igp_mask, truth_data, dual_freq)
+                            trise, inv_igp_mask, truth_data, dual_freq, ...
+                            active_satdata)
                             
 %*************************************************************************
 %*     Copyright c 2021 The board of trustees of the Leland Stanford     *
@@ -143,8 +144,14 @@ if ~isempty(wrsgeocnmpfun)
 end
 
 % udre
-satdata(sgnss,:) = feval(gpsudrefun, satdata(sgnss,:), wrsdata, ...
-                        wrs2satdata(wgnss,:), 1, dual_freq);
+if strcmp(gpsudrefun,'af_udreadd_cov')
+ satdata(sgnss,:) = feval(gpsudrefun, satdata(sgnss,:), wrsdata, ...
+                        wrs2satdata(wgnss,:), 1, dual_freq, active_satdata);
+else
+ satdata(sgnss,:) = feval(gpsudrefun, satdata(sgnss,:), wrsdata, ...
+                        wrs2satdata(wgnss,:), 1, dual_freq);                   
+end 
+
 
 % give
 if(~dual_freq)
@@ -162,7 +169,11 @@ if(~dual_freq)
                                                 igpdata(:,COL_IGP_UPMGIVEI));
 end
 
-satdata(sgeo,:) = feval(geoudrefun, satdata(sgeo,:), wrsdata, ...
+if strcmp(geoudrefun,'af_geoadd_cov')
+   satdata(sgeo,:) = feval(geoudrefun, satdata(sgeo,:), wrsdata, ...
+                        wrs2satdata(wgeo,:), 1, dual_freq, active_satdata);
+else
+   satdata(sgeo,:) = feval(geoudrefun, satdata(sgeo,:), wrsdata, ...
                         wrs2satdata(wgeo,:), 1, dual_freq);
-
+end
 
